@@ -25,7 +25,7 @@ paths:
         proper display order.
       parameters:
         - name: latitude
-          in: query2
+          in: query
           description: Latitude component of location.
           required: true
           type: number

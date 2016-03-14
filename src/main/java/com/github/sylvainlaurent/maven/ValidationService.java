@@ -76,7 +76,7 @@ public class ValidationService {
 				validationResult.encounteredError();
 			}
 			for (ProcessingMessage processingMessage : report) {
-				validationResult.addMessage(processingMessage.getMessage());
+				validationResult.addMessage(processingMessage.toString());
 			}
 		} catch (ProcessingException e) {
 			validationResult.addMessage(e.getMessage());
