@@ -20,9 +20,12 @@ The validation process is the same as [validator-badge](https://github.com/swagg
             <configuration>
               <includes>
                 <include>src/main/resources/swagger-*.yml</include>
+                <include>src/main/resources/swagger-*.json</include>
+                <!-- other <include> may be added -->
               </includes>
               <excludes>
                 <exclude>src/main/resources/swagger-do-not-validate*.yml</exclude>
+                <!-- <exclude> is optional, others may be added -->
               </excludes>
             </configuration>
           </execution>
