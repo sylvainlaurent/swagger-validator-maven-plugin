@@ -1,4 +1,4 @@
-package com.github.sylvainlaurent.maven;
+package com.github.sylvainlaurent.maven.swaggervalidator;
 
 import java.io.File;
 import java.io.IOException;

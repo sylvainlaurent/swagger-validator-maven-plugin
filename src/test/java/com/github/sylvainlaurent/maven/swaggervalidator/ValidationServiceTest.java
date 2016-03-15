@@ -1,5 +1,5 @@
 
-package com.github.sylvainlaurent.maven;
+package com.github.sylvainlaurent.maven.swaggervalidator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,6 +8,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 
 import org.junit.Test;
+
+import com.github.sylvainlaurent.maven.swaggervalidator.ValidationResult;
+import com.github.sylvainlaurent.maven.swaggervalidator.ValidationService;
 
 public class ValidationServiceTest {
 	private ValidationService service = new ValidationService();
