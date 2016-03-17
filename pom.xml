@@ -132,7 +132,7 @@
           </execution>
         </executions>
         <configuration>
-          <goalPrefix>swagger-validator-maven-plugin</goalPrefix>
+          <goalPrefix>swagger-validator</goalPrefix>
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
         </configuration>
       </plugin>

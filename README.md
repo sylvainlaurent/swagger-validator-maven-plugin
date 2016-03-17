@@ -3,9 +3,9 @@
 This maven plugin allows to validate yaml and json files.
 The validation process is the same as [validator-badge](https://github.com/swagger-api/validator-badge).
 
-## plugin configuration
+## Plugin configuration
 
-```
+```xml
       <plugin>
         <groupId>com.github.sylvainlaurent.maven</groupId>
         <artifactId>swagger-validator-maven-plugin</artifactId>
