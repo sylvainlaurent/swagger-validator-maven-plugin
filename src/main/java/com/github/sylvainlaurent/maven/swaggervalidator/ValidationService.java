@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
+import com.github.fge.jsonschema.core.load.Dereferencing;
+import com.github.fge.jsonschema.core.load.configuration.LoadingConfiguration;
 import com.github.fge.jsonschema.core.report.ProcessingMessage;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
@@ -22,75 +24,79 @@ import io.swagger.util.Yaml;
 
 public class ValidationService {
 
-	private static final String SCHEMA_FILE = "swagger-schema.json";
+    private static final String SCHEMA_FILE = "swagger-schema.json";
 
-	private ObjectMapper jsonMapper = Json.mapper();
-	private ObjectMapper yamlMapper = Yaml.mapper();
+    private final ObjectMapper jsonMapper = Json.mapper();
+    private final ObjectMapper yamlMapper = Yaml.mapper();
 
-	private JsonSchema schema;
+    private JsonSchema schema;
 
-	public ValidationService() {
-		InputStream is = this.getClass().getClassLoader().getResourceAsStream(SCHEMA_FILE);
-		JsonNode schemaObject;
-		try {
-			schemaObject = jsonMapper.readTree(is);
-			JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
-			schema = factory.getJsonSchema(schemaObject);
-		} catch (IOException | ProcessingException e) {
-			throw new RuntimeException(e);
-		}
+    public ValidationService() {
+        final InputStream is = this.getClass().getClassLoader().getResourceAsStream(SCHEMA_FILE);
+        JsonNode schemaObject;
+        try {
+            schemaObject = jsonMapper.readTree(is);
+            // using INLINE dereferencing to avoid internet access while validating
+            final LoadingConfiguration loadingConfiguration = LoadingConfiguration.newBuilder()
+                    .dereferencing(Dereferencing.INLINE).freeze();
+            final JsonSchemaFactory factory = JsonSchemaFactory.newBuilder()
+                    .setLoadingConfiguration(loadingConfiguration).freeze();
+            schema = factory.getJsonSchema(schemaObject);
+        } catch (IOException | ProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
-	}
+    }
 
-	public ValidationResult validate(File file) {
-		ValidationResult validationResult = new ValidationResult();
+    public ValidationResult validate(final File file) {
+        final ValidationResult validationResult = new ValidationResult();
 
-		JsonNode spec;
-		try {
-			spec = readFileContent(file);
-		} catch (Exception e) {
-			validationResult.addMessage("Error while parsing file " + file + ": " + e.getMessage());
-			validationResult.encounteredError();
-			return validationResult;
-		}
+        JsonNode spec;
+        try {
+            spec = readFileContent(file);
+        } catch (final Exception e) {
+            validationResult.addMessage("Error while parsing file " + file + ": " + e.getMessage());
+            validationResult.encounteredError();
+            return validationResult;
+        }
 
-		readSwaggerSpec(spec, validationResult);
-		validateSwagger(spec, validationResult);
+        readSwaggerSpec(spec, validationResult);
+        validateSwagger(spec, validationResult);
 
-		return validationResult;
-	}
+        return validationResult;
+    }
 
-	private void readSwaggerSpec(JsonNode spec, ValidationResult validationResult) {
-		// use the swagger deserializer to get human-friendly messages
-		SwaggerDeserializationResult swaggerResult = new Swagger20Parser().readWithInfo(spec);
-		swaggerResult.setSwagger(
-				new SwaggerResolver(swaggerResult.getSwagger(), new ArrayList<AuthorizationValue>(), null).resolve());
+    private void readSwaggerSpec(final JsonNode spec, final ValidationResult validationResult) {
+        // use the swagger deserializer to get human-friendly messages
+        final SwaggerDeserializationResult swaggerResult = new Swagger20Parser().readWithInfo(spec);
+        swaggerResult.setSwagger(
+                new SwaggerResolver(swaggerResult.getSwagger(), new ArrayList<AuthorizationValue>(), null).resolve());
 
-		validationResult.addMessages(swaggerResult.getMessages());
-	}
+        validationResult.addMessages(swaggerResult.getMessages());
+    }
 
-	private void validateSwagger(JsonNode spec, ValidationResult validationResult) {
-		try {
-			ProcessingReport report = schema.validate(spec);
-			if (!report.isSuccess()) {
-				validationResult.encounteredError();
-			}
-			for (ProcessingMessage processingMessage : report) {
-				validationResult.addMessage(processingMessage.toString());
-			}
-		} catch (ProcessingException e) {
-			validationResult.addMessage(e.getMessage());
-			validationResult.encounteredError();
-		}
-	}
+    private void validateSwagger(final JsonNode spec, final ValidationResult validationResult) {
+        try {
+            final ProcessingReport report = schema.validate(spec);
+            if (!report.isSuccess()) {
+                validationResult.encounteredError();
+            }
+            for (final ProcessingMessage processingMessage : report) {
+                validationResult.addMessage(processingMessage.toString());
+            }
+        } catch (final ProcessingException e) {
+            validationResult.addMessage(e.getMessage());
+            validationResult.encounteredError();
+        }
+    }
 
-	private JsonNode readFileContent(File file) throws IOException {
-		String fileName = file.getName().toLowerCase();
-		if (fileName.endsWith(".yml") || fileName.endsWith(".yaml")) {
-			return yamlMapper.readTree(file);
-		} else {
-			return jsonMapper.readTree(file);
-		}
-	}
+    private JsonNode readFileContent(final File file) throws IOException {
+        final String fileName = file.getName().toLowerCase();
+        if (fileName.endsWith(".yml") || fileName.endsWith(".yaml")) {
+            return yamlMapper.readTree(file);
+        } else {
+            return jsonMapper.readTree(file);
+        }
+    }
 
 }
