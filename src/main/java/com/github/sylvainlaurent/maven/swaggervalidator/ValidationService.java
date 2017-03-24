@@ -60,17 +60,17 @@ public class ValidationService {
             return validationResult;
         }
 
-        readSwaggerSpec(spec, validationResult);
+        readSwaggerSpec(spec, file, validationResult);
         validateSwagger(spec, validationResult);
 
         return validationResult;
     }
 
-    private void readSwaggerSpec(final JsonNode spec, final ValidationResult validationResult) {
+    private void readSwaggerSpec(final JsonNode spec, File specFile, final ValidationResult validationResult) {
         // use the swagger deserializer to get human-friendly messages
         final SwaggerDeserializationResult swaggerResult = new Swagger20Parser().readWithInfo(spec);
         swaggerResult.setSwagger(
-                new SwaggerResolver(swaggerResult.getSwagger(), new ArrayList<AuthorizationValue>(), null).resolve());
+                new SwaggerResolver(swaggerResult.getSwagger(), new ArrayList<AuthorizationValue>(), specFile.getPath()).resolve());
 
         validationResult.addMessages(swaggerResult.getMessages());
     }
