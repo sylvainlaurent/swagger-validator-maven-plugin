@@ -81,4 +81,18 @@ public class ValidationServiceTest {
         assertFalse(result.hasError());
         assertTrue(result.getMessages().isEmpty());
     }
+
+    @Test
+    public void test_external_references_yaml() {
+        final ValidationResult result = service.validate(new File("src/test/resources/swagger-doc-external-ref.yml"));
+        assertFalse(result.hasError());
+        assertTrue(result.getMessages().isEmpty());
+    }
+
+    @Test
+    public void test_external_references_json() {
+        final ValidationResult result = service.validate(new File("src/test/resources/swagger-doc-external-ref.json"));
+        assertFalse(result.hasError());
+        assertTrue(result.getMessages().isEmpty());
+    }
 }
