@@ -1,0 +1,58 @@
+swagger: '2.0'
+info:
+  title: Test API
+  description: Test API
+  version: "1.0.0"
+host: none
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /category/{id}/product/{productId}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: productId
+        in: path
+        required: true
+        type: string
+      operationId: getProduct
+      summary: test service
+      responses:
+        200:
+          description: ok
+          schema:
+            type: string
+
+definitions:
+
+  Product:
+    type: object
+    discriminator: productType
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      productType:
+        type: string
+    required:
+      - id
+      - name
+      #productType is not required
+
+  ApparelProduct:
+    type: object
+    allOf:
+      - $ref: '#/definitions/Product'
+      - type: object
+        properties:
+          color:
+            type: string
+        required:
+         - color

@@ -1,0 +1,39 @@
+swagger: '2.0'
+info:
+  title: Test API
+  description: Test API
+  version: "1.0.0"
+host: none
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /category/{id}/product/{productId}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: productId
+        in: path
+        required: true
+        type: string
+      #"product" is duplicated, because two parameters have the same values for 'name' and 'in'
+      - name: product
+        in: query
+        required: true
+        type: string
+      - name: product
+        in: query
+        required: true
+        type: string
+      operationId: getProduct
+      summary: test service
+      responses:
+        200:
+          description: ok
+          schema:
+            type: string

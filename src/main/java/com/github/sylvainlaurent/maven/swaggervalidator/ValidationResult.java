@@ -1,7 +1,12 @@
 package com.github.sylvainlaurent.maven.swaggervalidator;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 
 public class ValidationResult {
     private final Throwable exc;
@@ -43,5 +48,4 @@ public class ValidationResult {
     public List<String> getMessages() {
         return messages;
     }
-
 }
