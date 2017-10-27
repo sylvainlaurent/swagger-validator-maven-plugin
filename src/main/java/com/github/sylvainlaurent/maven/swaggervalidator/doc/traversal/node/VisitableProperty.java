@@ -4,7 +4,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.doc.traversal.PropertyVi
 
 public interface VisitableProperty {
 
-    public String getPropertyName();
+    String getPropertyName();
 
-    public void accept(PropertyVisitor visitor);
+    void accept(PropertyVisitor visitor);
 }

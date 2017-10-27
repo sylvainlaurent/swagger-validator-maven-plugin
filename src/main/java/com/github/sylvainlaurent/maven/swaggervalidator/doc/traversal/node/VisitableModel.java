@@ -4,9 +4,9 @@ import com.github.sylvainlaurent.maven.swaggervalidator.doc.traversal.ModelVisit
 
 import io.swagger.models.Model;
 
-public interface VisitableModel extends Model {
+public interface VisitableModel {
 
-    public String getModelName();
+    String getModelName();
 
-    public void accept(ModelVisitor visitor);
+    void accept(ModelVisitor visitor);
 }

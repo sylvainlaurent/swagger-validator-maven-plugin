@@ -34,7 +34,7 @@ public class InheritanceChainPropertiesValidator extends AbstractModelVisitor {
 
     @Override
     public void handle(ModelImplWrapper modelImplWrapper) {
-
+        // EMPTY
     }
 
     @Override
@@ -44,7 +44,7 @@ public class InheritanceChainPropertiesValidator extends AbstractModelVisitor {
 
     @Override
     public void handle(ArrayModelWrapper arrayModelWrapper) {
-
+        // EMPTY
     }
 
     @Override
