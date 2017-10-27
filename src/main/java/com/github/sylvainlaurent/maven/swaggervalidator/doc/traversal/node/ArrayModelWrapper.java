@@ -22,6 +22,7 @@ public class ArrayModelWrapper extends ArrayModel implements VisitableModel {
         return modelName;
     }
 
+    @Override
     public void accept(ModelVisitor modelVisitor) {
         modelVisitor.visit(this);
     }

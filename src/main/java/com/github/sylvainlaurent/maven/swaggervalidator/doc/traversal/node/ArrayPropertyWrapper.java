@@ -6,6 +6,7 @@ import io.swagger.models.Xml;
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.Property;
 
+@SuppressWarnings("hiding")
 public class ArrayPropertyWrapper extends ArrayProperty implements VisitableProperty {
 
     private final ArrayProperty arrayProperty;

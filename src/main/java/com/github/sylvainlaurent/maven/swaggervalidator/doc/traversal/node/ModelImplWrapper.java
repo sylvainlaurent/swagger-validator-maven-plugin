@@ -24,6 +24,7 @@ public class ModelImplWrapper extends ModelImpl implements VisitableModel {
         this.model = model;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<String> getRequired() {
         try {
@@ -310,6 +311,7 @@ public class ModelImplWrapper extends ModelImpl implements VisitableModel {
         return model.clone();
     }
 
+    @Override
     public void accept(ModelVisitor modelVisitor) {
         modelVisitor.visit(this);
     }

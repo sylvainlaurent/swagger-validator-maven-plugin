@@ -199,9 +199,9 @@ public class PathsValidator {
                 return false;
             }
 
-            Path path = (Path) o;
+            Path otherPath = (Path) o;
 
-            return pathElements != null ? pathElements.equals(path.pathElements) : path.pathElements == null;
+            return pathElements != null ? pathElements.equals(otherPath.pathElements) : otherPath.pathElements == null;
         }
 
         @Override
@@ -261,16 +261,16 @@ public class PathsValidator {
             }
         }
 
-        private List<PathElement> tokenize(String path) {
+        private List<PathElement> tokenize(String inpath) {
 
             List<PathElement> pathPathElements = new ArrayList<>();
 
-            String result = path;
+            String result = inpath;
             if (result.startsWith(SLASH)) {
-                result = path.substring(1, path.length());
+                result = inpath.substring(1, inpath.length());
             }
             if (result.endsWith(SLASH)) {
-                result = result.substring(0, path.length() - 1);
+                result = result.substring(0, inpath.length() - 1);
             }
 
             List<String> tokens = asList(result.split(SLASH));

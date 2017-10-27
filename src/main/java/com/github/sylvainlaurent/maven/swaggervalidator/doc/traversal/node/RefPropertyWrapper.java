@@ -37,7 +37,7 @@ public class RefPropertyWrapper extends RefProperty implements VisitableProperty
     }
 
     @Override
-    public RefProperty description(String description) {
+    public RefProperty description(@SuppressWarnings("hiding") String description) {
         return refProperty.description(description);
     }
 

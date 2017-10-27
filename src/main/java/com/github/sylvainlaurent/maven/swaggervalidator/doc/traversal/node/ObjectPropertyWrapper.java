@@ -11,6 +11,7 @@ import io.swagger.models.Xml;
 import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.Property;
 
+@SuppressWarnings("hiding")
 public class ObjectPropertyWrapper extends ObjectProperty implements VisitableProperty {
 
     private final ObjectProperty objectProperty;

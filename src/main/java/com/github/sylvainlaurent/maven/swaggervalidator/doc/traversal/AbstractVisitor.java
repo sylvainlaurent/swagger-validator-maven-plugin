@@ -12,42 +12,49 @@ public abstract class AbstractVisitor implements ModelVisitor, PropertyVisitor {
 
     protected VisitedItemsHolder holder = new VisitedItemsHolder();
 
+    @Override
     public void visit(ModelImplWrapper modelImplWrapper) {
         holder.push(modelImplWrapper);
         handle(modelImplWrapper);
         holder.pop();
     }
 
+    @Override
     public void visit(RefModelWrapper refModelWrapper) {
         holder.push(refModelWrapper);
         handle(refModelWrapper);
         holder.pop();
     }
 
+    @Override
     public void visit(ArrayModelWrapper arrayModelWrapper) {
         holder.push(arrayModelWrapper);
         handle(arrayModelWrapper);
         holder.pop();
     }
 
+    @Override
     public void visit(ComposedModelWrapper composedModelWrapper) {
         holder.push(composedModelWrapper);
         handle(composedModelWrapper);
         holder.pop();
     }
 
+    @Override
     public void visit(ObjectPropertyWrapper objectProperty) {
         holder.push(objectProperty);
         handle(objectProperty);
         holder.pop();
     }
 
+    @Override
     public void visit(ArrayPropertyWrapper arrayProperty) {
         holder.push(arrayProperty);
         handle(arrayProperty);
         holder.pop();
     }
 
+    @Override
     public void visit(RefPropertyWrapper refPropertyWrapper) {
         holder.push(refPropertyWrapper);
         handle(refPropertyWrapper);
