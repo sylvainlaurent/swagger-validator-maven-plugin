@@ -10,6 +10,8 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.DirectoryScanner;
 
+import com.github.sylvainlaurent.maven.swaggervalidator.instrumentation.Instrumentation;
+
 @Mojo(name = "validate", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true)
 public class ValidateMojo extends AbstractMojo {
 
@@ -32,6 +34,9 @@ public class ValidateMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
+
+        Instrumentation.init();
+
         final File[] files = getFiles();
         boolean encounteredError = false;
 

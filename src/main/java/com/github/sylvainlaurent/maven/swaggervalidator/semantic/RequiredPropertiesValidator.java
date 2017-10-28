@@ -124,7 +124,6 @@ public class RequiredPropertiesValidator extends AbstractVisitor {
 
     @Override
     protected void handle(ObjectPropertyWrapper objectProperty) {
-        //TODO: this is not working because required properties returned are not the original one,
         validate(objectProperty.getProperties().keySet(), objectProperty.getRequiredProperties());
         for (Map.Entry<String, Property> property : objectProperty.getProperties().entrySet()) {
             createVisitableProperty(property.getKey(), property.getValue()).accept(this);

@@ -19,8 +19,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import com.github.sylvainlaurent.maven.swaggervalidator.instrumentation.Instrumentation;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.error.DefinitionsSemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.error.SemanticError;
 
@@ -29,6 +31,11 @@ import io.swagger.parser.Swagger20Parser;
 import io.swagger.parser.util.SwaggerDeserializationResult;
 
 public class SemanticValidatorTest {
+
+    @Before
+    public void setup(){
+        Instrumentation.init();
+    }
 
     @Test
     public void operations_semantic_validation_should_fail_when_two_path_are_equal() {
@@ -131,8 +138,32 @@ public class SemanticValidatorTest {
     }
 
     @Test
+    public void definitions_semantic_validation_should_fail_when_object_property_contains_required_properties_not_defined() {
+
+        final SwaggerDeserializationResult swaggerResult = readDoc("src/test/resources/semantic-validation/swagger-doc-required-properties-not-defined-for-object-property.yml");
+        SemanticValidationResult result = new SemanticValidator(swaggerResult.getSwagger()).validate();
+
+        assertTrue(result.hasErrors());
+        List<SemanticError> semanticErrors = result.getErrors();
+        assertEquals(1, semanticErrors.size());
+        assertEquals(REQUIRED_PROPERTIES_NOT_DEFINED_AS_OBJECT_PROPERTIES, semanticErrors.get(0).getErrorType());
+    }
+
+    @Test
     public void definitions_semantic_validation_should_fail_when_model_contains_duplicated_required_properties() {
         final SwaggerDeserializationResult swaggerResult = readDoc("src/test/resources/semantic-validation/swagger-doc-required-properties-duplicated.yml");
+        SemanticValidationResult result = new SemanticValidator(swaggerResult.getSwagger()).validate();
+
+        assertTrue(result.hasErrors());
+        List<SemanticError> semanticErrors = result.getErrors();
+        assertEquals(1, semanticErrors.size());
+        assertEquals(REQUIRED_PROPERTIES_ARE_DUPLICATED, semanticErrors.get(0).getErrorType());
+    }
+
+    @Test
+    public void definitions_semantic_validation_should_fail_when_object_property_contains_duplicated_required_properties() {
+
+        final SwaggerDeserializationResult swaggerResult = readDoc("src/test/resources/semantic-validation/swagger-doc-required-properties-duplicated-for-object-property.yml");
         SemanticValidationResult result = new SemanticValidator(swaggerResult.getSwagger()).validate();
 
         assertTrue(result.hasErrors());
