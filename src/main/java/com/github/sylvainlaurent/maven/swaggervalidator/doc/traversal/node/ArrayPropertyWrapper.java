@@ -5,7 +5,6 @@ import com.github.sylvainlaurent.maven.swaggervalidator.doc.traversal.PropertyVi
 import io.swagger.models.properties.ArrayProperty;
 import io.swagger.models.properties.Property;
 
-@SuppressWarnings("hiding")
 public class ArrayPropertyWrapper implements VisitableProperty {
 
     private final ArrayProperty arrayProperty;

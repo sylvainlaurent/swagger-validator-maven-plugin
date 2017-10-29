@@ -8,7 +8,6 @@ import com.github.sylvainlaurent.maven.swaggervalidator.doc.traversal.PropertyVi
 import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.Property;
 
-@SuppressWarnings("hiding")
 public class ObjectPropertyWrapper implements VisitableProperty {
 
     private final ObjectProperty objectProperty;

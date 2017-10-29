@@ -35,6 +35,7 @@ public class ModelImplWrapper implements VisitableModel {
         return modelName;
     }
 
+    @Override
     public void accept(ModelVisitor modelVisitor) {
         modelVisitor.visit(this);
     }
