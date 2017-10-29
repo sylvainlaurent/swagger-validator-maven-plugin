@@ -14,7 +14,10 @@ import com.github.fge.jsonschema.core.report.ProcessingMessage;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.SemanticValidationResult;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.SemanticValidator;
 
+import io.swagger.models.Swagger;
 import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.parser.Swagger20Parser;
 import io.swagger.parser.SwaggerResolver;
@@ -60,22 +63,23 @@ public class ValidationService {
             return validationResult;
         }
 
-        readSwaggerSpec(spec, file, validationResult);
-        validateSwagger(spec, validationResult);
+        Swagger swagger = readSwaggerSpec(spec, file, validationResult);
+        validateSwagger(spec, validationResult, swagger);
 
         return validationResult;
     }
 
-    private void readSwaggerSpec(final JsonNode spec, File specFile, final ValidationResult validationResult) {
+    private Swagger readSwaggerSpec(final JsonNode spec, File specFile, final ValidationResult validationResult) {
         // use the swagger deserializer to get human-friendly messages
         final SwaggerDeserializationResult swaggerResult = new Swagger20Parser().readWithInfo(spec);
-        swaggerResult.setSwagger(
-                new SwaggerResolver(swaggerResult.getSwagger(), new ArrayList<AuthorizationValue>(), specFile.getPath()).resolve());
+        Swagger swagger = new SwaggerResolver(swaggerResult.getSwagger(), new ArrayList<AuthorizationValue>(), specFile.getPath()).resolve();
+        swaggerResult.setSwagger(swagger);
 
         validationResult.addMessages(swaggerResult.getMessages());
+        return swagger;
     }
 
-    private void validateSwagger(final JsonNode spec, final ValidationResult validationResult) {
+    private void validateSwagger(final JsonNode spec, final ValidationResult validationResult, final Swagger swagger) {
         try {
             final ProcessingReport report = schema.validate(spec);
             if (!report.isSuccess()) {
@@ -86,6 +90,12 @@ public class ValidationService {
             }
         } catch (final ProcessingException e) {
             validationResult.addMessage(e.getMessage());
+            validationResult.encounteredError();
+        }
+
+        final SemanticValidationResult semanticValidationResult = new SemanticValidator(swagger).validate();
+        if (semanticValidationResult.hasErrors()){
+            validationResult.addMessages(semanticValidationResult.messages());
             validationResult.encounteredError();
         }
     }

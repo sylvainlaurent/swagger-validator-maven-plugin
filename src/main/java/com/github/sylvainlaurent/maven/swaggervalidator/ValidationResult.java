@@ -43,5 +43,4 @@ public class ValidationResult {
     public List<String> getMessages() {
         return messages;
     }
-
 }

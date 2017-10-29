@@ -1,0 +1,42 @@
+swagger: '2.0'
+info:
+  title: Test API
+  description: Test API
+  version: "1.0.0"
+host: none
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /test:
+    get:
+      parameters:
+      operationId: test
+      summary: test service
+      responses:
+        200:
+          description: ok
+          schema:
+            type: string
+
+definitions:
+
+  Test:
+    type: object
+    properties:
+      id:
+        type: string
+      array:
+        type: array
+        items:
+          type: object
+          properties:
+            undefRef1:
+              type: array
+              items:
+                $ref: "#/definitions/UnexistingReference"
+      undefRef2:
+        $ref: "#/definitions/UnexistingReference"
+

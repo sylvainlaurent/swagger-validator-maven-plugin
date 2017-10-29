@@ -1,0 +1,49 @@
+swagger: '2.0'
+info:
+  title: Test API
+  description: Test API
+  version: "1.0.0"
+host: none
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /category/{id}/product/{productId}:
+    post:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: productId
+        in: path
+        required: true
+        type: string
+      #cannot have more than one 'body' parameter in one single operation
+      - name: product
+        in: body
+        required: true
+        type:
+          $ref: "#/definitions/Product"
+      - name: product2
+        in: body
+        required: true
+        type:
+          $ref: "#/definitions/Product"
+      operationId: createProduct
+      summary: test service
+      responses:
+        200:
+          description: ok
+          schema:
+            type: string
+
+definitions:
+
+  Product:
+    type: object
+    properties:
+      id:
+        type: string
