@@ -3,7 +3,7 @@ package com.github.sylvainlaurent.maven.swaggervalidator.instrumentation;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.doc.traversal.node.ObjectPropertyWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.doc.traversal.node.ObjectPropertyRequiredStore;
 
 import net.bytebuddy.implementation.bind.annotation.Argument;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
@@ -18,7 +18,7 @@ public final class ObjectPropertyRequiredInterceptor {
 
     @RuntimeType
     public static Object setRequiredProperties(@This Object object, @SuperCall Callable<?> zuper, @Argument(value = 0) List<String> requiredProperties) throws Exception {
-        ObjectPropertyWrapper.storeRequiredProperties(object, requiredProperties);
+        ObjectPropertyRequiredStore.storeRequiredProperties(object, requiredProperties);
         return zuper.call();
     }
 
