@@ -8,7 +8,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+@RunWith(ValidatorJunitRunner.class)
 public class ValidationServiceTest {
     private final ValidationService service = new ValidationService();
 

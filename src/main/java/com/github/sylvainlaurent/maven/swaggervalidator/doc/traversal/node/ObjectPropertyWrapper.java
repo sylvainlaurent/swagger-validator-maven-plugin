@@ -39,7 +39,4 @@ public class ObjectPropertyWrapper implements VisitableProperty {
         return objectProperty.getProperties();
     }
 
-
-
-
 }
