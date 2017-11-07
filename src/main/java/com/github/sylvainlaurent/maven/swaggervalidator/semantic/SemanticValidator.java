@@ -1,6 +1,7 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic;
 
 import static com.github.sylvainlaurent.maven.swaggervalidator.doc.traversal.VisitableModelFactory.createVisitableModel;
+import static org.apache.commons.collections4.MapUtils.emptyIfNull;
 
 import java.util.Collections;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class SemanticValidator {
     private final SemanticErrorsCollector errorCollector = new SemanticErrorsCollector();
 
     public SemanticValidator(Swagger swagger) {
-        definitions = swagger.getDefinitions() != null ? swagger.getDefinitions() : Collections.<String, Model>emptyMap();
+        definitions = emptyIfNull(swagger.getDefinitions());
         referenceValidator = new ReferenceValidator(definitions, errorCollector);
         requiredPropertiesValidator = new RequiredPropertiesValidator(errorCollector);
         inheritanceChainPropertiesValidator = new InheritanceChainPropertiesValidator(definitions, errorCollector);
