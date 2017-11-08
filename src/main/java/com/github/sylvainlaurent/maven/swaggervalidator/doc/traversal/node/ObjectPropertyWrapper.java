@@ -1,5 +1,7 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.doc.traversal.node;
 
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
+
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +11,7 @@ import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.Property;
 
 public class ObjectPropertyWrapper implements VisitableProperty {
+
 
     private final ObjectProperty objectProperty;
     private final String propertyName;
@@ -29,10 +32,11 @@ public class ObjectPropertyWrapper implements VisitableProperty {
     }
 
     public List<String> getRequiredProperties() {
-        return objectProperty.getRequiredProperties();
+        return emptyIfNull(ObjectPropertyRequiredStore.get(objectProperty));
     }
 
     public Map<String, Property> getProperties() {
         return objectProperty.getProperties();
     }
+
 }

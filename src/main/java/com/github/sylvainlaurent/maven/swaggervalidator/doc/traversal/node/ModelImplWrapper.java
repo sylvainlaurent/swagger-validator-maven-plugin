@@ -1,6 +1,7 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.doc.traversal.node;
 
 import static java.util.Collections.emptyList;
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class ModelImplWrapper implements VisitableModel {
     @SuppressWarnings("unchecked")
     public List<String> getRequired() {
         try {
-            return (List<String>) readField(model, "required", true);
+            return emptyIfNull((List<String>) readField(model, "required", true));
         } catch (IllegalAccessException ex) {
             return emptyList();
         }

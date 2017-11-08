@@ -20,7 +20,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import com.github.sylvainlaurent.maven.swaggervalidator.ValidatorJunitRunner;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.error.DefinitionsSemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.error.SemanticError;
 
@@ -28,6 +30,7 @@ import io.swagger.models.auth.AuthorizationValue;
 import io.swagger.parser.Swagger20Parser;
 import io.swagger.parser.util.SwaggerDeserializationResult;
 
+@RunWith(ValidatorJunitRunner.class)
 public class SemanticValidatorTest {
 
     @Test
@@ -110,7 +113,7 @@ public class SemanticValidatorTest {
         assertEquals(expectedErrorPaths.size(), semanticErrors.size());
 
         DefinitionsSemanticError semanticError1 = (DefinitionsSemanticError) semanticErrors.get(0);
-        DefinitionsSemanticError semanticError2 = (DefinitionsSemanticError) semanticErrors.get(0);
+        DefinitionsSemanticError semanticError2 = (DefinitionsSemanticError) semanticErrors.get(1);
 
         List<String> errorPaths = asList(semanticError1.getPath(), semanticError1.getPath());
         assertTrue(expectedErrorPaths.containsAll(errorPaths));
@@ -127,7 +130,24 @@ public class SemanticValidatorTest {
         assertTrue(result.hasErrors());
         List<SemanticError> semanticErrors = result.getErrors();
         assertEquals(1, semanticErrors.size());
-        assertEquals(REQUIRED_PROPERTIES_NOT_DEFINED_AS_OBJECT_PROPERTIES, semanticErrors.get(0).getErrorType());
+        DefinitionsSemanticError semanticError = (DefinitionsSemanticError)semanticErrors.get(0);
+        assertEquals(REQUIRED_PROPERTIES_NOT_DEFINED_AS_OBJECT_PROPERTIES, semanticError.getErrorType());
+        assertEquals("Product", semanticError.getPath());
+    }
+
+    @Test
+    public void definitions_semantic_validation_should_fail_when_object_property_contains_required_properties_not_defined() {
+
+        final SwaggerDeserializationResult swaggerResult = readDoc(
+            "src/test/resources/semantic-validation/swagger-doc-required-properties-not-defined-for-object-property.yml");
+        SemanticValidationResult result = new SemanticValidator(swaggerResult.getSwagger()).validate();
+
+        assertTrue(result.hasErrors());
+        List<SemanticError> semanticErrors = result.getErrors();
+        assertEquals(1, semanticErrors.size());
+        DefinitionsSemanticError semanticError = (DefinitionsSemanticError)semanticErrors.get(0);
+        assertEquals(REQUIRED_PROPERTIES_NOT_DEFINED_AS_OBJECT_PROPERTIES, semanticError.getErrorType());
+        assertEquals("Product.category.image", semanticError.getPath());
     }
 
     @Test
@@ -138,7 +158,24 @@ public class SemanticValidatorTest {
         assertTrue(result.hasErrors());
         List<SemanticError> semanticErrors = result.getErrors();
         assertEquals(1, semanticErrors.size());
-        assertEquals(REQUIRED_PROPERTIES_ARE_DUPLICATED, semanticErrors.get(0).getErrorType());
+        DefinitionsSemanticError semanticError = (DefinitionsSemanticError)semanticErrors.get(0);
+        assertEquals(REQUIRED_PROPERTIES_ARE_DUPLICATED, semanticError.getErrorType());
+        assertEquals("Product", semanticError.getPath());
+    }
+
+    @Test
+    public void definitions_semantic_validation_should_fail_when_object_property_contains_duplicated_required_properties() {
+
+        final SwaggerDeserializationResult swaggerResult = readDoc(
+            "src/test/resources/semantic-validation/swagger-doc-required-properties-duplicated-for-object-property.yml");
+        SemanticValidationResult result = new SemanticValidator(swaggerResult.getSwagger()).validate();
+
+        assertTrue(result.hasErrors());
+        List<SemanticError> semanticErrors = result.getErrors();
+        assertEquals(1, semanticErrors.size());
+        DefinitionsSemanticError semanticError = (DefinitionsSemanticError)semanticErrors.get(0);
+        assertEquals(REQUIRED_PROPERTIES_ARE_DUPLICATED, semanticError.getErrorType());
+        assertEquals("Product.category", semanticError.getPath());
     }
 
     @Test
@@ -151,9 +188,12 @@ public class SemanticValidatorTest {
         List<SemanticError> semanticErrors = result.getErrors();
         assertEquals(2, semanticErrors.size());
 
-        assertEquals(DISCRIMINATOR_NOT_DEFINED_AS_PROPERTY, semanticErrors.get(0).getErrorType());
-        assertEquals(DISCRIMINATOR_NOT_DEFINED_AS_REQUIRED_PROPERTY, semanticErrors.get(1).getErrorType());
-
+        DefinitionsSemanticError error1 = (DefinitionsSemanticError)semanticErrors.get(0);
+        DefinitionsSemanticError error2 = (DefinitionsSemanticError)semanticErrors.get(1);
+        assertEquals(DISCRIMINATOR_NOT_DEFINED_AS_PROPERTY, error1.getErrorType());
+        assertEquals("Product", error1.getPath());
+        assertEquals(DISCRIMINATOR_NOT_DEFINED_AS_REQUIRED_PROPERTY, error2.getErrorType());
+        assertEquals("Product", error2.getPath());
     }
 
     @Test
@@ -165,7 +205,9 @@ public class SemanticValidatorTest {
         assertTrue(result.hasErrors());
         List<SemanticError> semanticErrors = result.getErrors();
         assertEquals(1, semanticErrors.size());
-        assertEquals(DISCRIMINATOR_NOT_DEFINED_AS_REQUIRED_PROPERTY, semanticErrors.get(0).getErrorType());
+        DefinitionsSemanticError error = (DefinitionsSemanticError)semanticErrors.get(0);
+        assertEquals(DISCRIMINATOR_NOT_DEFINED_AS_REQUIRED_PROPERTY, error.getErrorType());
+        assertEquals("Product", error.getPath());
     }
 
     @Test
@@ -192,7 +234,10 @@ public class SemanticValidatorTest {
         assertTrue(result.hasErrors());
         List<SemanticError> semanticErrors = result.getErrors();
         assertEquals(1, semanticErrors.size());
-        assertEquals(ITEMS_PROPERTY_IS_NOT_DEFINED_IN_ARRAY, semanticErrors.get(0).getErrorType());
+        DefinitionsSemanticError definitionsSemanticError = (DefinitionsSemanticError) semanticErrors.get(0);
+        assertEquals(ITEMS_PROPERTY_IS_NOT_DEFINED_IN_ARRAY, definitionsSemanticError.getErrorType());
+        assertEquals("Product.categories", definitionsSemanticError.getPath());
+
     }
 
     private SwaggerDeserializationResult readDoc(String location) {
