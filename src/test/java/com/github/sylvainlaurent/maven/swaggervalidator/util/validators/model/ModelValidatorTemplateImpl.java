@@ -1,5 +1,9 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.util.validators.model;
 
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ArrayModelWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ComposedModelWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ModelImplWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.RefModelWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ArrayPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ObjectPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.RefPropertyWrapper;
@@ -8,22 +12,42 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.defin
 
 public class ModelValidatorTemplateImpl extends ModelValidatorTemplate {
     @Override
-    protected void validate(ObjectPropertyWrapper objectProperty) {
+    public void validate(ObjectPropertyWrapper objectProperty) {
 
     }
 
     @Override
-    protected void validate(ArrayPropertyWrapper arrayProperty) {
+    public void validate(ArrayPropertyWrapper arrayProperty) {
 
     }
 
     @Override
-    protected void validate(RefPropertyWrapper refPropertyWrapper) {
+    public void validate(RefPropertyWrapper refPropertyWrapper) {
 
     }
 
     @Override
     public void setValidationContext(ValidationContext context) {
+
+    }
+
+    @Override
+    public void validate(ModelImplWrapper modelImplWrapper) {
+
+    }
+
+    @Override
+    public void validate(RefModelWrapper refModelWrapper) {
+
+    }
+
+    @Override
+    public void validate(ArrayModelWrapper arrayModelWrapper) {
+
+    }
+
+    @Override
+    public void validate(ComposedModelWrapper composedModelWrapper) {
 
     }
 }

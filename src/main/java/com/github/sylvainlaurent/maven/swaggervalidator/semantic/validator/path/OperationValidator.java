@@ -3,7 +3,6 @@ package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.OperationWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.PathWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.ResponseWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.util.Util;
@@ -17,9 +16,6 @@ public class OperationValidator extends PathValidatorTemplate {
 
     private List<SemanticError> errors = new ArrayList<>();
     private Set<String> duplicateOperationIds;
-
-    @Override
-    public void validate(List<PathWrapper> paths) {}
 
     @Override
     public void validate(OperationWrapper operation) {
@@ -51,16 +47,6 @@ public class OperationValidator extends PathValidatorTemplate {
                 .map(OperationWrapper::getOperationId)
                 .collect(Collectors.toList());
         duplicateOperationIds = Util.findDuplicates(operationIds);
-    }
-
-    @Override
-    public void validate(ResponseWrapper wrapper) {
-//        do nothing
-    }
-
-    @Override
-    public void validate(com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter parameter) {
-//        do nothing
     }
 
     @Override

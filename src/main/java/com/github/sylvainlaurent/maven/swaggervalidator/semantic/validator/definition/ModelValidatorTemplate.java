@@ -16,7 +16,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ModelValidatorTemplate implements ModelVisitor, PropertyVisitor, VisitableModelValidator {
+public abstract class ModelValidatorTemplate implements ModelVisitor, PropertyVisitor, VisitableModelValidator, VisitablePropertyValidator {
 
     protected List<SemanticError> validationErrors = new ArrayList<>();
     protected VisitedItemsHolder holder = new VisitedItemsHolder();
@@ -80,18 +80,38 @@ public abstract class ModelValidatorTemplate implements ModelVisitor, PropertyVi
         holder.pop();
     }
 
-    protected void validate(ModelImplWrapper modelImplWrapper) {}
+    @Override
+    public void validate(ModelImplWrapper modelImplWrapper) {
 
-    protected void validate(RefModelWrapper refModelWrapper) {}
+    }
 
-    protected void validate(ArrayModelWrapper arrayModelWrapper) {}
+    @Override
+    public void validate(RefModelWrapper refModelWrapper) {
 
-    protected void validate(ComposedModelWrapper composedModelWrapper) {}
+    }
 
-    protected abstract void validate(ObjectPropertyWrapper objectProperty);
+    @Override
+    public void validate(ArrayModelWrapper arrayModelWrapper) {
 
-    protected abstract void validate(ArrayPropertyWrapper arrayProperty);
+    }
 
-    protected abstract void validate(RefPropertyWrapper refPropertyWrapper);
+    @Override
+    public void validate(ComposedModelWrapper composedModelWrapper) {
 
+    }
+
+    @Override
+    public void validate(ObjectPropertyWrapper objectProperty) {
+
+    }
+
+    @Override
+    public void validate(ArrayPropertyWrapper arrayProperty) {
+
+    }
+
+    @Override
+    public void validate(RefPropertyWrapper refPropertyWrapper) {
+
+    }
 }

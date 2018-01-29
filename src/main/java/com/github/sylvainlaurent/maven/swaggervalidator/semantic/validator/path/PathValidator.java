@@ -26,11 +26,6 @@ public class PathValidator extends PathValidatorTemplate {
     private static final Pattern TEMPLATE_PATTERN = Pattern.compile(TEMPLATE_REGEX);
 
     @Override
-    public void validate(List<PathWrapper> paths) {
-
-    }
-
-    @Override
     public void validate(PathWrapper path) {
         currentPath = path;
         validatePathString(path);

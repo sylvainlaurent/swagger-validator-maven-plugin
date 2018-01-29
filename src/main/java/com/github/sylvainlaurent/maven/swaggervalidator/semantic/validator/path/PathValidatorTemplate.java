@@ -67,4 +67,28 @@ public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathV
         holder.pop();
     }
 
+    @Override
+    public void validate(List<PathWrapper> paths) {
+
+    }
+
+    @Override
+    public void validate(PathWrapper path) {
+
+    }
+
+    @Override
+    public void validate(OperationWrapper operation) {
+
+    }
+
+    @Override
+    public void validate(ResponseWrapper wrapper) {
+
+    }
+
+    @Override
+    public void validate(VisitableParameter parameter) {
+
+    }
 }

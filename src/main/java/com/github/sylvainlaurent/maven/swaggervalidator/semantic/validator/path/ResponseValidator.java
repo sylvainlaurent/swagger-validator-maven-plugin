@@ -1,9 +1,7 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.OperationWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.PathWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.ResponseWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ArrayPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
@@ -26,12 +24,6 @@ public class ResponseValidator extends PathValidatorTemplate {
     public void setValidationContext(ValidationContext context) {
         this.context = context;
     }
-
-    @Override
-    public void validate(List<PathWrapper> paths) {}
-
-    @Override
-    public void validate(PathWrapper path) {}
 
     @Override
     public void validate(OperationWrapper operation) {
@@ -65,7 +57,4 @@ public class ResponseValidator extends PathValidatorTemplate {
             }
         }
     }
-
-    @Override
-    public void validate(VisitableParameter parameter) {}
 }

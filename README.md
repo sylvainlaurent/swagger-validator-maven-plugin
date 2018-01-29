@@ -47,6 +47,6 @@ The validation process is the same as [validator-badge](https://github.com/swagg
 Validation failures make the build fail.
 
 You can add your custom validators and provide plugin with them. Extend ModelValidatorTemplate or PathValidatorTemplate 
-classes for writing your validators.
+classes for writing your validators, override necessary validation methods.
 
 Requires java 1.8.

@@ -30,14 +30,14 @@ public class ReferenceValidator extends ModelValidatorTemplate {
     }
 
     @Override
-    protected void validate(ModelImplWrapper modelImplWrapper) {
+    public void validate(ModelImplWrapper modelImplWrapper) {
         for (Map.Entry<String, VisitableProperty> property : modelImplWrapper.getProperties().entrySet()) {
             property.getValue().accept(this);
         }
     }
 
     @Override
-    protected void validate(RefModelWrapper refModelWrapper) {
+    public void validate(RefModelWrapper refModelWrapper) {
         validateReferenceExistence(refModelWrapper.getSimpleRef());
         validateReferencePath(refModelWrapper.getModel());
     }
@@ -50,7 +50,7 @@ public class ReferenceValidator extends ModelValidatorTemplate {
     }
 
     @Override
-    protected void validate(ArrayModelWrapper model) {
+    public void validate(ArrayModelWrapper model) {
         if (model.getItems() == null) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
                     "'items' must be defined for an array"));
@@ -58,21 +58,21 @@ public class ReferenceValidator extends ModelValidatorTemplate {
     }
 
     @Override
-    protected void validate(ComposedModelWrapper composedModelWrapper) {
+    public void validate(ComposedModelWrapper composedModelWrapper) {
         for (RefModel refModel : composedModelWrapper.getInterfaces()) {
             createVisitableModel(refModel.getSimpleRef(), refModel).accept(this);
         }
     }
 
     @Override
-    protected void validate(ObjectPropertyWrapper objectProperty) {
+    public void validate(ObjectPropertyWrapper objectProperty) {
         for (Map.Entry<String, Property> property : objectProperty.getProperties().entrySet()) {
             createVisitableProperty(property.getKey(), property.getValue()).accept(this);
         }
     }
 
     @Override
-    protected void validate(ArrayPropertyWrapper arrayProperty) {
+    public void validate(ArrayPropertyWrapper arrayProperty) {
         if (arrayProperty.getItems() == null) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(), "'items' must be defined for an array"));
         }
@@ -80,7 +80,7 @@ public class ReferenceValidator extends ModelValidatorTemplate {
     }
 
     @Override
-    protected void validate(RefPropertyWrapper refProperty) {
+    public void validate(RefPropertyWrapper refProperty) {
         validateReferenceExistence(refProperty.getSimpleRef());
     }
 

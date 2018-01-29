@@ -4,9 +4,6 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableM
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ComposedModelWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ModelImplWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.RefModelWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ArrayPropertyWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ObjectPropertyWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.RefPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
 import io.swagger.models.RefModel;
@@ -38,21 +35,6 @@ public class InheritanceChainPropertiesValidator extends ModelValidatorTemplate 
                 holder.getCurrentPath(), "following properties are already defined in ancestors: "
                     + findCommonProperties(childProperties, parentProperties)));
         }
-    }
-
-    @Override
-    protected void validate(ObjectPropertyWrapper objectProperty) {
-
-    }
-
-    @Override
-    protected void validate(ArrayPropertyWrapper arrayProperty) {
-
-    }
-
-    @Override
-    protected void validate(RefPropertyWrapper refPropertyWrapper) {
-
     }
 
     private List<String> findCommonProperties(Collection<String> propertyNames, Collection<String> parentPropertyNames) {
@@ -101,21 +83,6 @@ public class InheritanceChainPropertiesValidator extends ModelValidatorTemplate 
             for (RefModel element : composedModelWrapper.getInterfaces()) {
                 createVisitableModel(element.getSimpleRef(), element).accept(this);
             }
-        }
-
-        @Override
-        protected void validate(ObjectPropertyWrapper objectProperty) {
-
-        }
-
-        @Override
-        protected void validate(ArrayPropertyWrapper arrayProperty) {
-
-        }
-
-        @Override
-        protected void validate(RefPropertyWrapper refPropertyWrapper) {
-
         }
 
         List<String> getParentProperties() {

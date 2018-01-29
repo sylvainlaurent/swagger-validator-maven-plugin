@@ -4,7 +4,6 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableP
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.parameter.FormParameterWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.OperationWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.PathWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.ResponseWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 
 import java.util.ArrayList;
@@ -16,11 +15,6 @@ public class FormDataValidator extends PathValidatorTemplate {
     private OperationWrapper currentOperation;
 
     @Override
-    public void validate(List<PathWrapper> paths) {
-        // do nothing
-    }
-
-    @Override
     public void validate(PathWrapper path) {
         path.getParameters().forEach(this::validate);
     }
@@ -29,11 +23,6 @@ public class FormDataValidator extends PathValidatorTemplate {
     public void validate(OperationWrapper operation) {
         currentOperation = operation;
         operation.getParameters().forEach(this::validate);
-    }
-
-    @Override
-    public void validate(ResponseWrapper wrapper) {
-        // do nothing
     }
 
     @Override
