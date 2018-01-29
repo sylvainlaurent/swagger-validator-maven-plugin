@@ -33,7 +33,7 @@ public class ValidateMojo extends AbstractMojo {
     private boolean verbose;
 
     @Parameter
-    private String customValidatorsPackage;
+    private String customModelValidatorsPackage;
 
     @Parameter
     private String customPathValidatorsPackage;
@@ -42,7 +42,7 @@ public class ValidateMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
-        validationService.setCustomModelValidatorsPackage(customValidatorsPackage);
+        validationService.setCustomModelValidatorsPackage(customModelValidatorsPackage);
         validationService.setCustomPathValidatorsPackage(customPathValidatorsPackage);
 
         Instrumentation.init();

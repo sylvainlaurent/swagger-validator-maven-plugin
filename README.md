@@ -29,12 +29,24 @@ The validation process is the same as [validator-badge](https://github.com/swagg
                 <exclude>src/main/resources/swagger-do-not-validate*.yml</exclude>
                 <!-- <exclude> is optional, others may be added -->
               </excludes>
+              <customModelValidatorsPackage>com.example.validators</customValidatorsPackage>
+              <customPathValidatorsPackage>com.example.validators</customPathValidatorsPackage>
             </configuration>
           </execution>
         </executions>
+        <dependencies>
+            <dependency>
+                <groupId>com.example</groupId>
+                <artifactId>custom-validators</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
       </plugin>
 ```
 
 Validation failures make the build fail.
 
-Requires java 1.7.
+You can add your custom validators and provide plugin with them. Extend ModelValidatorTemplate or PathValidatorTemplate 
+classes for writing your validators.
+
+Requires java 1.8.
