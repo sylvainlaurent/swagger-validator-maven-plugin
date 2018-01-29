@@ -1,0 +1,32 @@
+swagger: '2.0'
+info:
+  title: Test API
+  description: Test API
+  version: "1.0.0"
+host: none
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /categories:
+    post:
+      operationId: operation
+      summary: test service
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: productId
+          in: body
+          required: true
+          type: string
+        - name: id
+          in: formData
+          required: true
+          type: string
+      responses:
+        201:
+          description: created
+          schema:
+            type: string

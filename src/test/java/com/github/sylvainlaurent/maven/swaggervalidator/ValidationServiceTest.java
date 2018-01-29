@@ -1,14 +1,15 @@
 
 package com.github.sylvainlaurent.maven.swaggervalidator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import com.github.sylvainlaurent.maven.swaggervalidator.service.ValidationService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(ValidatorJunitRunner.class)
 public class ValidationServiceTest {
@@ -60,14 +61,12 @@ public class ValidationServiceTest {
     public void test_not_valid_swagger_yml() {
         final ValidationResult result = service.validate(new File("src/test/resources/swagger-doc-not-valid.yml"));
         assertTrue(result.hasError());
-        assertEquals(1, result.getMessages().size());
     }
 
     @Test
     public void test_not_valid_swagger_json() {
         final ValidationResult result = service.validate(new File("src/test/resources/swagger-doc-not-valid.json"));
         assertTrue(result.hasError());
-        assertEquals(1, result.getMessages().size());
     }
 
     @Test

@@ -1,14 +1,13 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.instrumentation;
 
-import java.util.List;
-import java.util.concurrent.Callable;
-
-import com.github.sylvainlaurent.maven.swaggervalidator.doc.traversal.node.ObjectPropertyRequiredStore;
-
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.ObjectPropertyRequiredStore;
 import net.bytebuddy.implementation.bind.annotation.Argument;
 import net.bytebuddy.implementation.bind.annotation.RuntimeType;
 import net.bytebuddy.implementation.bind.annotation.SuperCall;
 import net.bytebuddy.implementation.bind.annotation.This;
+
+import java.util.List;
+import java.util.concurrent.Callable;
 
 public final class ObjectPropertyRequiredInterceptor {
 

@@ -1,0 +1,50 @@
+swagger: '2.0'
+info:
+  title: Test API
+  description: Test API
+  version: "1.0.0"
+host: none
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  #the two paths defined in this doc are equivalent
+  /category/{id}/product/{productId}:
+    get:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: productId
+        in: path
+        required: true
+        type: string
+      operationId: getOne
+      summary: test service
+      description: Test external references
+      responses:
+        200:
+          description: ok
+          schema:
+            type: string
+  /category/{categoryId}/product/{sku}:
+    get:
+      parameters:
+      - name: categoryId
+        in: path
+        required: true
+        type: string
+      - name: sku
+        in: path
+        required: true
+        type: string
+      operationId: getTwo
+      summary: test service equivalent to getOne
+      responses:
+        200:
+          description: ok
+          schema:
+            type: string
