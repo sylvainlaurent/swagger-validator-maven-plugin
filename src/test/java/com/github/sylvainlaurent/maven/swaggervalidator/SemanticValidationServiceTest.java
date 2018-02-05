@@ -243,20 +243,6 @@ public class SemanticValidationServiceTest {
         assertEquals("Product.categories", definitionSemanticError.getPath());
     }
 
-    @Test
-    public void error_when_read_only_property_marked_required() {
-        SwaggerDeserializationResult swaggerResult = readDoc(
-                RESOURCE_FOLDER + "read-only-property-marked-required.yml");
-        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
-
-        assertFalse(errors.isEmpty());
-        assertEquals(1, errors.size());
-        DefinitionSemanticError error = (DefinitionSemanticError) errors.get(0);
-        assertEquals("Read only properties cannot be marked as required.", error.getMessage());
-        assertEquals("Test", error.getPath());
-    }
-
     public static SwaggerDeserializationResult readDoc(String location) {
         return new Swagger20Parser().readWithInfo(location, Collections.emptyList());
     }

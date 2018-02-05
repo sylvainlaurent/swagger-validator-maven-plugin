@@ -29,23 +29,12 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
     public void validate(ModelImplWrapper modelImplWrapper) {
         List<String> objectProperties = new ArrayList<>(modelImplWrapper.getProperties().keySet());
         List<String> requiredProperties = modelImplWrapper.getRequired();
-        List<String> readOnlyProperties = modelImplWrapper.getReadOlyProperties();
 
-        validateReadOnlyProperties(requiredProperties, readOnlyProperties);
         validateDiscriminator(modelImplWrapper.getDiscriminator(), requiredProperties, objectProperties);
         validateProperties(objectProperties, requiredProperties);
 
         for (Map.Entry<String, VisitableProperty> property : modelImplWrapper.getProperties().entrySet()) {
             property.getValue().accept(this);
-        }
-    }
-
-    private void validateReadOnlyProperties(List<String> requiredProperties, List<String> readOnlyProperties) {
-        for (String readOnlyProperty : readOnlyProperties) {
-            if (requiredProperties.contains(readOnlyProperty)) {
-                validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
-                        "Read only properties cannot be marked as required."));
-            }
         }
     }
 
