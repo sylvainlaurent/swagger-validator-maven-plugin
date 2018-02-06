@@ -6,6 +6,8 @@ import com.github.sylvainlaurent.maven.swaggervalidator.service.SemanticValidati
 import io.swagger.parser.util.SwaggerDeserializationResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -17,12 +19,14 @@ import static org.junit.Assert.assertFalse;
 @RunWith(ValidatorJunitRunner.class)
 public class FormDataValidatorTest {
 
+    private static Logger logger = LoggerFactory.getLogger(FormDataValidatorTest.class);
+
     @Test
     public void form_data_file_with_invalid_consumes() {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "form-data-with-file-type-and-invalid-consumes-type.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(2, errors.size());
@@ -41,7 +45,7 @@ public class FormDataValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "form-data-without-consumes.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(2, errors.size());

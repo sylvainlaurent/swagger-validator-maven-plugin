@@ -7,6 +7,8 @@ import com.github.sylvainlaurent.maven.swaggervalidator.service.SemanticValidati
 import io.swagger.parser.util.SwaggerDeserializationResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -18,12 +20,14 @@ import static org.junit.Assert.assertFalse;
 @RunWith(ValidatorJunitRunner.class)
 public class OperationValidatorTest {
 
+    private static Logger logger = LoggerFactory.getLogger(OperationValidatorTest.class);
+
     @Test
     public void semantic_error_when_path_parameter_not_defined_in_parameters_section_1() {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "duplicate-operation-ids.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(2, errors.size());
@@ -41,7 +45,7 @@ public class OperationValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "multiple-body-params.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
@@ -55,7 +59,7 @@ public class OperationValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "both-form-and-body-params.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());

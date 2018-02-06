@@ -7,6 +7,8 @@ import com.github.sylvainlaurent.maven.swaggervalidator.service.SemanticValidati
 import io.swagger.parser.util.SwaggerDeserializationResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -19,12 +21,14 @@ import static org.junit.Assert.assertTrue;
 @RunWith(ValidatorJunitRunner.class)
 public class PathValidatorTest {
 
+    private static Logger logger = LoggerFactory.getLogger(PathValidatorTest.class);
+
     @Test
     public void semantic_error_when_path_parameter_not_defined_in_parameters_section_1() {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "path-parameter-not-defined-1.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
@@ -38,7 +42,7 @@ public class PathValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "path-parameter-not-defined-2.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
@@ -52,7 +56,7 @@ public class PathValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "path-parameter-not-defined-in-path.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
@@ -66,7 +70,7 @@ public class PathValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "path-parameter-not-required-on-path-level.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
@@ -80,7 +84,7 @@ public class PathValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "path-parameter-not-required-on-operation-level.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
@@ -94,7 +98,7 @@ public class PathValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "empty-path-parameter-in-path-string.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
@@ -107,7 +111,7 @@ public class PathValidatorTest {
     public void semantic_error_when_equivalent_path_strings() {
         SwaggerDeserializationResult swaggerResult = readDoc(RESOURCE_FOLDER + "equivalent-path-strings.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(2, errors.size());
@@ -125,7 +129,7 @@ public class PathValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "partial-path-templating.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
@@ -139,7 +143,7 @@ public class PathValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "path-with-query-string.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
@@ -153,7 +157,7 @@ public class PathValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "duplicate-parameters-in-path.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());
@@ -167,7 +171,7 @@ public class PathValidatorTest {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "duplicate-parameters-in-operation.yml");
         List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(errors);
+        logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
         assertEquals(1, errors.size());

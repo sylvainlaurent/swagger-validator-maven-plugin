@@ -7,6 +7,8 @@ import io.swagger.parser.Swagger20Parser;
 import io.swagger.parser.util.SwaggerDeserializationResult;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,91 +22,92 @@ import static org.junit.Assert.assertTrue;
 public class SemanticValidationServiceTest {
 
     public static final String RESOURCE_FOLDER = "src/test/resources/semantic-validation/";
+    private static Logger logger = LoggerFactory.getLogger(SemanticValidationServiceTest.class);
 
     @Test
     public void operations_semantic_validation_should_fail_when_two_path_are_equal() {
         final SwaggerDeserializationResult swaggerResult = readDoc(RESOURCE_FOLDER + "equivalent-operations.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(2, semanticErrors.size());
-        assertEquals("Equivalent paths are not allowed.", semanticErrors.get(0).getMessage());
-        assertEquals("Equivalent paths are not allowed.", semanticErrors.get(1).getMessage());
+        assertFalse(errors.isEmpty());
+        assertEquals(2, errors.size());
+        assertEquals("Equivalent paths are not allowed.", errors.get(0).getMessage());
+        assertEquals("Equivalent paths are not allowed.", errors.get(1).getMessage());
     }
 
     @Test
     public void operations_semantic_validation_should_fail_when_an_operations_contains_both_form_and_body_params() {
         final SwaggerDeserializationResult swaggerResult = readDoc(RESOURCE_FOLDER + "both-form-and-body-params.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        assertTrue(semanticErrors.get(0).getMessage().endsWith("Parameters cannot contain both 'body' and 'formData' types."));
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        assertTrue(errors.get(0).getMessage().endsWith("Parameters cannot contain both 'body' and 'formData' types."));
     }
 
     @Test
     public void operations_semantic_validation_should_fail_when_operation_params_contains_multiple_body_params() {
         final SwaggerDeserializationResult swaggerResult = readDoc(RESOURCE_FOLDER + "multiple-body-params.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        assertTrue(semanticErrors.get(0).getMessage().endsWith("Multiple body parameters are not allowed."));
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        assertTrue(errors.get(0).getMessage().endsWith("Multiple body parameters are not allowed."));
     }
 
     @Test
     public void operations_semantic_validation_should_fail_when_path_variables_are_not_matched_by_operation_params() {
         final SwaggerDeserializationResult swaggerResult = readDoc(RESOURCE_FOLDER + "unmatched-path-variable.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        assertTrue(semanticErrors.get(0).getMessage().equals("Declared path parameter 'productId' needs to be defined as a path parameter at either the path or operation level"));
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        assertTrue(errors.get(0).getMessage().equals("Declared path parameter 'productId' needs to be defined as a path parameter at either the path or operation level"));
     }
 
     @Test
     public void operations_semantic_validation_should_fail_when_operation_params_are_not_matched_by_path_variables() {
         final SwaggerDeserializationResult swaggerResult = readDoc(RESOURCE_FOLDER + "unmatched-operation-path-parameter.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        assertTrue(semanticErrors.get(0).getMessage().contains("Declared path parameter 'additionalPathParam' needs to be defined as a path parameter at either the path or operation level"));
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        assertTrue(errors.get(0).getMessage().contains("Declared path parameter 'additionalPathParam' needs to be defined as a path parameter at either the path or operation level"));
     }
 
     @Test
     public void operations_semantic_validation_should_fail_when_operations_contains_parameters_with_same_name_and_in() {
         final SwaggerDeserializationResult swaggerResult = readDoc(RESOURCE_FOLDER + "duplicate-parameters-in-operation.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        assertEquals("should not have duplicate items: [product]", semanticErrors.get(0).getMessage());
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        assertEquals("should not have duplicate items: [product]", errors.get(0).getMessage());
     }
 
     @Test
     public void definitions_semantic_validation_should_fail_when_definitions_contains_undefined_reference() {
         final SwaggerDeserializationResult swaggerResult = readDoc(RESOURCE_FOLDER + "reference-not-found-in-definitions.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
+        assertFalse(errors.isEmpty());
 
         List<String> expectedErrorPaths = asList("Test.undefRef2", "Test.array.items.undefRef1.items");
-        assertEquals(expectedErrorPaths.size(), semanticErrors.size());
+        assertEquals(expectedErrorPaths.size(), errors.size());
 
-        DefinitionSemanticError semanticError1 = (DefinitionSemanticError) semanticErrors.get(0);
-        DefinitionSemanticError semanticError2 = (DefinitionSemanticError) semanticErrors.get(1);
+        DefinitionSemanticError semanticError1 = (DefinitionSemanticError) errors.get(0);
+        DefinitionSemanticError semanticError2 = (DefinitionSemanticError) errors.get(1);
 
         List<String> errorPaths = asList(semanticError1.getPath(), semanticError1.getPath());
         assertTrue(expectedErrorPaths.containsAll(errorPaths));
@@ -118,13 +121,13 @@ public class SemanticValidationServiceTest {
     @Test
     public void definitions_semantic_validation_should_fail_when_model_contains_required_properties_not_defined() {
         final SwaggerDeserializationResult swaggerResult = readDoc(RESOURCE_FOLDER + "required-properties-not-defined.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        DefinitionSemanticError semanticError = (DefinitionSemanticError)semanticErrors.get(0);
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        DefinitionSemanticError semanticError = (DefinitionSemanticError)errors.get(0);
         assertTrue(semanticError.getMessage().contains("required properties are not defined as object properties: "));
         assertEquals("Product", semanticError.getPath());
     }
@@ -134,13 +137,13 @@ public class SemanticValidationServiceTest {
 
         final SwaggerDeserializationResult swaggerResult = readDoc(
             RESOURCE_FOLDER + "required-properties-not-defined-for-object-property.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        DefinitionSemanticError semanticError = (DefinitionSemanticError)semanticErrors.get(0);
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        DefinitionSemanticError semanticError = (DefinitionSemanticError)errors.get(0);
         assertTrue(semanticError.getMessage().contains("required properties are not defined as object properties:"));
         assertEquals("Product.category.image", semanticError.getPath());
     }
@@ -148,13 +151,13 @@ public class SemanticValidationServiceTest {
     @Test
     public void definitions_semantic_validation_should_fail_when_model_contains_duplicated_required_properties() {
         final SwaggerDeserializationResult swaggerResult = readDoc(RESOURCE_FOLDER + "required-properties-duplicated.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        DefinitionSemanticError semanticError = (DefinitionSemanticError)semanticErrors.get(0);
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        DefinitionSemanticError semanticError = (DefinitionSemanticError)errors.get(0);
         assertTrue(semanticError.getMessage().contains("required property is defined multiple times:"));
         assertEquals("Product", semanticError.getPath());
     }
@@ -164,13 +167,13 @@ public class SemanticValidationServiceTest {
 
         final SwaggerDeserializationResult swaggerResult = readDoc(
             RESOURCE_FOLDER + "required-properties-duplicated-for-object-property.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        DefinitionSemanticError semanticError = (DefinitionSemanticError)semanticErrors.get(0);
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        DefinitionSemanticError semanticError = (DefinitionSemanticError)errors.get(0);
         assertTrue(semanticError.getMessage().contains("required property is defined multiple times:"));
         assertEquals("Product.category", semanticError.getPath());
     }
@@ -179,15 +182,15 @@ public class SemanticValidationServiceTest {
     public void definitions_semantic_validation_should_fail_when_model_contains_a_discrimininator_not_defined_as_property() {
         final SwaggerDeserializationResult swaggerResult = readDoc(
             RESOURCE_FOLDER + "discriminator-not-defined-as-property.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(2, semanticErrors.size());
+        assertFalse(errors.isEmpty());
+        assertEquals(2, errors.size());
 
-        DefinitionSemanticError error1 = (DefinitionSemanticError)semanticErrors.get(0);
-        DefinitionSemanticError error2 = (DefinitionSemanticError)semanticErrors.get(1);
+        DefinitionSemanticError error1 = (DefinitionSemanticError)errors.get(0);
+        DefinitionSemanticError error2 = (DefinitionSemanticError)errors.get(1);
         assertTrue(error1.getMessage().contains("discriminator"));
         assertTrue(error1.getMessage().contains("is not a property defined at this schema"));
         assertEquals("Product", error1.getPath());
@@ -200,13 +203,13 @@ public class SemanticValidationServiceTest {
     public void definitions_semantic_validation_should_fail_when_model_contains_a_discrimininator_not_defined_as_required_property() {
         final SwaggerDeserializationResult swaggerResult = readDoc(
             RESOURCE_FOLDER + "discriminator-not-defined-as-required-property.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        DefinitionSemanticError error = (DefinitionSemanticError)semanticErrors.get(0);
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        DefinitionSemanticError error = (DefinitionSemanticError)errors.get(0);
         assertTrue(error.getMessage().contains("discriminator property"));
         assertTrue(error.getMessage().contains("is not marked as required"));
         assertEquals("Product", error.getPath());
@@ -216,29 +219,29 @@ public class SemanticValidationServiceTest {
     public void definitions_semantic_validation_should_fail_when_model_contains_a_property_already_defined_in_ancestors() {
         final SwaggerDeserializationResult swaggerResult = readDoc(
             RESOURCE_FOLDER + "property-already-defined-in-ancestors.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
-        assertFalse(semanticErrors.isEmpty());
+        assertFalse(errors.isEmpty());
 
-        assertEquals(2, semanticErrors.size());
-        assertTrue(semanticErrors.get(0).getMessage().contains("following properties are already defined in ancestors:"));
-        assertEquals("TShirt", semanticErrors.get(0).getPath());
-        assertTrue(semanticErrors.get(1).getMessage().contains("following properties are already defined in ancestors:"));
-        assertEquals("ApparelProduct", (semanticErrors.get(1).getPath()));
+        assertEquals(2, errors.size());
+        assertTrue(errors.get(0).getMessage().contains("following properties are already defined in ancestors:"));
+        assertEquals("TShirt", errors.get(0).getPath());
+        assertTrue(errors.get(1).getMessage().contains("following properties are already defined in ancestors:"));
+        assertEquals("ApparelProduct", (errors.get(1).getPath()));
     }
 
     @Test
     public void definitions_semantic_validation_should_fail_when_items_is_undefined_in_array() {
         final SwaggerDeserializationResult swaggerResult = readDoc(
             RESOURCE_FOLDER + "items-property-not-defined-in-array.yml");
-        List<SemanticError> semanticErrors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        System.out.println(semanticErrors);
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
 
 
-        assertFalse(semanticErrors.isEmpty());
-        assertEquals(1, semanticErrors.size());
-        DefinitionSemanticError definitionSemanticError = (DefinitionSemanticError) semanticErrors.get(0);
+        assertFalse(errors.isEmpty());
+        assertEquals(1, errors.size());
+        DefinitionSemanticError definitionSemanticError = (DefinitionSemanticError) errors.get(0);
         assertTrue(definitionSemanticError.getMessage().contains("'items' must be defined for an array"));
         assertEquals("Product.categories", definitionSemanticError.getPath());
     }
