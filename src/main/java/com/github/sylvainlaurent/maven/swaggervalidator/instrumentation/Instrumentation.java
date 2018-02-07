@@ -1,11 +1,11 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.instrumentation;
 
-import static net.bytebuddy.matcher.ElementMatchers.named;
-
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.ClassFileLocator;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.pool.TypePool;
+
+import static net.bytebuddy.matcher.ElementMatchers.named;
 
 public final class Instrumentation {
 

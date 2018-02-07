@@ -1,18 +1,20 @@
 package com.github.sylvainlaurent.maven.swaggervalidator;
 
-import java.io.File;
-
+import com.github.sylvainlaurent.maven.swaggervalidator.instrumentation.Instrumentation;
+import com.github.sylvainlaurent.maven.swaggervalidator.service.ValidationService;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.DirectoryScanner;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.instrumentation.Instrumentation;
+import java.io.File;
 
-@Mojo(name = "validate", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true)
+@Mojo(name = "validate", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true,
+        requiresDependencyResolution = ResolutionScope.TEST)
 public class ValidateMojo extends AbstractMojo {
 
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
@@ -30,10 +32,18 @@ public class ValidateMojo extends AbstractMojo {
     @Parameter(defaultValue = "true")
     private boolean verbose;
 
+    @Parameter
+    private String customModelValidatorsPackage;
+
+    @Parameter
+    private String customPathValidatorsPackage;
+
     private final ValidationService validationService = new ValidationService();
 
     @Override
     public void execute() throws MojoExecutionException {
+        validationService.setCustomModelValidatorsPackage(customModelValidatorsPackage);
+        validationService.setCustomPathValidatorsPackage(customPathValidatorsPackage);
 
         Instrumentation.init();
 
@@ -49,7 +59,7 @@ public class ValidateMojo extends AbstractMojo {
                 encounteredError = true;
             }
             for (final String msg : result.getMessages()) {
-                getLog().warn(msg);
+                getLog().error(msg);
             }
         }
 

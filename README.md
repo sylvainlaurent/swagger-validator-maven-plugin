@@ -3,7 +3,6 @@
 # swagger-validator-maven-plugin
 
 This maven plugin allows to validate yaml and json files.
-The validation process is the same as [validator-badge](https://github.com/swagger-api/validator-badge).
 
 ## Plugin configuration
 
@@ -29,12 +28,26 @@ The validation process is the same as [validator-badge](https://github.com/swagg
                 <exclude>src/main/resources/swagger-do-not-validate*.yml</exclude>
                 <!-- <exclude> is optional, others may be added -->
               </excludes>
+              <!-- package names where custom validators are located -->
+              <customModelValidatorsPackage>com.example.validators</customValidatorsPackage>
+              <customPathValidatorsPackage>com.example.validators</customPathValidatorsPackage>
             </configuration>
           </execution>
         </executions>
+        <dependencies>
+            <!-- dependency with custom validators -->
+            <dependency>
+                <groupId>com.example</groupId>
+                <artifactId>custom-validators</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
       </plugin>
 ```
 
 Validation failures make the build fail.
 
-Requires java 1.7.
+You can add your custom validators and provide plugin with them. Extend from ModelValidatorTemplate or PathValidatorTemplate 
+classes for writing your validators and override necessary validation methods. See ReferenceValidator and PathValidator as examples.
+
+Requires java 1.8.
