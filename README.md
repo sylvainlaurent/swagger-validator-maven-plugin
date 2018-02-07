@@ -51,3 +51,17 @@ You can add your custom validators and provide plugin with them. Extend from Mod
 classes for writing your validators and override necessary validation methods. See ReferenceValidator and PathValidator as examples.
 
 Requires java 1.8.
+
+## Source code
+The source code is available on GitHub : https://github.com/sylvainlaurent/swagger-validator-maven-plugin
+
+### How to build source
+Use Maven and a JDK >=8, and run `mvn clean verify` in the root directory of the git repository.
+
+### How to create a release
+`mvn release:prepare release:perform` and answer the questions about version number.
+
+Then push the commits and tags to github.
+
+## License
+This software is licensed under the Apache Sotware License version 2.0, see [LICENSE.txt](LICENSE.txt).
