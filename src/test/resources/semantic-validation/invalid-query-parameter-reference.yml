@@ -1,0 +1,31 @@
+swagger: '2.0'
+info:
+  title: Test API
+  description: Test API
+  version: "1.0.0"
+host: none
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /category:
+    get:
+      parameters:
+      - $ref: '#/parameters/q_category_'
+      operationId: getProduct
+      summary: test service
+      responses:
+        200:
+          description: ok
+          schema:
+            type: string
+
+parameters:
+  q_category_id:
+    name: product_id
+    in: query
+    description: The ID of the TRACT Product.
+    required: false
+    type: string
