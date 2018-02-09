@@ -4,6 +4,8 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.PathVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
 import io.swagger.models.parameters.Parameter;
 
+import java.util.Objects;
+
 public class ParameterWrapper<T extends Parameter> implements VisitableParameter<T> {
 
     private String in;
@@ -31,7 +33,7 @@ public class ParameterWrapper<T extends Parameter> implements VisitableParameter
 
     @Override
     public String getIn() {
-        return in;
+        return in == null ? "" : in;
     }
 
     protected void setIn(String in) {
@@ -74,19 +76,13 @@ public class ParameterWrapper<T extends Parameter> implements VisitableParameter
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-
-        ParameterWrapper that = (ParameterWrapper) o;
-
-        if (!in.equals(that.in))
-            return false;
-        return parameter.getName().equals(that.getName());
+        ParameterWrapper<?> that = (ParameterWrapper<?>) o;
+        return Objects.equals(in, that.in) && Objects.equals(getName(), that.getName());
     }
 
     @Override
     public int hashCode() {
-        int result = in.hashCode();
-        result = 31 * result + getName().hashCode();
-        return result;
+        return Objects.hash(getName());
     }
 
     @Override

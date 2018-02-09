@@ -8,6 +8,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.defin
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition.VisitableModelValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.FormDataValidator;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.OperationParametersReferenceValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.OperationValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.PathValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.ResponseValidator;
@@ -42,9 +43,9 @@ public class SemanticValidationService {
         pathValidators.add(new FormDataValidator());
         pathValidators.add(new PathValidator());
         pathValidators.add(new OperationValidator());
+        pathValidators.add(new OperationParametersReferenceValidator());
 
-        context.setPaths(emptyIfNull(swagger.getPaths()));
-        context.setDefinitions(definitions);
+        context.setSwagger(swagger);
     }
 
     public SemanticValidationService(Swagger swagger, String validatorsPackageName, String pathValidatorsPackageName) {
