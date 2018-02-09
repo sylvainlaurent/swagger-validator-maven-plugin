@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.apache.commons.collections4.MapUtils.emptyIfNull;
+
 public class ValidationContext {
 
     protected List<PathWrapper> paths = new ArrayList<>();
@@ -25,8 +27,8 @@ public class ValidationContext {
 
     public void setSwagger(Swagger swagger) {
         this.swagger = swagger;
-        setPaths(swagger.getPaths());
-        setDefinitions(swagger.getDefinitions());
+        setPaths(emptyIfNull(swagger.getPaths()));
+        setDefinitions(emptyIfNull(swagger.getDefinitions()));
     }
 
     public Swagger getSwagger() {
