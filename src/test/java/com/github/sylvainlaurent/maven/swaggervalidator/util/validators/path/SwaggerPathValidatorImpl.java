@@ -9,10 +9,16 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.SwaggerPathValidator;
 
 import java.util.List;
+import java.util.Map;
 
 public class SwaggerPathValidatorImpl implements SwaggerPathValidator {
     @Override
     public void validate() {
+
+    }
+
+    @Override
+    public void visit(Map<String, List<String>> security) {
 
     }
 
@@ -38,6 +44,11 @@ public class SwaggerPathValidatorImpl implements SwaggerPathValidator {
 
     @Override
     public void validate(VisitableParameter parameter) {
+
+    }
+
+    @Override
+    public void validate(String securityDefinition, List<String> scopes) {
 
     }
 

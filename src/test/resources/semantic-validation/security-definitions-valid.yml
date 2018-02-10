@@ -1,0 +1,41 @@
+swagger: '2.0'
+info:
+  title: Test API
+  description: Test API
+  version: "1.0.0"
+host: none
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /category/{id}:
+    get:
+      operationId: getProduct
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+      responses:
+        200:
+          description: ok
+      security:
+      - petstore_auth:
+        - "write:categories"
+        - "read:categories"
+      - api_key: []
+
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://localhost:8080/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:categories: "modify categories"
+      read:categories: "read categories"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"

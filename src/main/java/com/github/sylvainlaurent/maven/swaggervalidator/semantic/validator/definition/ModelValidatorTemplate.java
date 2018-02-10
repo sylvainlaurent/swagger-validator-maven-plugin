@@ -81,6 +81,11 @@ public abstract class ModelValidatorTemplate implements ModelVisitor, PropertyVi
     }
 
     @Override
+    public void validate() {
+
+    }
+
+    @Override
     public void validate(ModelImplWrapper modelImplWrapper) {
 
     }

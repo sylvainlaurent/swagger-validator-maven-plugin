@@ -24,6 +24,11 @@ public class ModelValidatorImpl implements VisitableModelValidator {
     }
 
     @Override
+    public void validate() {
+
+    }
+
+    @Override
     public void validate(VisitableModel visitableModel) {
 
     }

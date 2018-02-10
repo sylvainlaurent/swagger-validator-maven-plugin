@@ -9,6 +9,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.Respo
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathValidator {
 
@@ -50,6 +51,14 @@ public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathV
         validate(operation);
         operation.getParameters().forEach(this::visit);
         operation.getResponses().forEach(this::visit);
+        operation.getSecurity().forEach(this::visit);
+        holder.pop();
+    }
+
+    @Override
+    public void visit(Map<String, List<String>> security) {
+        holder.push("security");
+        security.forEach(this::validate);
         holder.pop();
     }
 
@@ -89,6 +98,11 @@ public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathV
 
     @Override
     public void validate(VisitableParameter parameter) {
+
+    }
+
+    @Override
+    public void validate(String securityDefinition, List<String> scopes) {
 
     }
 }
