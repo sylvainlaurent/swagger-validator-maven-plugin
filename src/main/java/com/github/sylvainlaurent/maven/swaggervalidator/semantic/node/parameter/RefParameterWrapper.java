@@ -6,4 +6,13 @@ public class RefParameterWrapper extends ParameterWrapper<RefParameter> {
     public RefParameterWrapper(RefParameter parameter) {
         super(parameter);
     }
+
+    public String get$ref() {
+        return getParameter().get$ref();
+    }
+
+    @Override
+    public String getObjectPath() {
+        return get$ref();
+    }
 }

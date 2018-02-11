@@ -5,6 +5,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error
 import java.util.List;
 
 public interface SwaggerValidator {
+    void validate();
     List<SemanticError> getErrors();
     void setValidationContext(ValidationContext context);
 }
