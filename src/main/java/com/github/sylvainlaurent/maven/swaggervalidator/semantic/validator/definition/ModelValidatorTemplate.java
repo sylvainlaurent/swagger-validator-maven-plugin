@@ -11,6 +11,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.RefM
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ArrayPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ObjectPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.RefPropertyWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 
 import java.util.ArrayList;
@@ -20,6 +21,12 @@ public abstract class ModelValidatorTemplate implements ModelVisitor, PropertyVi
 
     protected List<SemanticError> validationErrors = new ArrayList<>();
     protected VisitedItemsHolder holder = new VisitedItemsHolder();
+    protected ValidationContext context;
+
+    @Override
+    public void setValidationContext(ValidationContext context) {
+        this.context = context;
+    }
 
     @Override
     public List<SemanticError> getErrors() {

@@ -4,7 +4,6 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableM
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ComposedModelWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ModelImplWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.RefModelWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
@@ -19,8 +18,6 @@ import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.Visitabl
 import static java.util.Collections.disjoint;
 
 public class InheritanceChainPropertiesValidator extends ModelValidatorTemplate {
-
-    protected ValidationContext context;
 
     @Override
     public void validate(ComposedModelWrapper composedModel) {
@@ -43,11 +40,6 @@ public class InheritanceChainPropertiesValidator extends ModelValidatorTemplate 
         return commonProperties;
     }
 
-    @Override
-    public void setValidationContext(ValidationContext context) {
-        this.context = context;
-    }
-
     final class ParentPropertiesCollector extends ModelValidatorTemplate {
 
         private List<String> parentProperties = new ArrayList<>();
@@ -68,7 +60,7 @@ public class InheritanceChainPropertiesValidator extends ModelValidatorTemplate 
         @Override
         public void validate(RefModelWrapper refModelWrapper) {
             String ref = refModelWrapper.getSimpleRef();
-            createVisitableModel(ref, context.getDefinitions().get(ref)).accept(this);
+            createVisitableModel(ref, InheritanceChainPropertiesValidator.this.context.getDefinitions().get(ref)).accept(this);
         }
 
         @Override
@@ -91,8 +83,5 @@ public class InheritanceChainPropertiesValidator extends ModelValidatorTemplate 
             }
             return parentProperties;
         }
-
-        @Override
-        public void setValidationContext(ValidationContext context) {}
     }
 }

@@ -8,7 +8,6 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.Comp
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ModelImplWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ArrayPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ObjectPropertyWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.util.Util;
 import io.swagger.models.Model;
@@ -110,7 +109,4 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
         VisitablePropertyFactory.createVisitableProperty("items", arrayProperty.getItems())
                 .accept(this);
     }
-
-    @Override
-    public void setValidationContext(ValidationContext context) {}
 }

@@ -8,7 +8,6 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.RefM
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ArrayPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ObjectPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.RefPropertyWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
@@ -19,8 +18,6 @@ import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.Visitabl
 import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory.createVisitableProperty;
 
 public class ReferenceValidator extends ModelValidatorTemplate {
-
-    protected ValidationContext context;
 
     private void validateReferenceExistence(String reference) {
         if (reference == null || !context.getDefinitions().containsKey(reference)) {
@@ -84,8 +81,4 @@ public class ReferenceValidator extends ModelValidatorTemplate {
         validateReferenceExistence(refProperty.getSimpleRef());
     }
 
-    @Override
-    public void setValidationContext(ValidationContext context) {
-        this.context = context;
-    }
 }
