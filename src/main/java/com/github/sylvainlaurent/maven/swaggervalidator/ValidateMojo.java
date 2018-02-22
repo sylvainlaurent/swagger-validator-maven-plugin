@@ -38,6 +38,9 @@ public class ValidateMojo extends AbstractMojo {
     @Parameter
     private String customPathValidatorsPackage;
 
+    @Parameter(defaultValue = "true")
+    private Boolean failOnErrors;
+
     private final ValidationService validationService = new ValidationService();
 
     @Override
@@ -59,11 +62,15 @@ public class ValidateMojo extends AbstractMojo {
                 encounteredError = true;
             }
             for (final String msg : result.getMessages()) {
-                getLog().error(msg);
+                if (failOnErrors) {
+                    getLog().error(msg);
+                } else {
+                    getLog().warn(msg);
+                }
             }
         }
 
-        if (encounteredError) {
+        if (encounteredError && failOnErrors) {
             throw new MojoExecutionException("Some files are not valid, see previous logs");
         }
     }
