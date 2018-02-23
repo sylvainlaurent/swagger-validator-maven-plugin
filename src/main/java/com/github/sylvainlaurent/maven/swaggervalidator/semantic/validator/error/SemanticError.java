@@ -27,9 +27,10 @@ public class SemanticError {
     @Override
     public String toString() {
         if (StringUtils.isEmpty(path)) {
-            return "SemanticError{ message='" + message + "'}";
+            return "SemanticError: " + message;
+
         }
-        return "SemanticError{ message='" + message + "', path='" + path + "'}";
+        return "SemanticError at " + path + ": " + message;
     }
 
     @Override

@@ -226,9 +226,9 @@ public class SemanticValidationServiceTest {
 
         assertEquals(2, errors.size());
         assertTrue(errors.get(0).getMessage().contains("following properties are already defined in ancestors:"));
-        assertEquals("TShirt", errors.get(0).getPath());
+        assertEquals("ApparelProduct", (errors.get(0).getPath()));
         assertTrue(errors.get(1).getMessage().contains("following properties are already defined in ancestors:"));
-        assertEquals("ApparelProduct", (errors.get(1).getPath()));
+        assertEquals("TShirt", errors.get(1).getPath());
     }
 
     @Test

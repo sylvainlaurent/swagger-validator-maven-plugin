@@ -117,11 +117,11 @@ public class PathValidatorTest {
         assertEquals(2, errors.size());
         DefinitionSemanticError error1 = (DefinitionSemanticError) errors.get(0);
         assertTrue(error1.getMessage().equals("Equivalent paths are not allowed."));
-        assertEquals("paths./product/{productId}", error1.getPath());
+        assertEquals("paths./product/{id}", error1.getPath());
 
         DefinitionSemanticError error2 = (DefinitionSemanticError) errors.get(1);
         assertTrue(error2.getMessage().equals("Equivalent paths are not allowed."));
-        assertEquals("paths./product/{id}", error2.getPath());
+        assertEquals("paths./product/{productId}", error2.getPath());
     }
 
     @Test

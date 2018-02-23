@@ -8,6 +8,6 @@ public class DefinitionSemanticError extends SemanticError {
 
     @Override
     public String toString() {
-        return "DefinitionSemanticError{" + super.toString() + "," + "path='" + path + "'}";
+        return "DefinitionSemanticError at " + path + ": " + getMessage();
     }
 }
