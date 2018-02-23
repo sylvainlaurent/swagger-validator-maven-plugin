@@ -52,6 +52,7 @@ public class ValidateMojo extends AbstractMojo {
 
         final File[] files = getFiles();
         boolean encounteredError = false;
+        int errorCount = 0;
 
         for (final File file : files) {
             if (verbose) {
@@ -62,6 +63,7 @@ public class ValidateMojo extends AbstractMojo {
                 encounteredError = true;
             }
             for (final String msg : result.getMessages()) {
+                errorCount++;
                 if (failOnErrors) {
                     getLog().error(msg);
                 } else {
@@ -71,7 +73,7 @@ public class ValidateMojo extends AbstractMojo {
         }
 
         if (encounteredError && failOnErrors) {
-            throw new MojoExecutionException("Some files are not valid, see previous logs");
+            throw new MojoExecutionException("Some files are not valid, see previous logs. Encountered " + errorCount + " errors.");
         }
     }
 
