@@ -33,25 +33,25 @@ public class PathWrapper implements PathObject {
         this.name = name;
         this.path = path;
         if (path.getGet() != null) {
-            operations.put("get", new OperationWrapper("get", path.getGet(), path));
+            operations.put("get", new OperationWrapper("get", path.getGet(), this));
         }
         if (path.getPut() != null) {
-            operations.put("put", new OperationWrapper("put", path.getPut(), path));
+            operations.put("put", new OperationWrapper("put", path.getPut(), this));
         }
         if (path.getPost() != null) {
-            operations.put("post", new OperationWrapper("post", path.getPost(), path));
+            operations.put("post", new OperationWrapper("post", path.getPost(), this));
         }
         if (path.getHead() != null) {
-            operations.put("head", new OperationWrapper("head", path.getHead(), path));
+            operations.put("head", new OperationWrapper("head", path.getHead(), this));
         }
         if (path.getDelete() != null) {
-            operations.put("delete", new OperationWrapper("delete", path.getDelete(), path));
+            operations.put("delete", new OperationWrapper("delete", path.getDelete(), this));
         }
         if (path.getPatch() != null) {
-            operations.put("patch", new OperationWrapper("patch", path.getPatch(), path));
+            operations.put("patch", new OperationWrapper("patch", path.getPatch(), this));
         }
         if (path.getOptions() != null) {
-            operations.put("options", new OperationWrapper("options", path.getOptions(), path));
+            operations.put("options", new OperationWrapper("options", path.getOptions(), this));
         }
 
         if (path.getParameters() != null) {
