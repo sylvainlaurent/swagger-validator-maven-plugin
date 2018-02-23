@@ -15,6 +15,6 @@ public class OperationSemanticError extends SemanticError {
 
     @Override
     public String toString() {
-        return "DefinitionSemanticError at operationId=" + operationId + ": " + getMessage();
+        return "OperationSemanticError at operationId=" + operationId + ": " + getMessage();
     }
 }
