@@ -6,6 +6,7 @@ import io.swagger.models.ExternalDocs;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class RefModelWrapper implements VisitableModel {
@@ -46,6 +47,9 @@ public class RefModelWrapper implements VisitableModel {
     }
 
     public Map<String, Property> getProperties() {
+        if (model.getProperties() == null) {
+            return new HashMap<>();
+        }
         return model.getProperties();
     }
 

@@ -42,7 +42,7 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
     }
 
     public List<String> getReadOlyProperties() {
-        return getProperties().values().stream()
+        return getVisitableProperties().values().stream()
                 .filter(VisitableProperty::getReadOnly)
                 .map(VisitableProperty::getName)
                 .collect(Collectors.toList());
@@ -58,7 +58,7 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
         modelVisitor.visit(this);
     }
 
-    public Map<String, VisitableProperty> getProperties() {
+    public Map<String, VisitableProperty> getVisitableProperties() {
         return properties;
     }
 

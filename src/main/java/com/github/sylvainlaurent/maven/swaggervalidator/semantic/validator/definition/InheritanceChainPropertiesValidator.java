@@ -5,6 +5,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.Comp
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ModelImplWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.RefModelWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
+import io.swagger.models.Model;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
 
@@ -52,15 +53,18 @@ public class InheritanceChainPropertiesValidator extends ModelValidatorTemplate 
 
         @Override
         public void validate(ModelImplWrapper modelImplWrapper) {
-            if (modelImplWrapper.getProperties() != null) {
-                parentProperties.addAll(modelImplWrapper.getProperties().keySet());
+            if (modelImplWrapper.getVisitableProperties() != null) {
+                parentProperties.addAll(modelImplWrapper.getVisitableProperties().keySet());
             }
         }
 
         @Override
         public void validate(RefModelWrapper refModelWrapper) {
             String ref = refModelWrapper.getSimpleRef();
-            createVisitableModel(ref, InheritanceChainPropertiesValidator.this.context.getDefinitions().get(ref)).accept(this);
+            Model model = InheritanceChainPropertiesValidator.this.context.getDefinitions().get(ref);
+            if (model != null) {
+                createVisitableModel(ref, model).accept(this);
+            }
         }
 
         @Override

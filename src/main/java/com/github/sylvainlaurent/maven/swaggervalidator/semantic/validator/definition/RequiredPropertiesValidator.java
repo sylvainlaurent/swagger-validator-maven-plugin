@@ -26,13 +26,13 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ModelImplWrapper modelImplWrapper) {
-        List<String> objectProperties = new ArrayList<>(modelImplWrapper.getProperties().keySet());
+        List<String> objectProperties = new ArrayList<>(modelImplWrapper.getVisitableProperties().keySet());
         List<String> requiredProperties = modelImplWrapper.getRequired();
 
         validateDiscriminator(modelImplWrapper.getDiscriminator(), requiredProperties, objectProperties);
         validateProperties(objectProperties, requiredProperties);
 
-        for (Map.Entry<String, VisitableProperty> property : modelImplWrapper.getProperties().entrySet()) {
+        for (Map.Entry<String, VisitableProperty> property : modelImplWrapper.getVisitableProperties().entrySet()) {
             property.getValue().accept(this);
         }
     }
