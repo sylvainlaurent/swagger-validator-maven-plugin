@@ -7,18 +7,26 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.Opera
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.PathWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.ResponseWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathValidator {
 
+    protected List<SemanticError> validationErrors = new ArrayList<>();
     protected VisitedItemsHolder holder = new VisitedItemsHolder();
     protected ValidationContext context;
 
     @Override
     public void setValidationContext(ValidationContext context) {
         this.context = context;
+    }
+
+    @Override
+    public List<SemanticError> getErrors() {
+        return validationErrors;
     }
 
     @Override
