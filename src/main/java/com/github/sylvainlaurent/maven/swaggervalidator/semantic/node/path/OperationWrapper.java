@@ -4,6 +4,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitableParame
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.PathObject;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
 import io.swagger.models.Operation;
+import io.swagger.models.Path;
 import io.swagger.models.Response;
 import io.swagger.models.parameters.Parameter;
 
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class OperationWrapper implements PathObject {
 
     private final String name;
+    private final Path path;
     private Operation operation;
 
     private Map<String, Object> vendorExtensions = new LinkedHashMap<String, Object>();
@@ -30,10 +32,10 @@ public class OperationWrapper implements PathObject {
     private Boolean deprecated;
     private List<VisitableParameter> parameters = new ArrayList<>();
     private List<ResponseWrapper> responses = new ArrayList<>();
-
-    public OperationWrapper(String name, Operation operation) {
+    public OperationWrapper(String name, Operation operation, Path path) {
         this.name = name;
         this.operation = operation;
+        this.path = path;
         this.summary = operation.getSummary();
         this.description = operation.getDescription();
         this.operationId = operation.getOperationId();
@@ -56,6 +58,10 @@ public class OperationWrapper implements PathObject {
                 responses.add(new ResponseWrapper(entry.getKey(), entry.getValue()));
             }
         }
+    }
+
+    public Path getPath() {
+        return path;
     }
 
     public Operation getOperation() {
