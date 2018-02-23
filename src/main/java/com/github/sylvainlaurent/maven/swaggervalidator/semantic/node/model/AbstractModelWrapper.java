@@ -24,7 +24,7 @@ public abstract class AbstractModelWrapper<T extends AbstractModel> implements V
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return name;
     }
 

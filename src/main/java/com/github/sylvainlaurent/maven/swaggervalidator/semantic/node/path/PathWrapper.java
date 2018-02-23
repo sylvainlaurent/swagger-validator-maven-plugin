@@ -75,7 +75,7 @@ public class PathWrapper implements PathObject {
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return name;
     }
 

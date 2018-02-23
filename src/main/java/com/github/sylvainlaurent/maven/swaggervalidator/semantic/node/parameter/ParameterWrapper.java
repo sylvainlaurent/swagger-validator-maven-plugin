@@ -22,11 +22,6 @@ public class ParameterWrapper<T extends Parameter> implements VisitableParameter
     }
 
     @Override
-    public String getObjectPath() {
-        return parameter.getName();
-    }
-
-    @Override
     public String getName() {
         return parameter.getName();
     }

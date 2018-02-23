@@ -47,11 +47,6 @@ public abstract class AbstractPropertyWrapper<T extends Property> implements Vis
     }
 
     @Override
-    public String getName() {
-        return propertyName;
-    }
-
-    @Override
     public boolean getRequired() {
         return property.getRequired();
     }
@@ -90,7 +85,7 @@ public abstract class AbstractPropertyWrapper<T extends Property> implements Vis
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return propertyName;
     }
 

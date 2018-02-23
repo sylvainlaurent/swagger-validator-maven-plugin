@@ -20,8 +20,6 @@ public interface VisitableProperty<T extends Property> extends VisitableObject<P
 
     Boolean getAllowEmptyValue();
 
-    String getName();
-
     boolean getRequired();
 
     Object getExample();

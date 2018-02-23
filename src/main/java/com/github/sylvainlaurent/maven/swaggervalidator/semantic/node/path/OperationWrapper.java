@@ -63,7 +63,7 @@ public class OperationWrapper implements PathObject {
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return name;
     }
 
@@ -117,10 +117,6 @@ public class OperationWrapper implements PathObject {
 
     public List<ResponseWrapper> getResponses() {
         return responses;
-    }
-
-    public String getName() {
-        return name;
     }
 
     @Override

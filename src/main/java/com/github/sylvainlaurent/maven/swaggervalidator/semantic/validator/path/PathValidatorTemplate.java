@@ -46,7 +46,7 @@ public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathV
 
     @Override
     public void visit(PathWrapper path) {
-        holder.push(path.getObjectPath());
+        holder.push(path.getName());
         validate(path);
         path.getParameters().forEach(this::validate);
         path.getOperations().values().forEach(this::visit);
@@ -55,7 +55,7 @@ public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathV
 
     @Override
     public void visit(OperationWrapper operation) {
-        holder.push(operation.getObjectPath());
+        holder.push(operation.getName());
         validate(operation);
         operation.getParameters().forEach(this::visit);
         operation.getResponses().forEach(this::visit);
@@ -72,14 +72,14 @@ public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathV
 
     @Override
     public void visit(ResponseWrapper response) {
-        holder.push(response.getObjectPath());
+        holder.push(response.getName());
         validate(response);
         holder.pop();
     }
 
     @Override
     public void visit(VisitableParameter parameter) {
-        holder.push(parameter.getObjectPath());
+        holder.push(parameter.getName());
         validate(parameter);
         holder.pop();
     }

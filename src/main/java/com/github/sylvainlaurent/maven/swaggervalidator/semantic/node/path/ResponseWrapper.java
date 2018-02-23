@@ -30,7 +30,7 @@ public class ResponseWrapper implements PathObject {
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return objectPath;
     }
 

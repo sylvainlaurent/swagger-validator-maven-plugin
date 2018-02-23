@@ -20,7 +20,7 @@ public class RefModelWrapper implements VisitableModel {
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return name;
     }
 

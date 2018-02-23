@@ -12,7 +12,7 @@ public class RefParameterWrapper extends ParameterWrapper<RefParameter> {
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return get$ref();
     }
 }

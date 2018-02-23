@@ -49,7 +49,7 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return name;
     }
 
