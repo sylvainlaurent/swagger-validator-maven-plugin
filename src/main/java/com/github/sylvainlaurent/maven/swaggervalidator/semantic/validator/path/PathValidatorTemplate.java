@@ -72,8 +72,10 @@ public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathV
 
     @Override
     public void visit(ResponseWrapper response) {
+        holder.push("responses");
         holder.push(response.getName());
         validate(response);
+        holder.pop();
         holder.pop();
     }
 
