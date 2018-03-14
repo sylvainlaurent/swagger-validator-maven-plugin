@@ -2,7 +2,6 @@ package com.github.sylvainlaurent.maven.swaggervalidator;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.instrumentation.Instrumentation;
 import com.github.sylvainlaurent.maven.swaggervalidator.service.ValidationService;
-import edu.emory.mathcs.backport.java.util.Collections;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -13,6 +12,7 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 import java.io.File;
+import java.util.Collections;
 
 @Mojo(name = "validate", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true,
         requiresDependencyResolution = ResolutionScope.TEST)
