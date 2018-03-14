@@ -2,6 +2,7 @@ package com.github.sylvainlaurent.maven.swaggervalidator;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.instrumentation.Instrumentation;
 import com.github.sylvainlaurent.maven.swaggervalidator.service.ValidationService;
+import edu.emory.mathcs.backport.java.util.Collections;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -62,6 +63,9 @@ public class ValidateMojo extends AbstractMojo {
             if (result.hasError()) {
                 encounteredError = true;
             }
+
+            Collections.sort(result.getMessages());
+
             for (final String msg : result.getMessages()) {
                 errorCount++;
                 if (failOnErrors) {
