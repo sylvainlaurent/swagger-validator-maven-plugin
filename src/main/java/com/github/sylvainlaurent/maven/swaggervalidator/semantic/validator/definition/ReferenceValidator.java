@@ -28,8 +28,8 @@ public class ReferenceValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ModelImplWrapper modelImplWrapper) {
-        for (Map.Entry<String, VisitableProperty> property : modelImplWrapper.getVisitableProperties().entrySet()) {
-            property.getValue().accept(this);
+        for (VisitableProperty property : modelImplWrapper.getProperties().values()) {
+            property.accept(this);
         }
     }
 

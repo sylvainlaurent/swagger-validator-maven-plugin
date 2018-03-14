@@ -53,9 +53,7 @@ public class InheritanceChainPropertiesValidator extends ModelValidatorTemplate 
 
         @Override
         public void validate(ModelImplWrapper modelImplWrapper) {
-            if (modelImplWrapper.getVisitableProperties() != null) {
-                parentProperties.addAll(modelImplWrapper.getVisitableProperties().keySet());
-            }
+            parentProperties.addAll(modelImplWrapper.getProperties().keySet());
         }
 
         @Override

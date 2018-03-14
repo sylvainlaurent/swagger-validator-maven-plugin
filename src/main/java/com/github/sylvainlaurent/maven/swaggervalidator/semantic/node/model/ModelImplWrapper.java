@@ -4,14 +4,11 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
 import io.swagger.models.ModelImpl;
-import io.swagger.models.properties.Property;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory.createVisitableProperty;
 import static java.util.Collections.emptyList;
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
@@ -23,11 +20,6 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
     public ModelImplWrapper(String name, ModelImpl model) {
         super(name, model);
         additionalProperties = VisitablePropertyFactory.createVisitableProperty("", model.getAdditionalProperties());
-        if (model.getProperties() != null) {
-            for (Map.Entry<String, Property> property : model.getProperties().entrySet()) {
-                properties.put(property.getKey(), createVisitableProperty(property.getKey(), property.getValue()));
-            }
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -40,7 +32,7 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
     }
 
     public List<String> getReadOlyProperties() {
-        return getVisitableProperties().values().stream()
+        return getProperties().values().stream()
                 .filter(VisitableProperty::getReadOnly)
                 .map(VisitableProperty::getName)
                 .collect(Collectors.toList());
@@ -55,10 +47,6 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
     public void accept(ModelVisitor modelVisitor) {
         super.accept(modelVisitor);
         modelVisitor.visit(this);
-    }
-
-    public Map<String, VisitableProperty> getVisitableProperties() {
-        return properties;
     }
 
     public String getDiscriminator() {
