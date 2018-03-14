@@ -1,6 +1,9 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model;
 
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableModel;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
 import io.swagger.models.AbstractModel;
 import io.swagger.models.ExternalDocs;
 import io.swagger.models.properties.Property;
@@ -12,10 +15,17 @@ public abstract class AbstractModelWrapper<T extends AbstractModel> implements V
 
     protected final T model;
     protected final String name;
+    protected final Map<String, VisitableProperty> properties = new HashMap<>();
 
     AbstractModelWrapper(String name, T model) {
         this.name = name;
         this.model = model;
+
+        if (model.getProperties() != null) {
+            for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
+                properties.put(entry.getKey(), VisitablePropertyFactory.createVisitableProperty(entry.getKey(), entry.getValue()));
+            }
+        }
     }
 
     @Override
@@ -45,10 +55,14 @@ public abstract class AbstractModelWrapper<T extends AbstractModel> implements V
     }
 
     // returns only properties from this model, not parents
-    public Map<String, Property> getProperties() {
-        if (model.getProperties() == null) {
-            return new HashMap<>();
+    public Map<String, VisitableProperty> getProperties() {
+        return properties;
+    }
+
+    @Override
+    public void accept(ModelVisitor visitor) {
+        for (VisitableProperty p : properties.values()) {
+            p.accept(visitor);
         }
-        return model.getProperties();
     }
 }

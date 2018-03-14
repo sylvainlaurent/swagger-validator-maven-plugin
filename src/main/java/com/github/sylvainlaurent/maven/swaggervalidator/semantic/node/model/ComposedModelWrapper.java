@@ -1,6 +1,8 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
 import io.swagger.models.ComposedModel;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
@@ -8,7 +10,6 @@ import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,10 +17,17 @@ public class ComposedModelWrapper  extends AbstractModelWrapper<ComposedModel> {
 
     public ComposedModelWrapper(String name, ComposedModel model) {
         super(name, model);
+
+        if (model.getChild() != null && model.getChild().getProperties() != null) {
+            for (Map.Entry<String, Property> entry : model.getChild().getProperties().entrySet()) {
+                properties.put(entry.getKey(), VisitablePropertyFactory.createVisitableProperty(entry.getKey(), entry.getValue()));
+            }
+        }
     }
 
     @Override
     public void accept(ModelVisitor modelVisitor) {
+        super.accept(modelVisitor);
         modelVisitor.visit(this);
     }
 
@@ -65,10 +73,7 @@ public class ComposedModelWrapper  extends AbstractModelWrapper<ComposedModel> {
     }
 
     // returns only properties from this model, not parents
-    public Map<String, Property> getProperties() {
-        if (model.getChild() == null || model.getChild().getProperties() == null) {
-            return new HashMap<>();
-        }
-        return model.getChild().getProperties();
+    public Map<String, VisitableProperty> getProperties() {
+        return properties;
     }
 }

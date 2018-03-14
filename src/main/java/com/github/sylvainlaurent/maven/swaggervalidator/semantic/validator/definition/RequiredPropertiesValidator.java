@@ -72,7 +72,7 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ArrayModelWrapper arrayModelWrapper) {
-        if (arrayModelWrapper.getItems() == null) {
+        if (arrayModelWrapper.getModel().getItems() == null) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
                     "'items' must be defined for an array"));
             return;
@@ -100,13 +100,12 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ArrayPropertyWrapper arrayProperty) {
-        if (arrayProperty.getItems() == null) {
+        if (arrayProperty.getProperty().getItems() == null) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
                     "'items' must be defined for an array"));
             return;
         }
 
-        VisitablePropertyFactory.createVisitableProperty("items", arrayProperty.getItems())
-                .accept(this);
+        arrayProperty.getItems().accept(this);
     }
 }

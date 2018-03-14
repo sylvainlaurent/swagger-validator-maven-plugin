@@ -1,6 +1,6 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.PropertyVisitor;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import io.swagger.models.properties.Property;
 
 public class UnhandledPropertyWrapper extends AbstractPropertyWrapper<Property> {
@@ -10,8 +10,8 @@ public class UnhandledPropertyWrapper extends AbstractPropertyWrapper<Property> 
     }
 
     @Override
-    public void accept(PropertyVisitor visitor) {
-        // do nothing
+    public void accept(ModelVisitor visitor) {
+        visitor.visit(this);
     }
 
 }

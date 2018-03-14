@@ -2,7 +2,6 @@ package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import io.swagger.models.Model;
-import io.swagger.models.properties.Property;
 
 import java.util.Map;
 
@@ -10,5 +9,5 @@ public interface VisitableModel extends VisitableObject<ModelVisitor>, PathObjec
 
     Model getModel();
 
-    Map<String, Property> getProperties();
+    Map<String, VisitableProperty> getProperties();
 }

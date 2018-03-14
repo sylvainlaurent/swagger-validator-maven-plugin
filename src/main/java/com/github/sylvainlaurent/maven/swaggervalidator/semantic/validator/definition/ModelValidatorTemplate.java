@@ -1,7 +1,6 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.PropertyVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitedItemsHolder;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableModel;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ArrayModelWrapper;
@@ -11,13 +10,14 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.RefM
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ArrayPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ObjectPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.RefPropertyWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.UnhandledPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ModelValidatorTemplate implements ModelVisitor, PropertyVisitor, VisitableModelValidator, VisitablePropertyValidator {
+public abstract class ModelValidatorTemplate implements ModelVisitor, VisitableModelValidator, VisitablePropertyValidator {
 
     protected List<SemanticError> validationErrors = new ArrayList<>();
     protected VisitedItemsHolder holder = new VisitedItemsHolder();
@@ -35,34 +35,35 @@ public abstract class ModelValidatorTemplate implements ModelVisitor, PropertyVi
 
     @Override
     public void validate(VisitableModel visitableModel) {
+        holder.push(visitableModel);
         visitableModel.accept(this);
+        holder.pop();
     }
 
     @Override
     public void visit(ModelImplWrapper modelImplWrapper) {
-        holder.push(modelImplWrapper);
         validate(modelImplWrapper);
-        holder.pop();
     }
 
     @Override
     public void visit(RefModelWrapper refModelWrapper) {
-        holder.push(refModelWrapper);
         validate(refModelWrapper);
-        holder.pop();
     }
 
     @Override
     public void visit(ArrayModelWrapper arrayModelWrapper) {
-        holder.push(arrayModelWrapper);
         validate(arrayModelWrapper);
-        holder.pop();
     }
 
     @Override
     public void visit(ComposedModelWrapper composedModelWrapper) {
-        holder.push(composedModelWrapper);
         validate(composedModelWrapper);
+    }
+
+    @Override
+    public void visit(UnhandledPropertyWrapper unhandledPropertyWrapper) {
+        holder.push(unhandledPropertyWrapper);
+        validate(unhandledPropertyWrapper);
         holder.pop();
     }
 
@@ -124,6 +125,11 @@ public abstract class ModelValidatorTemplate implements ModelVisitor, PropertyVi
 
     @Override
     public void validate(RefPropertyWrapper refPropertyWrapper) {
+
+    }
+
+    @Override
+    public void validate(UnhandledPropertyWrapper refPropertyWrapper) {
 
     }
 }

@@ -52,7 +52,7 @@ public class ResponseValidator extends PathValidatorTemplate {
 
     private void validateSchema(VisitableProperty schema) {
         if (schema.getType().equals("array")) {
-            if (((ArrayPropertyWrapper) schema).getItems() == null) {
+            if (((ArrayPropertyWrapper) schema).getProperty().getItems() == null) {
                 validationErrors.add(new SchemaError(holder.getCurrentPath(), "'type: array', require a sibling 'items:' field"));
             }
         }

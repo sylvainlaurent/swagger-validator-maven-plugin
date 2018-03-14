@@ -7,7 +7,6 @@ import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.Property;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +18,6 @@ import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 
 public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
 
-    private Map<String, VisitableProperty> properties = new HashMap<>();
     private VisitableProperty additionalProperties;
 
     public ModelImplWrapper(String name, ModelImpl model) {
@@ -55,6 +53,7 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
 
     @Override
     public void accept(ModelVisitor modelVisitor) {
+        super.accept(modelVisitor);
         modelVisitor.visit(this);
     }
 

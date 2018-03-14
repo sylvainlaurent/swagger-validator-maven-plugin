@@ -48,7 +48,7 @@ public class ReferenceValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ArrayModelWrapper model) {
-        if (model.getItems() == null) {
+        if (model.getModel().getItems() == null) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
                     "'items' must be defined for an array"));
         }
@@ -70,10 +70,11 @@ public class ReferenceValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ArrayPropertyWrapper arrayProperty) {
-        if (arrayProperty.getItems() == null) {
+        if (arrayProperty.getProperty().getItems() == null) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(), "'items' must be defined for an array"));
+        } else {
+            arrayProperty.getItems().accept(this);
         }
-        createVisitableProperty("items", arrayProperty.getItems()).accept(this);
     }
 
     @Override
