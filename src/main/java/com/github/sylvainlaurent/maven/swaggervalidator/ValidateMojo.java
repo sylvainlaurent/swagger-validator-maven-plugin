@@ -40,7 +40,7 @@ public class ValidateMojo extends AbstractMojo {
     private String customPathValidatorsPackage;
 
     @Parameter(defaultValue = "true")
-    private Boolean failOnErrors;
+    private boolean failOnErrors;
 
     private final ValidationService validationService = new ValidationService();
 
@@ -68,11 +68,7 @@ public class ValidateMojo extends AbstractMojo {
 
             for (final String msg : result.getMessages()) {
                 errorCount++;
-                if (failOnErrors) {
-                    getLog().error(msg);
-                } else {
-                    getLog().warn(msg);
-                }
+                getLog().error(msg);
             }
         }
 

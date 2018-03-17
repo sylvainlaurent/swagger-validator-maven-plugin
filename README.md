@@ -46,7 +46,7 @@ This maven plugin allows to validate yaml and json files.
       </plugin>
 ```
 
-Validation failures make the build fail but default. You can change this by setting `<failOnErrors>false</failOnErrors>` and error messages will be logged as warnings.
+Validation failures make the build fail but default. You can change this by setting `<failOnErrors>false</failOnErrors>`.
 
 You can add your custom validators and provide plugin with them. Extend from ModelValidatorTemplate or PathValidatorTemplate 
 classes for writing your validators and override necessary validation methods. See ReferenceValidator and PathValidator as examples.
