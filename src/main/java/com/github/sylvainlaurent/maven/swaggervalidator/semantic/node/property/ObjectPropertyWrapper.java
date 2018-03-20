@@ -1,6 +1,6 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.PropertyVisitor;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.ObjectPropertyRequiredStore;
 import io.swagger.models.properties.ObjectProperty;
 import io.swagger.models.properties.Property;
@@ -17,7 +17,7 @@ public class ObjectPropertyWrapper extends AbstractPropertyWrapper<ObjectPropert
     }
 
     @Override
-    public void accept(PropertyVisitor visitor) {
+    public void accept(ModelVisitor visitor) {
         visitor.visit(this);
     }
 

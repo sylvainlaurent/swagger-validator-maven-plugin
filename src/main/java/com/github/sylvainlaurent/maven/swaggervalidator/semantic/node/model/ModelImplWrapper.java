@@ -4,32 +4,22 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
 import io.swagger.models.ModelImpl;
-import io.swagger.models.properties.Property;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory.createVisitableProperty;
 import static java.util.Collections.emptyList;
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 
 public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
 
-    private Map<String, VisitableProperty> properties = new HashMap<>();
     private VisitableProperty additionalProperties;
 
     public ModelImplWrapper(String name, ModelImpl model) {
         super(name, model);
         additionalProperties = VisitablePropertyFactory.createVisitableProperty("", model.getAdditionalProperties());
-        if (model.getProperties() != null) {
-            for (Map.Entry<String, Property> property : model.getProperties().entrySet()) {
-                properties.put(property.getKey(), createVisitableProperty(property.getKey(), property.getValue()));
-            }
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -49,17 +39,14 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return name;
     }
 
     @Override
     public void accept(ModelVisitor modelVisitor) {
+        super.accept(modelVisitor);
         modelVisitor.visit(this);
-    }
-
-    public Map<String, VisitableProperty> getProperties() {
-        return properties;
     }
 
     public String getDiscriminator() {

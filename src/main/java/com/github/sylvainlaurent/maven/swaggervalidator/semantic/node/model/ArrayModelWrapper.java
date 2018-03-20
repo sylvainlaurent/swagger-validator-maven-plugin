@@ -16,6 +16,8 @@ public class ArrayModelWrapper extends AbstractModelWrapper<ArrayModel> {
 
     @Override
     public void accept(ModelVisitor modelVisitor) {
+        super.accept(modelVisitor);
+        items.accept(this);
         modelVisitor.visit(this);
     }
 

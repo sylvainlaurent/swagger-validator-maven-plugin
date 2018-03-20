@@ -7,8 +7,6 @@ public interface VisitableParameter<T extends Parameter> extends VisitableObject
 
     T getParameter();
 
-    String getName();
-
     String getIn();
 
     String getDescription();

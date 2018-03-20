@@ -12,6 +12,7 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.DirectoryScanner;
 
 import java.io.File;
+import java.util.Collections;
 
 @Mojo(name = "validate", defaultPhase = LifecyclePhase.PROCESS_SOURCES, threadSafe = true,
         requiresDependencyResolution = ResolutionScope.TEST)
@@ -38,6 +39,9 @@ public class ValidateMojo extends AbstractMojo {
     @Parameter
     private String customPathValidatorsPackage;
 
+    @Parameter(defaultValue = "true")
+    private boolean failOnErrors;
+
     private final ValidationService validationService = new ValidationService();
 
     @Override
@@ -49,6 +53,7 @@ public class ValidateMojo extends AbstractMojo {
 
         final File[] files = getFiles();
         boolean encounteredError = false;
+        int errorCount = 0;
 
         for (final File file : files) {
             if (verbose) {
@@ -58,13 +63,17 @@ public class ValidateMojo extends AbstractMojo {
             if (result.hasError()) {
                 encounteredError = true;
             }
+
+            Collections.sort(result.getMessages());
+
             for (final String msg : result.getMessages()) {
+                errorCount++;
                 getLog().error(msg);
             }
         }
 
-        if (encounteredError) {
-            throw new MojoExecutionException("Some files are not valid, see previous logs");
+        if (encounteredError && failOnErrors) {
+            throw new MojoExecutionException("Some files are not valid, see previous logs. Encountered " + errorCount + " errors.");
         }
     }
 

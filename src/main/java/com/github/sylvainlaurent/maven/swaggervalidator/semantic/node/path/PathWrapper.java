@@ -33,25 +33,25 @@ public class PathWrapper implements PathObject {
         this.name = name;
         this.path = path;
         if (path.getGet() != null) {
-            operations.put("get", new OperationWrapper("get", path.getGet()));
+            operations.put("get", new OperationWrapper("get", path.getGet(), this));
         }
         if (path.getPut() != null) {
-            operations.put("put", new OperationWrapper("put", path.getPut()));
+            operations.put("put", new OperationWrapper("put", path.getPut(), this));
         }
         if (path.getPost() != null) {
-            operations.put("post", new OperationWrapper("post", path.getPost()));
+            operations.put("post", new OperationWrapper("post", path.getPost(), this));
         }
         if (path.getHead() != null) {
-            operations.put("head", new OperationWrapper("head", path.getHead()));
+            operations.put("head", new OperationWrapper("head", path.getHead(), this));
         }
         if (path.getDelete() != null) {
-            operations.put("delete", new OperationWrapper("delete", path.getDelete()));
+            operations.put("delete", new OperationWrapper("delete", path.getDelete(), this));
         }
         if (path.getPatch() != null) {
-            operations.put("patch", new OperationWrapper("patch", path.getPatch()));
+            operations.put("patch", new OperationWrapper("patch", path.getPatch(), this));
         }
         if (path.getOptions() != null) {
-            operations.put("options", new OperationWrapper("options", path.getOptions()));
+            operations.put("options", new OperationWrapper("options", path.getOptions(), this));
         }
 
         if (path.getParameters() != null) {
@@ -75,7 +75,7 @@ public class PathWrapper implements PathObject {
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return name;
     }
 

@@ -10,11 +10,11 @@ public class VisitedItemsHolder {
     private final Stack<String> visitedItems = new Stack<>();
 
     public void push(VisitableProperty property) {
-        visitedItems.push(property.getObjectPath());
+        visitedItems.push(property.getName());
     }
 
     public void push(VisitableModel model) {
-        visitedItems.push(model.getObjectPath());
+        visitedItems.push(model.getName());
     }
 
     public void push(String item) {

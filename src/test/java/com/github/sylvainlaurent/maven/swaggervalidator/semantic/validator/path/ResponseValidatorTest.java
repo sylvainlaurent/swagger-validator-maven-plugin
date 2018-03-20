@@ -65,6 +65,16 @@ public class ResponseValidatorTest {
     }
 
     @Test
+    public void succeed_when_array_items_is_simple_type() {
+        SwaggerDeserializationResult swaggerResult = readDoc(
+                RESOURCE_FOLDER + "array-with-simple-items.yml");
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
+
+        assertTrue(errors.isEmpty());
+    }
+
+    @Test
     public void path_error_should_fail_when_schema_has_array_with_empty_items() {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "schema-with-array-should-have-non-empty-items.yml");

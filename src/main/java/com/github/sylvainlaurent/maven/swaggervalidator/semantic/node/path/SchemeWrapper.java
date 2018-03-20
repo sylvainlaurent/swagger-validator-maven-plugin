@@ -16,7 +16,7 @@ public class SchemeWrapper implements PathObject {
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return  "scheme";
     }
 }

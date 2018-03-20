@@ -8,7 +8,7 @@ public class SchemaError extends SemanticError {
 
     @Override
     public String toString() {
-        return "SchemaError{" + getMessage() + "," + "path='" + path + "'}";
+        return "SchemaError at " + path + ": " + getMessage();
     }
 
 }

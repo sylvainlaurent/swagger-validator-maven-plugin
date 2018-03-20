@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class OperationWrapper implements PathObject {
 
     private final String name;
+    private final PathWrapper path;
     private Operation operation;
 
     private Map<String, Object> vendorExtensions = new LinkedHashMap<String, Object>();
@@ -31,9 +32,10 @@ public class OperationWrapper implements PathObject {
     private List<VisitableParameter> parameters = new ArrayList<>();
     private List<ResponseWrapper> responses = new ArrayList<>();
 
-    public OperationWrapper(String name, Operation operation) {
+    public OperationWrapper(String name, Operation operation, PathWrapper path) {
         this.name = name;
         this.operation = operation;
+        this.path = path;
         this.summary = operation.getSummary();
         this.description = operation.getDescription();
         this.operationId = operation.getOperationId();
@@ -58,12 +60,16 @@ public class OperationWrapper implements PathObject {
         }
     }
 
+    public PathWrapper getPath() {
+        return path;
+    }
+
     public Operation getOperation() {
         return operation;
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return name;
     }
 
@@ -117,10 +123,6 @@ public class OperationWrapper implements PathObject {
 
     public List<ResponseWrapper> getResponses() {
         return responses;
-    }
-
-    public String getName() {
-        return name;
     }
 
     @Override

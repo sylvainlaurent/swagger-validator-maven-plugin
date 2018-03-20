@@ -8,12 +8,22 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.defin
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition.RequiredPropertiesValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition.VisitableModelValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.*;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.FormDataValidator;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.OperationParametersReferenceValidator;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.OperationValidator;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.PathValidator;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.ResponseValidator;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.SecurityValidator;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.SwaggerPathValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.util.Util;
 import io.swagger.models.Model;
 import io.swagger.models.Swagger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitableModelFactory.createVisitableModel;
 

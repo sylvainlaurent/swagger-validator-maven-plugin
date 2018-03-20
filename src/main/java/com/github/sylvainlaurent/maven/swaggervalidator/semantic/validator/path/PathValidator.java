@@ -40,7 +40,7 @@ public class PathValidator extends PathValidatorTemplate {
      * Paths cannot have query strings. E.g. /path?query=abc is illegal.
      */
     private void validateQueryStrings(PathWrapper path) {
-        if (path.getObjectPath().contains("?")) {
+        if (path.getName().contains("?")) {
             errors.add(new DefinitionSemanticError(holder.getCurrentPath(), "Query strings in paths are not allowed."));
         }
     }
@@ -49,7 +49,7 @@ public class PathValidator extends PathValidatorTemplate {
      * Paths cannot have partial templates. E.g. /path/abc{123} is illegal.
      */
     private void validateUrlTemplates(PathWrapper path) {
-        List<String> pathSections = Arrays.asList(path.getObjectPath().split("/"));
+        List<String> pathSections = Arrays.asList(path.getName().split("/"));
         for (String pathSection : pathSections) {
             Matcher matcher = TEMPLATE_PATTERN.matcher(pathSection);
             if (matcher.find() && !pathSection.replaceAll(TEMPLATE_REGEX, "").isEmpty()) {
@@ -128,7 +128,7 @@ public class PathValidator extends PathValidatorTemplate {
 
     private void validateParametersUniqueness(List<VisitableParameter> parameters) {
         List<String> duplicates = Util.findDuplicates(parameters).stream()
-                .map(VisitableParameter::getObjectPath)
+                .map(VisitableParameter::getName)
                 .collect(Collectors.toList());
         if (!duplicates.isEmpty()) {
             errors.add(new DefinitionSemanticError(holder.getCurrentPath(), "should not have duplicate items: " + duplicates));

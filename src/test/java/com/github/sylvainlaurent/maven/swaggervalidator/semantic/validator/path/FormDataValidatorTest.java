@@ -33,11 +33,11 @@ public class FormDataValidatorTest {
         SemanticError error1 = errors.get(0);
         assertEquals("Operations with parameters of 'type: file' must include 'multipart/form-data' in their 'consumes' property.",
                 error1.getMessage());
-        assertEquals("paths./category.post.name", error1.getPath());
+        assertEquals("paths./category.post", error1.getPath());
         SemanticError error2 = errors.get(1);
         assertEquals("Operations with parameters of 'type: file' must include 'multipart/form-data' in their 'consumes' property.",
                 error2.getMessage());
-        assertEquals("paths./category.post", error2.getPath());
+        assertEquals("paths./category.post.name", error2.getPath());
     }
 
     @Test

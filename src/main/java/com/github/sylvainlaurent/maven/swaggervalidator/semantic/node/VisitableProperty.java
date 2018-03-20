@@ -1,12 +1,12 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.PropertyVisitor;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import io.swagger.models.Xml;
 import io.swagger.models.properties.Property;
 
 import java.util.Map;
 
-public interface VisitableProperty<T extends Property> extends VisitableObject<PropertyVisitor>, PathObject {
+public interface VisitableProperty<T extends Property> extends VisitableObject<ModelVisitor>, PathObject {
 
     T getProperty();
 
@@ -19,8 +19,6 @@ public interface VisitableProperty<T extends Property> extends VisitableObject<P
     String getDescription();
 
     Boolean getAllowEmptyValue();
-
-    String getName();
 
     boolean getRequired();
 

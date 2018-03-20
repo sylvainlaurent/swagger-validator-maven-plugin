@@ -16,7 +16,7 @@ public class ResponseWrapper implements PathObject {
     private String objectPath;
 
     public ResponseWrapper(String operationType, Response response) {
-        this.objectPath = "responses." + operationType;
+        this.objectPath = operationType;
         this.response = response;
         if (response != null && response.getHeaders() != null) {
             for (Map.Entry<String, Property> entry : response.getHeaders().entrySet()) {
@@ -30,7 +30,7 @@ public class ResponseWrapper implements PathObject {
     }
 
     @Override
-    public String getObjectPath() {
+    public String getName() {
         return objectPath;
     }
 

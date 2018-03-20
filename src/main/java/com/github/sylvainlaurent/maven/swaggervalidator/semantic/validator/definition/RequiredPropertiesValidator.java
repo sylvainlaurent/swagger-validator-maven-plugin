@@ -8,7 +8,6 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.Comp
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.ModelImplWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ArrayPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ObjectPropertyWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.util.Util;
 import io.swagger.models.Model;
@@ -33,8 +32,8 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
         validateDiscriminator(modelImplWrapper.getDiscriminator(), requiredProperties, objectProperties);
         validateProperties(objectProperties, requiredProperties);
 
-        for (Map.Entry<String, VisitableProperty> property : modelImplWrapper.getProperties().entrySet()) {
-            property.getValue().accept(this);
+        for (VisitableProperty property : modelImplWrapper.getProperties().values()) {
+            property.accept(this);
         }
     }
 
@@ -73,7 +72,7 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ArrayModelWrapper arrayModelWrapper) {
-        if (arrayModelWrapper.getItems() == null) {
+        if (arrayModelWrapper.getModel().getItems() == null) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
                     "'items' must be defined for an array"));
             return;
@@ -101,16 +100,12 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ArrayPropertyWrapper arrayProperty) {
-        if (arrayProperty.getItems() == null) {
+        if (arrayProperty.getProperty().getItems() == null) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
                     "'items' must be defined for an array"));
             return;
         }
 
-        VisitablePropertyFactory.createVisitableProperty("items", arrayProperty.getItems())
-                .accept(this);
+        arrayProperty.getItems().accept(this);
     }
-
-    @Override
-    public void setValidationContext(ValidationContext context) {}
 }

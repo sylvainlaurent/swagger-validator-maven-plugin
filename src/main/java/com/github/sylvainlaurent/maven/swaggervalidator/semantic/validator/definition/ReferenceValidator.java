@@ -8,7 +8,6 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.RefM
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ArrayPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ObjectPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.RefPropertyWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
@@ -20,8 +19,6 @@ import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.Visitabl
 
 public class ReferenceValidator extends ModelValidatorTemplate {
 
-    protected ValidationContext context;
-
     private void validateReferenceExistence(String reference) {
         if (reference == null || !context.getDefinitions().containsKey(reference)) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
@@ -31,8 +28,8 @@ public class ReferenceValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ModelImplWrapper modelImplWrapper) {
-        for (Map.Entry<String, VisitableProperty> property : modelImplWrapper.getProperties().entrySet()) {
-            property.getValue().accept(this);
+        for (VisitableProperty property : modelImplWrapper.getProperties().values()) {
+            property.accept(this);
         }
     }
 
@@ -51,7 +48,7 @@ public class ReferenceValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ArrayModelWrapper model) {
-        if (model.getItems() == null) {
+        if (model.getModel().getItems() == null) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
                     "'items' must be defined for an array"));
         }
@@ -73,10 +70,11 @@ public class ReferenceValidator extends ModelValidatorTemplate {
 
     @Override
     public void validate(ArrayPropertyWrapper arrayProperty) {
-        if (arrayProperty.getItems() == null) {
+        if (arrayProperty.getProperty().getItems() == null) {
             validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(), "'items' must be defined for an array"));
+        } else {
+            arrayProperty.getItems().accept(this);
         }
-        createVisitableProperty("items", arrayProperty.getItems()).accept(this);
     }
 
     @Override
@@ -84,8 +82,4 @@ public class ReferenceValidator extends ModelValidatorTemplate {
         validateReferenceExistence(refProperty.getSimpleRef());
     }
 
-    @Override
-    public void setValidationContext(ValidationContext context) {
-        this.context = context;
-    }
 }
