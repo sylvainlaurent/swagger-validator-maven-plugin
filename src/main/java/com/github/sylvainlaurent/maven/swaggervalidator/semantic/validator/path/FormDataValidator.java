@@ -31,7 +31,7 @@ public class FormDataValidator extends PathValidatorTemplate {
         if (in.equals("formData")) {
             String type = ((FormParameterWrapper) parameter).getType();
             List<String> consumes = currentOperation.getConsumes();
-            if (type.equals("file") && !consumes.contains("`multipart/form-data")) {
+            if (type.equals("file") && !consumes.contains("multipart/form-data")) {
                 validationErrors.add(new SemanticError(holder.getCurrentPath(),
                         "Operations with parameters of 'type: file' must include 'multipart/form-data' in their 'consumes' property."));
             }
