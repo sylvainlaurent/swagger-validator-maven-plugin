@@ -23,7 +23,7 @@ public class ArrayModelWrapper extends AbstractModelWrapper<ArrayModel> {
         modelVisitor.visit(this);
     }
 
-    public VisitableProperty getItems() {
+    public VisitableProperty<? extends Property> getItems() {
         return items;
     }
 

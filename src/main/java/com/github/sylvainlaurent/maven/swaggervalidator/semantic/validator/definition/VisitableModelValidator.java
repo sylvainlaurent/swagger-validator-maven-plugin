@@ -8,15 +8,19 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model.RefM
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.SwaggerValidator;
 
 public interface VisitableModelValidator extends SwaggerValidator {
-    void validate();
 
-    void validate(VisitableModel visitableModel);
+    default void validate(VisitableModel visitableModel) {
+    }
 
-    void validate(ModelImplWrapper modelImplWrapper);
+    default void validate(ModelImplWrapper modelImplWrapper) {
+    }
 
-    void validate(RefModelWrapper refModelWrapper);
+    default void validate(RefModelWrapper refModelWrapper) {
+    }
 
-    void validate(ArrayModelWrapper arrayModelWrapper);
+    default void validate(ArrayModelWrapper arrayModelWrapper) {
+    }
 
-    void validate(ComposedModelWrapper composedModelWrapper);
+    default void validate(ComposedModelWrapper composedModelWrapper) {
+    }
 }

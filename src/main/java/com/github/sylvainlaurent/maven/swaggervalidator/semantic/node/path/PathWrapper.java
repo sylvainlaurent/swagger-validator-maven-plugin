@@ -1,10 +1,6 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitableParameterFactory;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.PathObject;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
-import io.swagger.models.Path;
-import io.swagger.models.parameters.Parameter;
+import static java.util.Arrays.asList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +9,12 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.util.Arrays.asList;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitableParameterFactory;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.PathObject;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
+
+import io.swagger.models.Path;
+import io.swagger.models.parameters.Parameter;
 
 public class PathWrapper implements PathObject {
 
@@ -24,7 +25,7 @@ public class PathWrapper implements PathObject {
     private final String name;
     private Path path;
     private Map<String, OperationWrapper> operations = new HashMap<>();
-    private List<VisitableParameter> parameters = new ArrayList<>();
+    private List<VisitableParameter<Parameter>> parameters = new ArrayList<>();
     private List<String> requiredPathParameters = new ArrayList<>();
 
     public PathWrapper(String name, Path path) {
@@ -65,7 +66,7 @@ public class PathWrapper implements PathObject {
 
     private void initRequiredPathParameters() {
         Matcher matcher = PATTERN.matcher(this.name);
-        while(matcher.find()) {
+        while (matcher.find()) {
             requiredPathParameters.add(matcher.group(1));
         }
     }
@@ -107,7 +108,7 @@ public class PathWrapper implements PathObject {
         return operations.get("options");
     }
 
-    public List<VisitableParameter> getParameters() {
+    public List<VisitableParameter<Parameter>> getParameters() {
         return parameters;
     }
 

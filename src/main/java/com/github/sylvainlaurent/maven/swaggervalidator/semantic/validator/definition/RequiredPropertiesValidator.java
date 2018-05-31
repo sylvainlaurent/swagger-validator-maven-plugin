@@ -1,5 +1,13 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition;
 
+import static org.apache.commons.lang3.StringUtils.isEmpty;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitableModelFactory;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
@@ -10,17 +18,10 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.A
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ObjectPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.util.Util;
+
 import io.swagger.models.Model;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 public class RequiredPropertiesValidator extends ModelValidatorTemplate {
 
@@ -32,7 +33,7 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
         validateDiscriminator(modelImplWrapper.getDiscriminator(), requiredProperties, objectProperties);
         validateProperties(objectProperties, requiredProperties);
 
-        for (VisitableProperty property : modelImplWrapper.getProperties().values()) {
+        for (VisitableProperty<? extends Property> property : modelImplWrapper.getProperties().values()) {
             property.accept(this);
         }
     }
@@ -73,8 +74,8 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
     @Override
     public void validate(ArrayModelWrapper arrayModelWrapper) {
         if (arrayModelWrapper.getModel().getItems() == null) {
-            validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
-                    "'items' must be defined for an array"));
+            validationErrors
+                    .add(new DefinitionSemanticError(holder.getCurrentPath(), "'items' must be defined for an array"));
             return;
         }
         arrayModelWrapper.getItems().accept(this);
@@ -93,16 +94,15 @@ public class RequiredPropertiesValidator extends ModelValidatorTemplate {
         validateProperties(objectProperty.getProperties().keySet(), objectProperty.getRequiredProperties());
 
         for (Map.Entry<String, Property> property : objectProperty.getProperties().entrySet()) {
-            VisitablePropertyFactory
-                    .createVisitableProperty(property.getKey(), property.getValue()).accept(this);
+            VisitablePropertyFactory.createVisitableProperty(property.getKey(), property.getValue()).accept(this);
         }
     }
 
     @Override
     public void validate(ArrayPropertyWrapper arrayProperty) {
         if (arrayProperty.getProperty().getItems() == null) {
-            validationErrors.add(new DefinitionSemanticError(holder.getCurrentPath(),
-                    "'items' must be defined for an array"));
+            validationErrors
+                    .add(new DefinitionSemanticError(holder.getCurrentPath(), "'items' must be defined for an array"));
             return;
         }
 

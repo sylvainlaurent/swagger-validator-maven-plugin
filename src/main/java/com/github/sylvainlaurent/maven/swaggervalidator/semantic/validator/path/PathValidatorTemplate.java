@@ -1,5 +1,9 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.PathVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitedItemsHolder;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
@@ -9,9 +13,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.Respo
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import io.swagger.models.parameters.Parameter;
 
 public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathValidator {
 
@@ -80,39 +82,10 @@ public abstract class PathValidatorTemplate implements PathVisitor, SwaggerPathV
     }
 
     @Override
-    public void visit(VisitableParameter parameter) {
+    public <T extends Parameter> void visit(VisitableParameter<T> parameter) {
         holder.push(parameter.getName());
         validate(parameter);
         holder.pop();
     }
 
-    @Override
-    public void validate(List<PathWrapper> paths) {
-
-    }
-
-    @Override
-    public void validate(PathWrapper path) {
-
-    }
-
-    @Override
-    public void validate(OperationWrapper operation) {
-
-    }
-
-    @Override
-    public void validate(ResponseWrapper wrapper) {
-
-    }
-
-    @Override
-    public void validate(VisitableParameter parameter) {
-
-    }
-
-    @Override
-    public void validate(String securityDefinition, List<String> scopes) {
-
-    }
 }

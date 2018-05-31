@@ -1,5 +1,8 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitedItemsHolder;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableModel;
@@ -14,10 +17,8 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.U
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class ModelValidatorTemplate implements ModelVisitor, VisitableModelValidator, VisitablePropertyValidator {
+public abstract class ModelValidatorTemplate
+        implements ModelVisitor, VisitableModelValidator, VisitablePropertyValidator {
 
     protected List<SemanticError> validationErrors = new ArrayList<>();
     protected VisitedItemsHolder holder = new VisitedItemsHolder();
@@ -88,48 +89,4 @@ public abstract class ModelValidatorTemplate implements ModelVisitor, VisitableM
         holder.pop();
     }
 
-    @Override
-    public void validate() {
-
-    }
-
-    @Override
-    public void validate(ModelImplWrapper modelImplWrapper) {
-
-    }
-
-    @Override
-    public void validate(RefModelWrapper refModelWrapper) {
-
-    }
-
-    @Override
-    public void validate(ArrayModelWrapper arrayModelWrapper) {
-
-    }
-
-    @Override
-    public void validate(ComposedModelWrapper composedModelWrapper) {
-
-    }
-
-    @Override
-    public void validate(ObjectPropertyWrapper objectProperty) {
-
-    }
-
-    @Override
-    public void validate(ArrayPropertyWrapper arrayProperty) {
-
-    }
-
-    @Override
-    public void validate(RefPropertyWrapper refPropertyWrapper) {
-
-    }
-
-    @Override
-    public void validate(UnhandledPropertyWrapper refPropertyWrapper) {
-
-    }
 }

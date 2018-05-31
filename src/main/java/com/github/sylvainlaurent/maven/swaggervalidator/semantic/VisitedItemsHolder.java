@@ -1,15 +1,18 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableModel;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
 
-import java.util.Stack;
+import io.swagger.models.properties.Property;
 
 public class VisitedItemsHolder {
 
-    private final Stack<String> visitedItems = new Stack<>();
+    private final Deque<String> visitedItems = new ArrayDeque<>();
 
-    public void push(VisitableProperty property) {
+    public void push(VisitableProperty<? extends Property> property) {
         visitedItems.push(property.getName());
     }
 
@@ -26,14 +29,6 @@ public class VisitedItemsHolder {
     }
 
     public String getCurrentPath() {
-        String path = "";
-        for (int i = 0; i < visitedItems.size(); i++) {
-            path += visitedItems.get(i);
-            if (i < visitedItems.size() - 1) {
-                path += ".";
-            }
-        }
-
-        return path;
+        return String.join(".", (Iterable<String>) () -> visitedItems.descendingIterator());
     }
 }

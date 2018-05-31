@@ -7,11 +7,15 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.U
 
 public interface VisitablePropertyValidator {
 
-    void validate(ObjectPropertyWrapper objectProperty);
+    default void validate(ObjectPropertyWrapper objectProperty) {
+    }
 
-    void validate(ArrayPropertyWrapper arrayProperty);
+    default void validate(ArrayPropertyWrapper arrayProperty) {
+    }
 
-    void validate(RefPropertyWrapper refPropertyWrapper);
+    default void validate(RefPropertyWrapper refPropertyWrapper) {
+    }
 
-    void validate(UnhandledPropertyWrapper refPropertyWrapper);
+    default void validate(UnhandledPropertyWrapper refPropertyWrapper) {
+    }
 }

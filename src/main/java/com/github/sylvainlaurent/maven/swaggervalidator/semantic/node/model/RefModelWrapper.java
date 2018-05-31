@@ -1,21 +1,22 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableModel;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
+
 import io.swagger.models.ExternalDocs;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RefModelWrapper implements VisitableModel {
 
     private final String name;
     private RefModel model;
-    private final Map<String, VisitableProperty> properties = new HashMap<>();
+    private final Map<String, VisitableProperty<? extends Property>> properties = new HashMap<>();
 
     public RefModelWrapper(String name, RefModel model) {
         this.name = name;
@@ -23,7 +24,8 @@ public class RefModelWrapper implements VisitableModel {
 
         if (model.getProperties() != null) {
             for (Map.Entry<String, Property> entry : model.getProperties().entrySet()) {
-                properties.put(entry.getKey(), VisitablePropertyFactory.createVisitableProperty(entry.getKey(), entry.getValue()));
+                properties.put(entry.getKey(),
+                        VisitablePropertyFactory.createVisitableProperty(entry.getKey(), entry.getValue()));
             }
         }
     }
@@ -40,7 +42,7 @@ public class RefModelWrapper implements VisitableModel {
 
     @Override
     public void accept(ModelVisitor modelVisitor) {
-        for (VisitableProperty p : properties.values()) {
+        for (VisitableProperty<? extends Property> p : properties.values()) {
             p.accept(modelVisitor);
         }
         modelVisitor.visit(this);
@@ -58,7 +60,8 @@ public class RefModelWrapper implements VisitableModel {
         return model.getExternalDocs();
     }
 
-    public Map<String, VisitableProperty> getProperties() {
+    @Override
+    public Map<String, VisitableProperty<? extends Property>> getProperties() {
         return properties;
     }
 

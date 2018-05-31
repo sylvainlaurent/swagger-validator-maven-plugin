@@ -1,23 +1,35 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path;
 
+import java.util.List;
+import java.util.Map;
+
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.OperationWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.PathWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.ResponseWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.SwaggerValidator;
 
-import java.util.List;
-import java.util.Map;
+import io.swagger.models.parameters.Parameter;
 
 public interface SwaggerPathValidator extends SwaggerValidator {
 
     void visit(Map<String, List<String>> security);
 
-    void validate(List<PathWrapper> paths);
-    void validate(PathWrapper path);
-    void validate(OperationWrapper operation);
-    void validate(ResponseWrapper wrapper);
-    void validate(VisitableParameter parameter);
+    default void validate(List<PathWrapper> paths) {
+    }
 
-    void validate(String securityDefinition, List<String> scopes);
+    default void validate(PathWrapper path) {
+    }
+
+    default void validate(OperationWrapper operation) {
+    }
+
+    default void validate(ResponseWrapper wrapper) {
+    }
+
+    default <T extends Parameter> void validate(VisitableParameter<T> parameter) {
+    }
+
+    default void validate(String securityDefinition, List<String> scopes) {
+    }
 }

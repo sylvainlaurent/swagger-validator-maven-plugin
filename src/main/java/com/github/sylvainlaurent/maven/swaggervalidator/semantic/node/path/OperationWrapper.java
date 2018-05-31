@@ -1,17 +1,18 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitableParameterFactory;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.PathObject;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
-import io.swagger.models.Operation;
-import io.swagger.models.Response;
-import io.swagger.models.parameters.Parameter;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitableParameterFactory;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.PathObject;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
+
+import io.swagger.models.Operation;
+import io.swagger.models.Response;
+import io.swagger.models.parameters.Parameter;
 
 public class OperationWrapper implements PathObject {
 
@@ -29,7 +30,7 @@ public class OperationWrapper implements PathObject {
     private List<SchemeWrapper> schemes = new ArrayList<>();
     private List<Map<String, List<String>>> security = new ArrayList<>();
     private Boolean deprecated;
-    private List<VisitableParameter> parameters = new ArrayList<>();
+    private List<VisitableParameter<Parameter>> parameters = new ArrayList<>();
     private List<ResponseWrapper> responses = new ArrayList<>();
 
     public OperationWrapper(String name, Operation operation, PathWrapper path) {
@@ -41,14 +42,18 @@ public class OperationWrapper implements PathObject {
         this.operationId = operation.getOperationId();
         this.deprecated = operation.isDeprecated() == null ? false : operation.isDeprecated();
 
-        if (operation.getTags() != null)
+        if (operation.getTags() != null) {
             this.tags.addAll(operation.getTags());
-        if (operation.getConsumes() != null)
+        }
+        if (operation.getConsumes() != null) {
             this.consumes.addAll(operation.getConsumes());
-        if (operation.getProduces() != null)
+        }
+        if (operation.getProduces() != null) {
             this.produces.addAll(operation.getProduces());
-        if (operation.getSecurity() != null)
+        }
+        if (operation.getSecurity() != null) {
             this.security.addAll(operation.getSecurity());
+        }
 
         for (Parameter parameter : operation.getParameters()) {
             parameters.add(VisitableParameterFactory.createParameter(parameter));
@@ -113,11 +118,11 @@ public class OperationWrapper implements PathObject {
         return deprecated;
     }
 
-    public List<VisitableParameter> getParameters() {
+    public List<VisitableParameter<Parameter>> getParameters() {
         return parameters;
     }
 
-    public List<VisitableParameter> getParameters(String type) {
+    public List<VisitableParameter<Parameter>> getParameters(String type) {
         return parameters.stream().filter(p -> p.getIn().equals(type)).collect(Collectors.toList());
     }
 
@@ -127,10 +132,12 @@ public class OperationWrapper implements PathObject {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
 
         OperationWrapper that = (OperationWrapper) o;
 

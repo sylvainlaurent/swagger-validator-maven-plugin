@@ -1,17 +1,17 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path;
 
+import java.util.List;
+
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.parameter.FormParameterWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.OperationWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.PathWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.swagger.models.parameters.Parameter;
 
 public class FormDataValidator extends PathValidatorTemplate {
 
-    private List<SemanticError> validationErrors = new ArrayList<>();
     private OperationWrapper currentOperation;
 
     @Override
@@ -26,7 +26,7 @@ public class FormDataValidator extends PathValidatorTemplate {
     }
 
     @Override
-    public void validate(VisitableParameter parameter) {
+    public <T extends Parameter> void validate(VisitableParameter<T> parameter) {
         String in = parameter.getIn();
         if (in.equals("formData")) {
             String type = ((FormParameterWrapper) parameter).getType();
@@ -42,8 +42,4 @@ public class FormDataValidator extends PathValidatorTemplate {
         }
     }
 
-    @Override
-    public List<SemanticError> getErrors() {
-        return validationErrors;
-    }
 }

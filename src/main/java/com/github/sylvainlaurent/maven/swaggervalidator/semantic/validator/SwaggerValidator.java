@@ -1,11 +1,14 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
-
 import java.util.List;
 
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
+
 public interface SwaggerValidator {
-    void validate();
+    default void validate() {
+    }
+
     List<SemanticError> getErrors();
+
     void setValidationContext(ValidationContext context);
 }

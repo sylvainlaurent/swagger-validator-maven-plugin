@@ -1,12 +1,6 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.OperationWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.PathWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.ResponseWrapper;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
-import com.github.sylvainlaurent.maven.swaggervalidator.util.Util;
+import static com.github.sylvainlaurent.maven.swaggervalidator.util.Util.findDuplicates;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +10,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.github.sylvainlaurent.maven.swaggervalidator.util.Util.findDuplicates;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.OperationWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.PathWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.ResponseWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
+import com.github.sylvainlaurent.maven.swaggervalidator.util.Util;
+
+import io.swagger.models.parameters.Parameter;
 
 public class PathValidator extends PathValidatorTemplate {
 
@@ -53,7 +55,8 @@ public class PathValidator extends PathValidatorTemplate {
         for (String pathSection : pathSections) {
             Matcher matcher = TEMPLATE_PATTERN.matcher(pathSection);
             if (matcher.find() && !pathSection.replaceAll(TEMPLATE_REGEX, "").isEmpty()) {
-                errors.add(new DefinitionSemanticError(holder.getCurrentPath(), "Partial path templating is not allowed."));
+                errors.add(new DefinitionSemanticError(holder.getCurrentPath(),
+                        "Partial path templating is not allowed."));
             }
         }
     }
@@ -88,9 +91,10 @@ public class PathValidator extends PathValidatorTemplate {
             if (!requiredParam.isEmpty() && parameterAbsentInPathParameters(requiredParam, path)) {
                 for (OperationWrapper operation : path.getOperations().values()) {
                     if (parameterAbsentInOperation(requiredParam, operation)) {
-                        errors.add(new DefinitionSemanticError(holder.getCurrentPath(), "Declared path parameter '"
-                                + requiredParam + "' needs to be defined as a path parameter at either the path "
-                                + "or operation level"));
+                        errors.add(new DefinitionSemanticError(holder.getCurrentPath(),
+                                "Declared path parameter '" + requiredParam
+                                        + "' needs to be defined as a path parameter at either the path "
+                                        + "or operation level"));
                     }
                 }
             }
@@ -108,16 +112,12 @@ public class PathValidator extends PathValidatorTemplate {
     }
 
     private List<String> getOperationParameters(OperationWrapper operation) {
-        return operation.getParameters().stream()
-                .filter(p -> p.getIn().equals("path"))
-                .map(VisitableParameter::getName)
+        return operation.getParameters().stream().filter(p -> p.getIn().equals("path")).map(VisitableParameter::getName)
                 .collect(Collectors.toList());
     }
 
     private List<String> getPathDefinitionParameters(PathWrapper path) {
-        return path.getParameters().stream()
-                .filter(p -> p.getIn().equals("path"))
-                .map(VisitableParameter::getName)
+        return path.getParameters().stream().filter(p -> p.getIn().equals("path")).map(VisitableParameter::getName)
                 .collect(Collectors.toList());
     }
 
@@ -126,35 +126,35 @@ public class PathValidator extends PathValidatorTemplate {
         validateParametersUniqueness(operation.getParameters());
     }
 
-    private void validateParametersUniqueness(List<VisitableParameter> parameters) {
-        List<String> duplicates = Util.findDuplicates(parameters).stream()
-                .map(VisitableParameter::getName)
+    private void validateParametersUniqueness(List<VisitableParameter<Parameter>> parameters) {
+        List<String> duplicates = Util.findDuplicates(parameters).stream().map(VisitableParameter::getName)
                 .collect(Collectors.toList());
         if (!duplicates.isEmpty()) {
-            errors.add(new DefinitionSemanticError(holder.getCurrentPath(), "should not have duplicate items: " + duplicates));
+            errors.add(new DefinitionSemanticError(holder.getCurrentPath(),
+                    "should not have duplicate items: " + duplicates));
         }
     }
 
     @Override
-    public void validate(ResponseWrapper response) { }
+    public void validate(ResponseWrapper response) {
+    }
 
     @Override
-    public void validate(VisitableParameter parameter) {
+    public <T extends Parameter> void validate(VisitableParameter<T> parameter) {
         if (parameter.getIn().equals("path")) {
             validatePathParameter(parameter, parameter.getName());
         }
     }
 
-    private void validatePathParameter(VisitableParameter parameter, String parameterName) {
+    private void validatePathParameter(VisitableParameter<? extends Parameter> parameter, String parameterName) {
         List<String> requiredPathParameters = currentPath.getRequiredPathParameters();
         if (!requiredPathParameters.contains(parameterName)) {
-            errors.add(new DefinitionSemanticError(holder.getCurrentPath(), "Declared path parameter '"
-                    + parameterName + "' needs to be defined as a path parameter at either the path "
-                    + "or operation level"));
+            errors.add(new DefinitionSemanticError(holder.getCurrentPath(), "Declared path parameter '" + parameterName
+                    + "' needs to be defined as a path parameter at either the path " + "or operation level"));
         }
         if (!parameter.isRequired()) {
-            errors.add(new DefinitionSemanticError(holder.getCurrentPath(), "Path parameter '"
-                    + parameterName + "' must have 'required: true'."));
+            errors.add(new DefinitionSemanticError(holder.getCurrentPath(),
+                    "Path parameter '" + parameterName + "' must have 'required: true'."));
         }
     }
 

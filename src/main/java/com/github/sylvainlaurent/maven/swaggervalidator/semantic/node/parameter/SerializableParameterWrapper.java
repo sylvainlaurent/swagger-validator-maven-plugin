@@ -1,11 +1,13 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.parameter;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
-import io.swagger.models.parameters.SerializableParameter;
-
 import java.math.BigDecimal;
 import java.util.List;
+
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
+
+import io.swagger.models.parameters.SerializableParameter;
+import io.swagger.models.properties.Property;
 
 public abstract class SerializableParameterWrapper<T extends SerializableParameter> extends ParameterWrapper<T> {
 
@@ -17,7 +19,7 @@ public abstract class SerializableParameterWrapper<T extends SerializableParamet
         return parameter.getType();
     }
 
-    public VisitableProperty getItems() {
+    public VisitableProperty<? extends Property> getItems() {
         return VisitablePropertyFactory.createVisitableProperty("items", parameter.getItems());
     }
 

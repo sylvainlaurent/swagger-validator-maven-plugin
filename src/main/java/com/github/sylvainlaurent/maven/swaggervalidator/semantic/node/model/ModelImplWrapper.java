@@ -1,21 +1,23 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model;
 
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
-import io.swagger.models.ModelImpl;
+import static java.util.Collections.emptyList;
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
+import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Collections.emptyList;
-import static org.apache.commons.collections4.ListUtils.emptyIfNull;
-import static org.apache.commons.lang3.reflect.FieldUtils.readField;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
 
-public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
+import io.swagger.models.ModelImpl;
+import io.swagger.models.properties.Property;
 
-    private VisitableProperty additionalProperties;
+public class ModelImplWrapper extends AbstractModelWrapper<ModelImpl> {
+
+    private VisitableProperty<? extends Property> additionalProperties;
 
     public ModelImplWrapper(String name, ModelImpl model) {
         super(name, model);
@@ -32,9 +34,7 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
     }
 
     public List<String> getReadOlyProperties() {
-        return getProperties().values().stream()
-                .filter(VisitableProperty::getReadOnly)
-                .map(VisitableProperty::getName)
+        return getProperties().values().stream().filter(VisitableProperty::getReadOnly).map(VisitableProperty::getName)
                 .collect(Collectors.toList());
     }
 
@@ -53,6 +53,7 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
         return model.getDiscriminator();
     }
 
+    @Override
     public ModelImpl getModel() {
         return model;
     }
@@ -85,7 +86,7 @@ public class ModelImplWrapper  extends AbstractModelWrapper<ModelImpl> {
         return model.getExample();
     }
 
-    public VisitableProperty getAdditionalProperties() {
+    public VisitableProperty<? extends Property> getAdditionalProperties() {
         return additionalProperties;
     }
 

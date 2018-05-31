@@ -1,5 +1,6 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic;
 
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.parameter.BodyParameterWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.parameter.CookieParameterWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.parameter.FormParameterWrapper;
@@ -8,6 +9,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.parameter.
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.parameter.PathParameterWraper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.parameter.QueryParameterWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.parameter.RefParameterWrapper;
+
 import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.CookieParameter;
 import io.swagger.models.parameters.FormParameter;
@@ -19,27 +21,28 @@ import io.swagger.models.parameters.RefParameter;
 
 public class VisitableParameterFactory {
 
-    public static com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter createParameter(Parameter parameter) {
+    @SuppressWarnings("unchecked")
+    public static <T extends Parameter> VisitableParameter<T> createParameter(T parameter) {
         if (parameter instanceof BodyParameter) {
-            return new BodyParameterWrapper((BodyParameter) parameter);
+            return (VisitableParameter<T>) new BodyParameterWrapper((BodyParameter) parameter);
         }
         if (parameter instanceof CookieParameter) {
-            return new CookieParameterWrapper((CookieParameter) parameter);
+            return (VisitableParameter<T>) new CookieParameterWrapper((CookieParameter) parameter);
         }
         if (parameter instanceof FormParameter) {
-            return new FormParameterWrapper((FormParameter) parameter);
+            return (VisitableParameter<T>) new FormParameterWrapper((FormParameter) parameter);
         }
         if (parameter instanceof HeaderParameter) {
-            return new HeaderParameterWrapper((HeaderParameter) parameter);
+            return (VisitableParameter<T>) new HeaderParameterWrapper((HeaderParameter) parameter);
         }
         if (parameter instanceof PathParameter) {
-            return new PathParameterWraper((PathParameter) parameter);
+            return (VisitableParameter<T>) new PathParameterWraper((PathParameter) parameter);
         }
         if (parameter instanceof QueryParameter) {
-            return new QueryParameterWrapper((QueryParameter) parameter);
+            return (VisitableParameter<T>) new QueryParameterWrapper((QueryParameter) parameter);
         }
         if (parameter instanceof RefParameter) {
-            return new RefParameterWrapper((RefParameter) parameter);
+            return (VisitableParameter<T>) new RefParameterWrapper((RefParameter) parameter);
         }
         return new ParameterWrapper<>(parameter);
     }

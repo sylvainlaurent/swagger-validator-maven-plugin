@@ -6,19 +6,10 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.Respo
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.property.ArrayPropertyWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SchemaError;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 
-import java.util.ArrayList;
-import java.util.List;
+import io.swagger.models.properties.Property;
 
 public class ResponseValidator extends PathValidatorTemplate {
-
-    private List<SemanticError> validationErrors = new ArrayList<>();
-
-    @Override
-    public List<SemanticError> getErrors() {
-        return validationErrors;
-    }
 
     @Override
     public void setValidationContext(ValidationContext context) {
@@ -42,7 +33,7 @@ public class ResponseValidator extends PathValidatorTemplate {
             validationErrors.add(new SchemaError(holder.getCurrentPath(), "missingProperty: 'description'"));
             return;
         }
-        VisitableProperty schema = response.getSchema();
+        VisitableProperty<? extends Property> schema = response.getSchema();
         if (schema != null) {
             holder.push("schema");
             validateSchema(schema);
@@ -50,10 +41,11 @@ public class ResponseValidator extends PathValidatorTemplate {
         }
     }
 
-    private void validateSchema(VisitableProperty schema) {
+    private void validateSchema(VisitableProperty<? extends Property> schema) {
         if (schema.getType().equals("array")) {
             if (((ArrayPropertyWrapper) schema).getProperty().getItems() == null) {
-                validationErrors.add(new SchemaError(holder.getCurrentPath(), "'type: array', require a sibling 'items:' field"));
+                validationErrors.add(
+                        new SchemaError(holder.getCurrentPath(), "'type: array', require a sibling 'items:' field"));
             }
         }
     }

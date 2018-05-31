@@ -1,26 +1,28 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
+
 import io.swagger.models.ComposedModel;
 import io.swagger.models.Model;
 import io.swagger.models.ModelImpl;
 import io.swagger.models.RefModel;
 import io.swagger.models.properties.Property;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-public class ComposedModelWrapper  extends AbstractModelWrapper<ComposedModel> {
+public class ComposedModelWrapper extends AbstractModelWrapper<ComposedModel> {
 
     public ComposedModelWrapper(String name, ComposedModel model) {
         super(name, model);
 
         if (model.getChild() != null && model.getChild().getProperties() != null) {
             for (Map.Entry<String, Property> entry : model.getChild().getProperties().entrySet()) {
-                properties.put(entry.getKey(), VisitablePropertyFactory.createVisitableProperty(entry.getKey(), entry.getValue()));
+                properties.put(entry.getKey(),
+                        VisitablePropertyFactory.createVisitableProperty(entry.getKey(), entry.getValue()));
             }
         }
     }
@@ -73,7 +75,8 @@ public class ComposedModelWrapper  extends AbstractModelWrapper<ComposedModel> {
     }
 
     // returns only properties from this model, not parents
-    public Map<String, VisitableProperty> getProperties() {
+    @Override
+    public Map<String, VisitableProperty<? extends Property>> getProperties() {
         return properties;
     }
 }
