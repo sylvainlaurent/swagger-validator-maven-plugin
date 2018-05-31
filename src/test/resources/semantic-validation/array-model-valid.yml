@@ -1,0 +1,26 @@
+swagger: '2.0'
+info:
+  title: Test API
+  description: Test API
+  version: "1.0.0"
+host: none
+basePath: /v1
+produces:
+  - application/json
+
+paths:
+  /categories:
+    get:
+      operationId: getProducts
+      responses:
+        200:
+          description: ok
+          schema:
+            $ref: '#/definitions/ArrayOfString'
+
+definitions:
+
+  ArrayOfString:
+    type: array
+    items:
+      type: string

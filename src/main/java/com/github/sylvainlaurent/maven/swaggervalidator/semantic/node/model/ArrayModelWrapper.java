@@ -3,11 +3,13 @@ package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
+
 import io.swagger.models.ArrayModel;
+import io.swagger.models.properties.Property;
 
 public class ArrayModelWrapper extends AbstractModelWrapper<ArrayModel> {
 
-    private final VisitableProperty items;
+    private final VisitableProperty<? extends Property> items;
 
     public ArrayModelWrapper(String name, ArrayModel model) {
         super(name, model);
@@ -17,7 +19,7 @@ public class ArrayModelWrapper extends AbstractModelWrapper<ArrayModel> {
     @Override
     public void accept(ModelVisitor modelVisitor) {
         super.accept(modelVisitor);
-        items.accept(this);
+        items.accept(modelVisitor);
         modelVisitor.visit(this);
     }
 
