@@ -41,6 +41,24 @@ public class OperationValidatorTest {
     }
 
     @Test
+    public void semantic_error_when_operation_id_is_duplicated_across_different_paths() {
+        SwaggerDeserializationResult swaggerResult = readDoc(
+                RESOURCE_FOLDER + "duplicate-operation-ids-different-paths.yml");
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
+
+        assertFalse(errors.isEmpty());
+        assertEquals(2, errors.size());
+        DefinitionSemanticError error1 = (DefinitionSemanticError) errors.get(0);
+        assertEquals("Operations must have unique operationIds. Duplicate: operation", error1.getMessage());
+        assertEquals("paths./category/{id}/.get", error1.getPath());
+
+        DefinitionSemanticError error2 = (DefinitionSemanticError) errors.get(1);
+        assertEquals("Operations must have unique operationIds. Duplicate: operation", error1.getMessage());
+        assertEquals("paths./category/{id}/product/{productId}.get", error2.getPath());
+    }
+
+    @Test
     public void semantic_error_when_more_than_one_body_parameter() {
         SwaggerDeserializationResult swaggerResult = readDoc(
                 RESOURCE_FOLDER + "multiple-body-params.yml");

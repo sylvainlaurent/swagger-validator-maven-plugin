@@ -10,9 +10,10 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.Opera
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.PathWrapper;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
-import com.github.sylvainlaurent.maven.swaggervalidator.util.Util;
 
 import io.swagger.models.parameters.Parameter;
+
+import static com.github.sylvainlaurent.maven.swaggervalidator.util.Util.findDuplicates;
 
 public class OperationValidator extends PathValidatorTemplate {
 
@@ -41,15 +42,16 @@ public class OperationValidator extends PathValidatorTemplate {
     }
 
     @Override
-    public void validate(PathWrapper path) {
+    public void validate(List<PathWrapper> paths) {
         // save duplicates at this point to have pretty error messages added later
-        collectDuplicateOperationIds(path);
+        collectDuplicateOperationIds(paths);
     }
 
-    private void collectDuplicateOperationIds(PathWrapper path) {
-        List<String> operationIds = path.getOperations().values().stream().map(OperationWrapper::getOperationId)
+    private void collectDuplicateOperationIds(List<PathWrapper> paths) {
+        List<String> operationIds = paths.stream().flatMap(path -> path.getOperations().values().stream()
+                .map(OperationWrapper::getOperationId))
                 .collect(Collectors.toList());
-        duplicateOperationIds = Util.findDuplicates(operationIds);
+        duplicateOperationIds = findDuplicates(operationIds);
     }
 
     @Override
