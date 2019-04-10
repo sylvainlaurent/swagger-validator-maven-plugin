@@ -68,9 +68,9 @@ public class InheritanceChainPropertiesValidator extends ModelValidatorTemplate 
         @Override
         public void validate(ComposedModelWrapper composedModelWrapper) {
             if (composedModelWrapper != root) {
-                Map<String, Property> childProperties = composedModelWrapper.getChild().getProperties() != null ?
-                                                        composedModelWrapper.getChild().getProperties() :
-                                                        Collections.<String, Property>emptyMap();
+                Map<String, Property> childProperties = composedModelWrapper.getChild()== null || composedModelWrapper.getChild().getProperties() == null ?
+                                                        Collections.<String, Property>emptyMap() :
+                                                        composedModelWrapper.getChild().getProperties();
                 parentProperties.addAll(childProperties.keySet());
             }
 
