@@ -2,6 +2,7 @@ package com.github.sylvainlaurent.maven.swaggervalidator.util;
 
 import java.util.Set;
 
+import com.github.sylvainlaurent.maven.swaggervalidator.ValidatorJunitRunner;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,7 +13,9 @@ import com.github.sylvainlaurent.maven.swaggervalidator.util.validators.model.Mo
 import com.github.sylvainlaurent.maven.swaggervalidator.util.validators.path.PathValidatorImpl;
 import com.github.sylvainlaurent.maven.swaggervalidator.util.validators.path.PathValidatorTemplateImpl;
 import com.github.sylvainlaurent.maven.swaggervalidator.util.validators.path.SwaggerPathValidatorImpl;
+import org.junit.runner.RunWith;
 
+@RunWith(ValidatorJunitRunner.class)
 public class UtilTest {
 
     private static final String MODEL_VALIDATORS_PACKAGE = "com.github.sylvainlaurent.maven.swaggervalidator.util.validators.model";
