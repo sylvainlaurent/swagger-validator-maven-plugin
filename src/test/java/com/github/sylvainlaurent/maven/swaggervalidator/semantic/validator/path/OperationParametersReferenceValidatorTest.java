@@ -1,9 +1,11 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path;
 
+import com.github.sylvainlaurent.maven.swaggervalidator.ValidatorJunitRunner;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.service.SemanticValidationService;
 import io.swagger.parser.util.SwaggerDeserializationResult;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@RunWith(ValidatorJunitRunner.class)
 public class OperationParametersReferenceValidatorTest {
 
     private static Logger logger = LoggerFactory.getLogger(OperationParametersReferenceValidatorTest.class);
