@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.sylvainlaurent.maven</groupId>
   <artifactId>swagger-validator-maven-plugin</artifactId>
-  <version>1.2.5</version>
+  <version>1.2.6-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
   <name>swagger-validator-maven-plugin Maven Plugin</name>
   <description>A Maven Plugin to validate yaml and json swagger document</description>
@@ -26,7 +26,7 @@
   <scm>
     <connection>scm:git:https://github.com/sylvainlaurent/swagger-validator-maven-plugin.git</connection>
     <developerConnection>scm:git:https://github.com/sylvainlaurent/swagger-validator-maven-plugin.git</developerConnection>
-    <tag>1.2.5</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/sylvainlaurent/swagger-validator-maven-plugin</url>
   </scm>
 
