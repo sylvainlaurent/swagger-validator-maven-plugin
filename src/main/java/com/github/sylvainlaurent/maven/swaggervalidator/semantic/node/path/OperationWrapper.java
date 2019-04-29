@@ -25,8 +25,8 @@ public class OperationWrapper implements PathObject {
     private String summary;
     private String description;
     private String operationId;
-    private List<String> consumes = new ArrayList<>();
-    private List<String> produces = new ArrayList<>();
+    private List<String> consumes;
+    private List<String> produces;
     private List<SchemeWrapper> schemes = new ArrayList<>();
     private List<Map<String, List<String>>> security = new ArrayList<>();
     private Boolean deprecated;
@@ -46,10 +46,10 @@ public class OperationWrapper implements PathObject {
             this.tags.addAll(operation.getTags());
         }
         if (operation.getConsumes() != null) {
-            this.consumes.addAll(operation.getConsumes());
+            this.consumes = new ArrayList<>(operation.getConsumes());
         }
         if (operation.getProduces() != null) {
-            this.produces.addAll(operation.getProduces());
+            this.produces = new ArrayList<>(operation.getProduces());
         }
         if (operation.getSecurity() != null) {
             this.security.addAll(operation.getSecurity());

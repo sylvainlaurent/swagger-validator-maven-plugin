@@ -1,6 +1,8 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic;
 
 import java.util.ArrayDeque;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableModel;
@@ -30,5 +32,9 @@ public class VisitedItemsHolder {
 
     public String getCurrentPath() {
         return String.join(".", (Iterable<String>) () -> visitedItems.descendingIterator());
+    }
+
+    public Collection<String> getVisitedItems() {
+        return Collections.unmodifiableCollection(visitedItems);
     }
 }

@@ -39,6 +39,7 @@ definitions:
   Product:
     allOf:
       - $ref: '#/definitions/Entity'
+      - $ref: '#/definitions/CatalogProduct'
       - type: object
         discriminator: productType
         required:

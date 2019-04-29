@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.ValidatorJunitRunner;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.DefinitionSemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.service.SemanticValidationService;
 import io.swagger.parser.util.SwaggerDeserializationResult;
@@ -32,4 +33,15 @@ public class InheritanceChainPropertiesValidatorTest {
         assertTrue(errors.isEmpty());
     }
 
+    @Test
+    public void fail_when_hierarchy_has_cyclic_refs() {
+        SwaggerDeserializationResult swaggerResult = readDoc(
+                RESOURCE_FOLDER + "inheritance-hierarchy-model-with-cycle-ref-models-invalid.yml");
+        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
+        logger.info(errors.toString());
+        assertFalse(errors.isEmpty());
+        assertTrue(errors.contains(new DefinitionSemanticError("TypedProduct1","cyclic reference 'CatalogProduct'.")));
+        assertTrue(errors.contains(new DefinitionSemanticError("Product","required property is defined multiple times: [productType]")));
+        assertTrue(errors.contains(new DefinitionSemanticError("Product","following properties are already defined in ancestors: [description, productType]")));
+    }
 }

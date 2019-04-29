@@ -5,7 +5,6 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.Swagg
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition.InheritanceChainPropertiesValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition.ReferenceValidator;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition.RequiredPropertiesValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition.VisitableModelValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.FormDataValidator;
@@ -38,7 +37,6 @@ public class SemanticValidationService {
         context = new ValidationContext(swagger);
 
         modelValidators.add(new ReferenceValidator());
-        modelValidators.add(new RequiredPropertiesValidator());
         modelValidators.add(new InheritanceChainPropertiesValidator());
         validators.add(new ResponseValidator());
         validators.add(new FormDataValidator());

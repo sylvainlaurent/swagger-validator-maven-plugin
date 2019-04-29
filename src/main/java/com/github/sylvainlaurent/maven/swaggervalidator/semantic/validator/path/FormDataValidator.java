@@ -1,5 +1,8 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path;
 
+import static org.apache.commons.collections4.ListUtils.emptyIfNull;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
@@ -30,7 +33,8 @@ public class FormDataValidator extends PathValidatorTemplate {
         String in = parameter.getIn();
         if (in.equals("formData")) {
             String type = ((FormParameterWrapper) parameter).getType();
-            List<String> consumes = currentOperation.getConsumes();
+            List<String> consumes = new ArrayList<>(emptyIfNull(currentOperation.getConsumes()));
+            consumes.addAll(emptyIfNull(context.getSwagger().getConsumes()));
             if (type.equals("file") && !consumes.contains("multipart/form-data")) {
                 validationErrors.add(new SemanticError(holder.getCurrentPath(),
                         "Operations with parameters of 'type: file' must include 'multipart/form-data' in their 'consumes' property."));
