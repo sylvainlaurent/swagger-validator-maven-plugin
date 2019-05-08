@@ -9,6 +9,8 @@ schemes:
 basePath: /v1
 produces:
   - application/json
+consumes:
+  - application/json
 paths:
   #productId is missing in path parameters of the operations
   /category/{id}/product/{productId}:
