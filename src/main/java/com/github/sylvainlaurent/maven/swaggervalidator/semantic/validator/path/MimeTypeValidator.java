@@ -1,5 +1,9 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path;
 
+import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.OperationConstants.OPERATION_PARAMETRES_BODY;
+import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.OperationConstants.OPERATION_PARAMETRES_FORM;
+import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.OperationConstants.OPERATION_TYPE_DELETE;
+import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.OperationConstants.OPERATION_TYPE_GET;
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 
 import java.util.ArrayList;
@@ -7,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.OperationWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.MediaType;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 
 public class MimeTypeValidator extends PathValidatorTemplate {
@@ -24,8 +29,8 @@ public class MimeTypeValidator extends PathValidatorTemplate {
         if (consumes == null) {
             consumes = new ArrayList<>(emptyIfNull(context.getSwagger().getConsumes()));
         }
-        if ("get".equals(operationName) || "delete".equals(operationName) ||
-                (operation.getParameters("body").isEmpty() && operation.getParameters("formData").isEmpty())) {
+        if (OPERATION_TYPE_GET.equals(operationName) || OPERATION_TYPE_DELETE.equals(operationName) ||
+                (operation.getParameters(OPERATION_PARAMETRES_BODY).isEmpty() && operation.getParameters(OPERATION_PARAMETRES_FORM).isEmpty())) {
             if (consumes == null || !consumes.isEmpty()) {
                 validationErrors
                         .add(new SemanticError(holder.getCurrentPath(), "'consumes' must be equal to 'consumes: []' "));
@@ -68,7 +73,7 @@ public class MimeTypeValidator extends PathValidatorTemplate {
             collection.stream().filter(x ->
                                        {
                                            try {
-                                               return !(context.getMimeTypes().contains(x));
+                                               return !(MediaType.getMimeTypes().contains(x));
                                            } catch (Exception e) {
                                                return true;
                                            }

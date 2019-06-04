@@ -10,6 +10,7 @@ import java.util.Set;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableModel;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.OperationWrapper;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.MediaType;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.SwaggerValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.ValidationContext;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition.InheritanceChainPropertiesValidator;
@@ -58,7 +59,7 @@ public class SemanticValidationService {
         if (pathValidatorsPackageName != null) {
             validators.addAll(Util.createInstances(pathValidatorsPackageName, SwaggerPathValidator.class));
         }
-        context.addCustomMimeTypes(customMimeTypes);
+        MediaType.addCustomMimeTypes(customMimeTypes);
     }
 
     public List<SemanticError> validate() {
