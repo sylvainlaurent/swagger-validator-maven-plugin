@@ -16,20 +16,6 @@ public class ValidationServiceTest {
     private final ValidationService service = new ValidationService();
 
     @Test
-    public void test_empty_file_yml() {
-        final ValidationResult result = service.validate(new File("src/test/resources/swagger-doc-empty.yml"));
-        assertTrue(result.hasError());
-        assertEquals(1, result.getMessages().size());
-    }
-
-    @Test
-    public void test_empty_file_json() {
-        final ValidationResult result = service.validate(new File("src/test/resources/swagger-doc-empty.json"));
-        assertTrue(result.hasError());
-        assertEquals(1, result.getMessages().size());
-    }
-
-    @Test
     public void test_malformed_file_yml() {
         final ValidationResult result = service.validate(new File("src/test/resources/swagger-doc-malformed.yml"));
         assertTrue(result.hasError());
@@ -84,16 +70,24 @@ public class ValidationServiceTest {
     }
 
     @Test
-    public void test_external_references_yaml() {
-        final ValidationResult result = service.validate(new File("src/test/resources/swagger-doc-external-ref.yml"));
+    public void test_external_references_in_definition_yaml() {
+        final ValidationResult result = service.validate(new File("src/test/resources/ext-ref/swagger-doc-external-ref-definition.yml"));
         assertFalse(result.hasError());
         assertTrue(result.getMessages().isEmpty());
     }
 
     @Test
-    public void test_external_references_json() {
-        final ValidationResult result = service.validate(new File("src/test/resources/swagger-doc-external-ref.json"));
+    public void test_external_references_in_definition_json() {
+        final ValidationResult result = service.validate(new File("src/test/resources/ext-ref/swagger-doc-external-ref-definition.json"));
         assertFalse(result.hasError());
         assertTrue(result.getMessages().isEmpty());
     }
+
+    @Test
+    public void test_external_references_in_path_yaml() {
+        final ValidationResult result = service.validate(new File("src/test/resources/ext-ref/swagger-doc-external-ref-path.yml"));
+        assertFalse(result.hasError());
+        assertTrue(result.getMessages().isEmpty());
+    }
+
 }

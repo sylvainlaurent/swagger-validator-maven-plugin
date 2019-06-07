@@ -1,0 +1,24 @@
+swagger: '2.0'
+
+info:
+  version: "1.0.0"
+  title: MyAPI
+
+host: localhost:4523
+basePath: /myapi/v1
+
+consumes:
+- application/json
+
+produces:
+- application/json
+
+schemes:
+- https
+
+paths:
+  /health:
+    $ref: 'swagger-doc-external-ref-path-imported.yml#/paths/~1health'
+    
+  /info:
+    $ref: './swagger-doc-external-ref-path-imported.yml#/paths/~1info'

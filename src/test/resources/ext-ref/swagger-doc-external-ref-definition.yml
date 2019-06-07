@@ -1,0 +1,32 @@
+swagger: '2.0'
+info:
+  title: Test API for external references
+  description: Test API for external references
+  version: "1.0.0"
+host: none
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /test:
+    get:
+      summary: 'Test external references without ./ prefix'
+      description: 'Test external references without ./ prefix'
+      responses:
+        404:
+          description: Returns an object (Error) defined in an external file
+          schema:
+            $ref: 'swagger-editor-external-ref-definition-imported.yml#/definitions/Error'
+  /test2:
+    get:
+      summary: 'Test external references with ./ prefix'
+      description: 'Test external references with ./ prefix'
+      responses:
+        404:
+          description: Returns an object (Activity) defined in an external file
+          schema:
+            $ref: './swagger-editor-external-ref-definition-imported.yml#/definitions/Activity'
+  
+

@@ -56,11 +56,6 @@ public class ParameterWrapper<T extends Parameter> implements VisitableParameter
     }
 
     @Override
-    public Boolean getAllowEmptyValue() {
-        return parameter.getAllowEmptyValue();
-    }
-
-    @Override
     public Boolean getReadOnly() {
         return parameter.isReadOnly();
     }

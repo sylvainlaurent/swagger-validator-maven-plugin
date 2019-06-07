@@ -17,8 +17,6 @@ public interface VisitableParameter<T extends Parameter> extends VisitableObject
 
     String getPattern();
 
-    Boolean getAllowEmptyValue();
-
     Boolean getReadOnly();
 
 }

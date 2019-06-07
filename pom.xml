@@ -40,10 +40,10 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
-    <swagger-core-version>1.5.16</swagger-core-version>
-    <swagger-parser-version>1.0.32</swagger-parser-version>
+    <swagger-core-version>1.5.22</swagger-core-version>
+    <swagger-parser-version>1.0.44</swagger-parser-version>
     <json-schema-validator-version>2.2.6</json-schema-validator-version>
-    <jackson-version>2.8.9</jackson-version>
+    <jackson-version>2.9.8</jackson-version>
   </properties>
 
   <dependencies>
@@ -217,7 +217,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>1.4</version>
+        <version>3.0.0-M2</version>
         <executions>
           <execution>
             <id>enforce-versions</id>
@@ -226,7 +226,11 @@
             </goals>
             <configuration>
               <rules>
-                <requireUpperBoundDeps />
+                <requireUpperBoundDeps>
+                  <excludes>
+                    <exclude>com.google.guava:guava</exclude>
+                  </excludes>
+                </requireUpperBoundDeps>
               </rules>
             </configuration>
           </execution>
