@@ -42,12 +42,16 @@ public class ValidateMojo extends AbstractMojo {
     @Parameter(defaultValue = "true")
     private boolean failOnErrors;
 
+    @Parameter
+    private String[] customMimeTypes;
+
     private final ValidationService validationService = new ValidationService();
 
     @Override
     public void execute() throws MojoExecutionException {
         validationService.setCustomModelValidatorsPackage(customModelValidatorsPackage);
         validationService.setCustomPathValidatorsPackage(customPathValidatorsPackage);
+        validationService.setCustomMimeTypes(customMimeTypes);
 
         Instrumentation.init();
 

@@ -48,7 +48,7 @@ public class FormDataValidatorTest {
         logger.info(errors.toString());
 
         assertFalse(errors.isEmpty());
-        assertEquals(2, errors.size());
+        assertEquals(3, errors.size());
         SemanticError error1 = errors.get(0);
         assertEquals("Operations with Parameters of 'in: formData' must include 'application/x-www-form-urlencoded' or 'multipart/form-data' in their 'consumes' property.",
                 error1.getMessage());
@@ -57,5 +57,9 @@ public class FormDataValidatorTest {
         assertEquals("Operations with Parameters of 'in: formData' must include 'application/x-www-form-urlencoded' or 'multipart/form-data' in their 'consumes' property.",
                 error2.getMessage());
         assertEquals("paths./category.post", error2.getPath());
+        SemanticError error3 = errors.get(2);
+        assertEquals("'consumes' cannot be empty",
+                     error3.getMessage());
+        assertEquals("paths./category.post", error3.getPath());
     }
 }

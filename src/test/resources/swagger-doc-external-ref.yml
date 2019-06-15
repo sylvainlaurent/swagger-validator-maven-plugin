@@ -7,8 +7,6 @@ host: none
 schemes:
   - https
 basePath: /v1
-produces:
-  - application/json
 paths:
   /test:
     get:

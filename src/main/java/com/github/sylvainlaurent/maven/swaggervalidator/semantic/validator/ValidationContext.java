@@ -1,16 +1,19 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator;
 
 import static org.apache.commons.collections4.MapUtils.emptyIfNull;
+import static org.apache.commons.lang3.reflect.FieldUtils.readDeclaredStaticField;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitableParameterFactory;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableParameter;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path.PathWrapper;
-
 import io.swagger.models.Model;
 import io.swagger.models.Path;
 import io.swagger.models.Swagger;
@@ -18,7 +21,6 @@ import io.swagger.models.auth.SecuritySchemeDefinition;
 import io.swagger.models.parameters.Parameter;
 
 public class ValidationContext {
-
     protected List<PathWrapper> paths = new ArrayList<>();
     protected Map<String, Model> definitions = new HashMap<>();
     private Swagger swagger;

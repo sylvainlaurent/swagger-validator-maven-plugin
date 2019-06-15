@@ -13,6 +13,7 @@ paths:
   /category:
     post:
       summary: A sample survey.
+      produces: []
       parameters:
         - in: formData
           name: name

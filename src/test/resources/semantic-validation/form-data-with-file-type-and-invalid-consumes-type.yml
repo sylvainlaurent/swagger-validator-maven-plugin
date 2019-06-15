@@ -15,6 +15,7 @@ paths:
       summary: A sample survey.
       consumes:
         - application/x-www-form-urlencoded
+      produces: []
       parameters:
         - in: formData
           name: name

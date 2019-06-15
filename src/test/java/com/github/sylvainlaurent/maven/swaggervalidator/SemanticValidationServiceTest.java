@@ -232,11 +232,13 @@ public class SemanticValidationServiceTest {
 
         assertFalse(errors.isEmpty());
 
-        assertEquals(2, errors.size());
+        assertEquals(3, errors.size());
         assertTrue(errors.get(0).getMessage().contains("following properties are already defined in ancestors:"));
         assertEquals("ApparelProduct", (errors.get(0).getPath()));
         assertTrue(errors.get(1).getMessage().contains("following properties are already defined in ancestors:"));
         assertEquals("TShirt", errors.get(1).getPath());
+        assertTrue(errors.get(2).getMessage().contains("required property is defined multiple times:"));
+        assertEquals("TShirt", errors.get(2).getPath());
     }
 
     @Test

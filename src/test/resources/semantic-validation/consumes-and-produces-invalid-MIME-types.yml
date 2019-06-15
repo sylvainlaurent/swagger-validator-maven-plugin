@@ -1,0 +1,51 @@
+swagger: '2.0'
+info:
+  title: Test API
+  description: Test API
+  version: "1.0.0"
+host: none
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/mytype1
+consumes:
+  - application/mytype2
+paths:
+  /producs:
+    post:
+      summary: A sample survey.
+      consumes:
+        - application/mytype3
+      produces:
+        - application/mytype4
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CreateProduct'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/Product'
+
+definitions:
+  CreateProduct:
+    - type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+
+  Product:
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        name:
+          type: string

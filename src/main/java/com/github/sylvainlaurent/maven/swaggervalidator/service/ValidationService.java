@@ -34,6 +34,7 @@ public class ValidationService {
     private JsonSchema schema;
     private String customModelValidatorsPackage;
     private String customPathValidatorsPackage;
+    private String[] customMimeTypes;
 
     public ValidationService() {
         final InputStream is = this.getClass().getClassLoader().getResourceAsStream(SCHEMA_FILE);
@@ -95,7 +96,7 @@ public class ValidationService {
         }
 
         List<SemanticError> semanticValidationResult = new SemanticValidationService(swagger,
-                customModelValidatorsPackage, customPathValidatorsPackage).validate();
+                customModelValidatorsPackage, customPathValidatorsPackage, customMimeTypes).validate();
         if (!semanticValidationResult.isEmpty()){
             for (SemanticError error: semanticValidationResult) {
                 validationResult.addMessage(error.toString());
@@ -118,5 +119,9 @@ public class ValidationService {
     }
     public void setCustomPathValidatorsPackage(String customPathValidatorsPackage) {
         this.customPathValidatorsPackage = customPathValidatorsPackage;
+    }
+
+    public void setCustomMimeTypes(String[] customMimeTypes) {
+        this.customMimeTypes = customMimeTypes;
     }
 }

@@ -1,17 +1,16 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.model;
 
-import static java.util.Collections.emptyList;
 import static org.apache.commons.collections4.ListUtils.emptyIfNull;
 import static org.apache.commons.lang3.reflect.FieldUtils.readField;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.ModelVisitor;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.VisitablePropertyFactory;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.VisitableProperty;
-
 import io.swagger.models.ModelImpl;
 import io.swagger.models.properties.Property;
 
@@ -26,11 +25,13 @@ public class ModelImplWrapper extends AbstractModelWrapper<ModelImpl> {
 
     @SuppressWarnings("unchecked")
     public List<String> getRequired() {
+        List<String> requiredProperties;
         try {
-            return emptyIfNull((List<String>) readField(model, "required", true));
+            requiredProperties = new ArrayList<>(emptyIfNull((List<String>) readField(model, "required", true)));
         } catch (IllegalAccessException ex) {
-            return emptyList();
+            requiredProperties = new ArrayList<>();
         }
+        return requiredProperties;
     }
 
     public List<String> getReadOlyProperties() {

@@ -9,6 +9,8 @@ schemes:
 basePath: /v1
 produces:
   - application/json
+consumes:
+  - application/json
 paths:
   /category/{id}/product/{productId}:
     post:
