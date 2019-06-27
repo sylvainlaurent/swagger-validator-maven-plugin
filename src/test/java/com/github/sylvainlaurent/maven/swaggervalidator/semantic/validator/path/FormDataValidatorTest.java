@@ -39,27 +39,4 @@ public class FormDataValidatorTest {
                 error2.getMessage());
         assertEquals("paths./category.post.name", error2.getPath());
     }
-
-    @Test
-    public void form_data_without_consumes() {
-        SwaggerDeserializationResult swaggerResult = readDoc(
-                RESOURCE_FOLDER + "form-data-without-consumes.yml");
-        List<SemanticError> errors = new SemanticValidationService(swaggerResult.getSwagger()).validate();
-        logger.info(errors.toString());
-
-        assertFalse(errors.isEmpty());
-        assertEquals(3, errors.size());
-        SemanticError error1 = errors.get(0);
-        assertEquals("Operations with Parameters of 'in: formData' must include 'application/x-www-form-urlencoded' or 'multipart/form-data' in their 'consumes' property.",
-                error1.getMessage());
-        assertEquals("paths./category.post.name", error1.getPath());
-        SemanticError error2 = errors.get(1);
-        assertEquals("Operations with Parameters of 'in: formData' must include 'application/x-www-form-urlencoded' or 'multipart/form-data' in their 'consumes' property.",
-                error2.getMessage());
-        assertEquals("paths./category.post", error2.getPath());
-        SemanticError error3 = errors.get(2);
-        assertEquals("'consumes' cannot be empty",
-                     error3.getMessage());
-        assertEquals("paths./category.post", error3.getPath());
-    }
 }

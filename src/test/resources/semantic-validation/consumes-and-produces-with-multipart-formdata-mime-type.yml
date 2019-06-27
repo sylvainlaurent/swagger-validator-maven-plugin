@@ -7,19 +7,18 @@ host: none
 schemes:
   - https
 basePath: /v1
+produces:
+  - application/json
+consumes:
+  - application/xml
 paths:
   /producs:
-    get:
-      summary: A sample survey.
-      responses:
-        200:
-          description: OK
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Product'
     post:
       summary: A sample survey.
+      consumes:
+        - multipart/form-data
+      produces:
+        - text/plain
       parameters:
         - name: body
           in: body

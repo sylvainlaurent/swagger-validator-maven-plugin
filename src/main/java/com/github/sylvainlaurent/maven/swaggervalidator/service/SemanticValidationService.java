@@ -18,7 +18,7 @@ import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.defin
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.definition.VisitableModelValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.error.SemanticError;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.FormDataValidator;
-import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.MimeTypeValidator;
+import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.MediaTypeValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.OperationParametersReferenceValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.OperationValidator;
 import com.github.sylvainlaurent.maven.swaggervalidator.semantic.validator.path.PathValidator;
@@ -48,7 +48,7 @@ public class SemanticValidationService {
         validators.add(new OperationValidator());
         validators.add(new OperationParametersReferenceValidator());
         validators.add(new SecurityValidator());
-        validators.add(new MimeTypeValidator());
+        validators.add(new MediaTypeValidator());
     }
 
     public SemanticValidationService(Swagger swagger, String validatorsPackageName, String pathValidatorsPackageName, String[] customMimeTypes) {
@@ -59,18 +59,18 @@ public class SemanticValidationService {
         if (pathValidatorsPackageName != null) {
             validators.addAll(Util.createInstances(pathValidatorsPackageName, SwaggerPathValidator.class));
         }
-        MediaType.addCustomMimeTypes(customMimeTypes);
+        MediaType.addCustomMediaTypes(customMimeTypes);
     }
 
     public List<SemanticError> validate() {
 
         Set<SemanticError> uniqueValidationErrors = new HashSet<>();
 
-        MimeTypeValidator mimeTypeValidator = new MimeTypeValidator();
-        mimeTypeValidator.setValidationContext(context);
-        mimeTypeValidator.validateMimeTypes(new OperationWrapper("swagger-root", new Operation().consumes(context.getSwagger().getConsumes())
+        MediaTypeValidator mediaTypeValidator = new MediaTypeValidator();
+        mediaTypeValidator.setValidationContext(context);
+        mediaTypeValidator.validateMediaTypes(new OperationWrapper("swagger-root", new Operation().consumes(context.getSwagger().getConsumes())
                 .produces(context.getSwagger().getProduces()), null));
-        uniqueValidationErrors.addAll(mimeTypeValidator.getErrors());
+        uniqueValidationErrors.addAll(mediaTypeValidator.getErrors());
 
         for (SwaggerValidator validator : validators) {
             validator.setValidationContext(context);

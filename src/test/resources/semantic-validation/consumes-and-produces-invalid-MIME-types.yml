@@ -8,17 +8,17 @@ schemes:
   - https
 basePath: /v1
 produces:
-  - application/mytype1
+  - application////json
 consumes:
-  - application/mytype2
+  - application-json
 paths:
   /producs:
     post:
       summary: A sample survey.
       consumes:
-        - application/mytype3
+        - not_allowed_prefix/application/mytype3
       produces:
-        - application/mytype4
+        - application/json;charset=utf8
       parameters:
         - name: body
           in: body
