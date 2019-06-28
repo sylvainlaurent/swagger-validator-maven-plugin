@@ -42,11 +42,12 @@ public class ResponseValidator extends PathValidatorTemplate {
     }
 
     private void validateSchema(VisitableProperty<? extends Property> schema) {
-        if (schema.getType().equals("array")) {
-            if (((ArrayPropertyWrapper) schema).getProperty().getItems() == null) {
-                validationErrors.add(
-                        new SchemaError(holder.getCurrentPath(), "'type: array', require a sibling 'items:' field"));
-            }
+        if (schema.getType().equals("array")
+                && ((ArrayPropertyWrapper) schema).getProperty().getItems() == null) {
+
+            validationErrors.add(
+                    new SchemaError(holder.getCurrentPath(), "'type: array', require a sibling 'items:' field"));
         }
     }
+
 }

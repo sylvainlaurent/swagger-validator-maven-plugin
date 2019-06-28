@@ -13,6 +13,10 @@ import io.swagger.models.RefModel;
 
 public class VisitableModelFactory {
 
+    private VisitableModelFactory() {
+        // private constructor
+    }
+
     public static VisitableModel createVisitableModel(String modelName, Model model) {
         if (model instanceof ModelImpl) {
             return new ModelImplWrapper(modelName, (ModelImpl) model);

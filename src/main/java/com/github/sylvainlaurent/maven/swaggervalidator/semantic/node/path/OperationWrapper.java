@@ -14,13 +14,15 @@ import io.swagger.models.Operation;
 import io.swagger.models.Response;
 import io.swagger.models.parameters.Parameter;
 
+import static org.apache.commons.lang3.BooleanUtils.isTrue;
+
 public class OperationWrapper implements PathObject {
 
     private final String name;
     private final PathWrapper path;
     private Operation operation;
 
-    private Map<String, Object> vendorExtensions = new LinkedHashMap<String, Object>();
+    private Map<String, Object> vendorExtensions = new LinkedHashMap<>();
     private List<String> tags = new ArrayList<>();
     private String summary;
     private String description;
@@ -40,7 +42,7 @@ public class OperationWrapper implements PathObject {
         this.summary = operation.getSummary();
         this.description = operation.getDescription();
         this.operationId = operation.getOperationId();
-        this.deprecated = operation.isDeprecated() == null ? false : operation.isDeprecated();
+        this.deprecated = isTrue(operation.isDeprecated());
 
         if (operation.getTags() != null) {
             this.tags.addAll(operation.getTags());

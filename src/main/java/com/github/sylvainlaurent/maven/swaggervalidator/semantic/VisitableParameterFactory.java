@@ -21,6 +21,10 @@ import io.swagger.models.parameters.RefParameter;
 
 public class VisitableParameterFactory {
 
+    private VisitableParameterFactory() {
+        // private constructor
+    }
+
     @SuppressWarnings("unchecked")
     public static <T extends Parameter> VisitableParameter<T> createParameter(T parameter) {
         if (parameter instanceof BodyParameter) {

@@ -31,7 +31,7 @@ public class VisitedItemsHolder {
     }
 
     public String getCurrentPath() {
-        return String.join(".", (Iterable<String>) () -> visitedItems.descendingIterator());
+        return String.join(".", (Iterable<String>) visitedItems::descendingIterator);
     }
 
     public Collection<String> getVisitedItems() {

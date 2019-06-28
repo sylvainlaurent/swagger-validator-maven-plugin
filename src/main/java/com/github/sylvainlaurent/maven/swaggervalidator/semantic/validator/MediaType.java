@@ -11,7 +11,12 @@ public class MediaType {
 
     private static final Set<String> CUSTOM_MEDIA_TYPES = new HashSet<>();
 
-    private static Pattern RFC6838_MEDIA_TYPE_PATTERN =
+    private MediaType () {
+        // private constructor
+    }
+
+    // adapted from https://github.com/lovell/media-type
+    private static final Pattern RFC6838_MEDIA_TYPE_PATTERN =
             compile("^(application|audio|font|image|message|model|multipart|text|video|\\*)/([a-zA-Z0-9!#$%^&*_\\-+{}|'.`~]{1,127})(;.*)?$");
 
     public static void addCustomMediaTypes(String[] customMediaTypes) {

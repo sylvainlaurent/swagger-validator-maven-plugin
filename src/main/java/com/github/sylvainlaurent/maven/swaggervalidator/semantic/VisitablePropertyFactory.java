@@ -13,6 +13,10 @@ import io.swagger.models.properties.RefProperty;
 
 public class VisitablePropertyFactory {
 
+    private VisitablePropertyFactory() {
+        // private constructor
+    }
+
     @SuppressWarnings("unchecked")
     public static <T extends Property> VisitableProperty<T> createVisitableProperty(String propertyName, T property) {
         if (property instanceof ObjectProperty) {

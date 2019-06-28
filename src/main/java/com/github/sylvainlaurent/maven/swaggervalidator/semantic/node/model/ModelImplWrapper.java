@@ -95,7 +95,7 @@ public class ModelImplWrapper extends AbstractModelWrapper<ModelImpl> {
         return model.getDefaultValue();
     }
 
-    public List<String> get_enum() {
+    public List<String> getEnum() {
         return model.getEnum();
     }
 

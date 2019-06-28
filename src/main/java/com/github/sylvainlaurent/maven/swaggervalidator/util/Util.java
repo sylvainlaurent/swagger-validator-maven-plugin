@@ -16,6 +16,10 @@ import org.reflections.util.ConfigurationBuilder;
 
 public class Util {
 
+    private Util() {
+        // private constructor
+    }
+
     public static <T> Set<T> findDuplicates(Collection<T> list) {
         Set<T> duplicates = new LinkedHashSet<>();
         Set<T> uniques = new HashSet<>();

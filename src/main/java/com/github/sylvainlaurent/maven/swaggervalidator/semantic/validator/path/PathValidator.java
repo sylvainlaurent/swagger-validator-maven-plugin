@@ -137,6 +137,7 @@ public class PathValidator extends PathValidatorTemplate {
 
     @Override
     public void validate(ResponseWrapper response) {
+        // empty
     }
 
     @Override

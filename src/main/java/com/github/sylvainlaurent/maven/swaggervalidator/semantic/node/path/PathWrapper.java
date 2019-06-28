@@ -1,11 +1,9 @@
 package com.github.sylvainlaurent.maven.swaggervalidator.semantic.node.path;
 
+import static com.github.sylvainlaurent.maven.swaggervalidator.semantic.OperationConstants.*;
 import static java.util.Arrays.asList;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,25 +32,25 @@ public class PathWrapper implements PathObject {
         this.name = name;
         this.path = path;
         if (path.getGet() != null) {
-            operations.put("get", new OperationWrapper("get", path.getGet(), this));
+            operations.put(OPERATION_TYPE_GET, new OperationWrapper(OPERATION_TYPE_GET, path.getGet(), this));
         }
         if (path.getPut() != null) {
-            operations.put("put", new OperationWrapper("put", path.getPut(), this));
+            operations.put(OPERATION_TYPE_PUT, new OperationWrapper(OPERATION_TYPE_PUT, path.getPut(), this));
         }
         if (path.getPost() != null) {
-            operations.put("post", new OperationWrapper("post", path.getPost(), this));
+            operations.put(OPERATION_TYPE_POST, new OperationWrapper(OPERATION_TYPE_POST, path.getPost(), this));
         }
         if (path.getHead() != null) {
-            operations.put("head", new OperationWrapper("head", path.getHead(), this));
+            operations.put(OPERATION_TYPE_HEAD, new OperationWrapper(OPERATION_TYPE_HEAD, path.getHead(), this));
         }
         if (path.getDelete() != null) {
-            operations.put("delete", new OperationWrapper("delete", path.getDelete(), this));
+            operations.put(OPERATION_TYPE_DELETE, new OperationWrapper(OPERATION_TYPE_DELETE, path.getDelete(), this));
         }
         if (path.getPatch() != null) {
-            operations.put("patch", new OperationWrapper("patch", path.getPatch(), this));
+            operations.put(OPERATION_TYPE_PATCH, new OperationWrapper(OPERATION_TYPE_PATCH, path.getPatch(), this));
         }
         if (path.getOptions() != null) {
-            operations.put("options", new OperationWrapper("options", path.getOptions(), this));
+            operations.put(OPERATION_TYPE_OPTIONS, new OperationWrapper(OPERATION_TYPE_OPTIONS, path.getOptions(), this));
         }
 
         if (path.getParameters() != null) {
@@ -81,31 +79,31 @@ public class PathWrapper implements PathObject {
     }
 
     public OperationWrapper getGet() {
-        return operations.get("get");
+        return operations.get(OPERATION_TYPE_GET);
     }
 
     public OperationWrapper getPut() {
-        return operations.get("put");
+        return operations.get(OPERATION_TYPE_PUT);
     }
 
     public OperationWrapper getPost() {
-        return operations.get("post");
+        return operations.get(OPERATION_TYPE_POST);
     }
 
     public OperationWrapper getHead() {
-        return operations.get("head");
+        return operations.get(OPERATION_TYPE_HEAD);
     }
 
     public OperationWrapper getDelete() {
-        return operations.get("delete");
+        return operations.get(OPERATION_TYPE_DELETE);
     }
 
     public OperationWrapper getPatch() {
-        return operations.get("patch");
+        return operations.get(OPERATION_TYPE_PATCH);
     }
 
     public OperationWrapper getOptions() {
-        return operations.get("options");
+        return operations.get(OPERATION_TYPE_OPTIONS);
     }
 
     public List<VisitableParameter<Parameter>> getParameters() {
@@ -131,7 +129,7 @@ public class PathWrapper implements PathObject {
 
         PathWrapper otherPath = (PathWrapper) o;
 
-        return pathElements != null ? pathElements.equals(otherPath.pathElements) : otherPath.pathElements == null;
+        return Objects.equals(pathElements, otherPath.pathElements);
     }
 
     @Override
@@ -181,7 +179,7 @@ public class PathWrapper implements PathObject {
 
             PathToken pathToken = (PathToken) o;
 
-            return token != null ? token.equals(pathToken.token) : pathToken.token == null;
+            return Objects.equals(token, pathToken.token);
         }
 
         @Override
@@ -196,7 +194,7 @@ public class PathWrapper implements PathObject {
 
         String result = inpath;
         if (result.startsWith(SLASH)) {
-            result = inpath.substring(1, inpath.length());
+            result = inpath.substring(1);
         }
         if (result.endsWith(SLASH)) {
             result = result.substring(0, inpath.length() - 1);
