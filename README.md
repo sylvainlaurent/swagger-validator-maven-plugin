@@ -30,7 +30,7 @@ This maven plugin allows to validate yaml and json files.
                 <!-- <exclude> is optional, others may be added -->
               </excludes>
               <!-- package names where custom validators are located -->
-              <customModelValidatorsPackage>com.example.validators</customValidatorsPackage>
+              <customModelValidatorsPackage>com.example.validators</customModelValidatorsPackage>
               <customPathValidatorsPackage>com.example.validators</customPathValidatorsPackage>
             </configuration>
           </execution>

@@ -2,6 +2,7 @@ package com.github.sylvainlaurent.maven.swaggervalidator.instrumentation;
 
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.dynamic.ClassFileLocator;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.implementation.MethodDelegation;
 import net.bytebuddy.pool.TypePool;
 
@@ -31,7 +32,7 @@ public final class Instrumentation {
                            .method(named(METHOD_TO_BE_INSTRUMENTED))
                            .intercept(MethodDelegation.to(ObjectPropertyRequiredInterceptor.class))
                            .make()
-                           .load(classLoader);
+                           .load(classLoader, ClassLoadingStrategy.Default.INJECTION);
             initialized = true;
         } catch (Exception ex) {
             throw new RuntimeException(ex);

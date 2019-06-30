@@ -49,11 +49,12 @@ public class ValidateMojo extends AbstractMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
+
+        Instrumentation.init();
+
         validationService.setCustomModelValidatorsPackage(customModelValidatorsPackage);
         validationService.setCustomPathValidatorsPackage(customPathValidatorsPackage);
         validationService.setCustomMimeTypes(customMimeTypes);
-
-        Instrumentation.init();
 
         final File[] files = getFiles();
         boolean encounteredError = false;
